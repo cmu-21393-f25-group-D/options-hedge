@@ -1,42 +1,60 @@
 # Portfolio Insurance Optimization
 
-This project implements a portfolio insurance strategy for retirees using options on the S&P 500 index. It uses optimization techniques to find the most cost-effective combination of put options that protect a portfolio against downside risk while maintaining upside potential.
-
-## Features
-
-- Portfolio insurance strategy using S&P 500 put options
-- Optimization model to minimize option costs while ensuring downside protection
-- Analysis of different strike prices and expiration dates
-- Visualization of strategy performance under various market scenarios
-- Back-testing capabilities using historical data
+This project implements a portfolio insurance strategy for retirees using put options on the S&P 500 index. It uses optimization techniques to find the most cost-effective combination of put options that protect a portfolio against downside risk while maintaining upside potential.
 
 ## Installation
 
-1. Install uv (Python package manager):
+1. Install uv (Python package manager that also stores versions of packages; makes sure nothing breaks due to mismatched versions):
+
 ```bash
 python -m pip install --upgrade pip
 pip install uv
 ```
 
-2. Create and activate a virtual environment:
+1. Create and activate a virtual environment:
+
 ```bash
 uv venv
 source .venv/bin/activate  # On Unix/macOS
 .venv\Scripts\activate     # On Windows
 ```
 
-3. Install the package with development dependencies:
+1. Install the package with development dependencies:
+
 ```bash
 uv pip install -e ".[dev]"
 ```
 
-4. Install Gurobi:
+1. Install Gurobi:
 Follow the instructions at [Gurobi Installation Guide](https://www.gurobi.com/documentation/quickstart.html)
 
-5. Verify installation:
+1. Install and configure pre-commit hooks:
+
+```bash
+pre-commit install
+```
+
+1. Verify installation:
+
 ```bash
 uv run python -c "import options_hedge; print('Package successfully installed!')"
 ```
+
+## Code Quality
+
+This project uses pre-commit hooks to maintain code quality. When you commit changes, the following checks are automatically run:
+
+- Code formatting with Ruff
+- Style and error checks with Ruff
+- Type checking with mypy
+- Other checks like trailing whitespace and file endings
+
+If any issues are found:
+
+- For formatting issues: The hooks will automatically fix them
+- For other issues: The commit will be blocked until you fix them
+
+After a hook makes automated fixes, you'll need to stage the changes and commit again.
 
 ## Usage
 

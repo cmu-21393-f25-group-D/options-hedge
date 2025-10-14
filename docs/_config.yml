@@ -41,7 +41,8 @@ html:
   use_fullscreen_button: true
   extra_navbar: ""
   extra_footer: ""
-  google_analytics_id: ""
+  analytics:
+    google_analytics_id: ""
   comments:
     hypothesis: false
     utterances: false
@@ -64,20 +65,18 @@ sphinx:
       header_organisation: "Options Hedge"
       header_organisation_url: https://akhilkarra.github.io/options-hedge
       repository_url: https://github.com/akhilkarra/options-hedge
-      nb_repository_url: https://github.com/akhilkarra/options-hedge
+      nb_repository_url: ""
       twitter: akhilkarra
       twitter_url: https://twitter.com/akhilkarra
-      author: Akhil Karra
       github_url: https://github.com/akhilkarra
       description: Documentation for the options-hedge package
       keywords: Python, Finance, Options, Hedging
-      analytics:
-        google_analytics: false
       launch_buttons:
-        notebook_interface: "classic"
+        notebook_interface: classic
+        colab_url: ""
         binderhub_url: ""
         jupyterhub_url: ""
-        colab_url: ""
+        thebe: false
     mathjax3_config:
       tex:
         macros:

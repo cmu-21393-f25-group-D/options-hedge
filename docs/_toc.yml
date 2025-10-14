@@ -4,4 +4,11 @@
 format: jb-book
 root: source/index
 chapters:
+  - file: source/motivation
+    title: Project Motivation
+  - file: source/installation
+    title: Installation Guide
+  - file: source/contributing
+    title: Contributing Guide
   - file: source/hello_world
+    title: Hello World Example

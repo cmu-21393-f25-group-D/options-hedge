@@ -154,7 +154,11 @@ This project is under active development. Current focus areas:
 
 ## License
 
-MIT License - see LICENSE file for details
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Academic Integrity Notice
+
+This project was developed as coursework for CMU 21-393 (Operations Research). While the code is open source under the MIT License, we strongly encourage students in similar courses to develop their own solutions. This repository is intended as a reference and learning resource, not a template for submission.
 
 ## Acknowledgments
 

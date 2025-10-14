@@ -1,6 +1,6 @@
 # Book settings
 title: Options Hedge
-author: Akhil Karra
+author: Akhil Karra, Zoe Xu, Vivaan Shroff, Wendy Wang
 copyright: "2025"
 logo: ""
 description: "Documentation for the options-hedge package"
@@ -66,9 +66,6 @@ sphinx:
       header_organisation_url: https://cmu-21393-f25-group-D.github.io/options-hedge
       repository_url: https://github.com/cmu-21393-f25-group-D/options-hedge
       nb_repository_url: ""
-      twitter: akhilkarra
-      twitter_url: https://twitter.com/akhilkarra
-      github_url: https://github.com/akhilkarra
       description: Documentation for the options-hedge package
       keywords: Python, Finance, Options, Hedging
       launch_buttons:

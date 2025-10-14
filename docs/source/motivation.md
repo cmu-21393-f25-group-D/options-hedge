@@ -4,7 +4,23 @@
 
 ### A Growing Challenge
 
-The United States is experiencing a demographic shift as Baby Boomers enter retirement en masse. This generation controls trillions of dollars in retirement savings, and they face a critical challenge: how to preserve wealth while maintaining purchasing power in retirement.
+The United States is experiencing an unprecedented demographic shift. According to the Population Reference Bureau, "the number of Americans ages 65 and older is projected to nearly double from 52 million in 2018 to 95 million by 2060."[^1] This wave represents the largest generation of retirees in American history, controlling trillions of dollars in retirement savings.
+
+This demographic transformation creates an urgent financial challenge: **how can millions of retirees preserve wealth while maintaining purchasing power over increasingly longer retirements?**
+
+### Why This Problem Is Escalating
+
+Three converging trends make this challenge more critical than ever:
+
+1. **Unprecedented scale**: The Baby Boomer generation represents 73 million Americans born between 1946-1964, all approaching or in retirement. This is not just a generational blip—it's a fundamental reshaping of the economic landscape.
+
+2. **Longer lifespans**: Advances in healthcare mean people are living longer than ever before. A 65-year-old today can expect to live another 20-30+ years, meaning retirement portfolios must sustain decades of withdrawals. This extended timeframe amplifies both the sequence-of-returns risk and the cumulative impact of inflation.
+
+3. **Persistent inflation risk**: Recent years have demonstrated that high inflation cycles remain a threat. Retirees can't simply move to cash or bonds without risking their purchasing power over multiple decades. With the Fed targeting 2% inflation, even "moderate" inflation will cut purchasing power in half over a 35-year retirement.
+
+**The stakes are enormous**: Traditional asset allocation strategies (like the "60/40 portfolio" or the "4% rule") were designed for different demographic and economic conditions. With this demographic tsunami and trillions of dollars at risk, we need smarter, more adaptive solutions that provide downside protection without sacrificing growth potential.
+
+[^1]: Population Reference Bureau. "Fact Sheet: Aging in the United States." PRB, 2019. <https://www.prb.org/resources/fact-sheet-aging-in-the-united-states/>
 
 ### The Traditional Dilemma
 

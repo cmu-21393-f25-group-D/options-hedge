@@ -31,7 +31,17 @@ Upcoming retirees face a difficult trade-off:
 1. **Stay in stocks**: Maintain growth potential and inflation protection, but risk catastrophic losses right when income stops
 2. **Move to bonds**: Preserve capital but earn minimal returns in today's low interest-rate environment
 
-With Baby Boomers entering retirement en masse, trillions of dollars are at risk. Traditional asset allocation strategies may no longer provide adequate protection.
+**Why This Problem Matters Now More Than Ever:**
+
+- **Demographic shift**: The Population Reference Bureau projects that "the number of Americans ages 65 and older is projected to nearly double from 52 million in 2018 to 95 million by 2060"[^1]. This wave of retirements represents an unprecedented transfer of assets from accumulation to preservation mode.
+
+- **Longer lifespans**: People are living longer than ever before, meaning retirement portfolios must sustain 20-30+ years of withdrawals. A market crash early in retirement can devastate long-term financial security due to sequence-of-returns risk.
+
+- **Persistent inflation risk**: With high inflation cycles expected in the future, retirees can't simply move to cash or bonds without risking their purchasing power over decades of retirement.
+
+Traditional asset allocation strategies (like the "60/40 portfolio" or the "4% rule") were designed for different demographic and economic conditions. With trillions of dollars at stake and millions approaching retirement, we need smarter, more adaptive solutions.
+
+[^1]: Population Reference Bureau. "Fact Sheet: Aging in the United States." PRB, 2019.
 
 ### Our Solution
 

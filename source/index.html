@@ -110,16 +110,16 @@
     <link rel="next" title="Project Motivation" href="motivation.html" />
 
 <!-- Normal Meta Tags -->
-<meta name="author" context="Akhil Karra" />
+<meta name="author" context="Akhil Karra, Zoe Xu, Vivaan Shroff, Wendy Wang" />
 <meta name="keywords" content="Python, Finance, Options, Hedging" />
 <meta name="description" content=Documentation for the options-hedge package />
 
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@akhilkarra" />
+<meta name="twitter:site" content="@" />
 <meta name="twitter:title" content="Portfolio Insurance Optimization"/>
 <meta name="twitter:description" content="Documentation for the options-hedge package">
-<meta name="twitter:creator" content="@akhilkarra">
+<meta name="twitter:creator" content="@">
 <meta name="twitter:image" content="">
 
 <!-- Opengraph tags -->
@@ -190,7 +190,7 @@
 
                     </div>
                     <!-- length 2, since its a string and empty dict has length 2 - {} -->
-                        <p class="qe-page__header-authors" font-size="18">Akhil Karra</p>
+                        <p class="qe-page__header-authors" font-size="18">Akhil Karra, Zoe Xu, Vivaan Shroff, Wendy Wang</p>
 
 
                 </div> <!-- .page__header -->
@@ -222,16 +222,22 @@
 <li><p><strong>Stay in stocks</strong>: Maintain growth potential and inflation protection, but risk catastrophic losses right when income stops</p></li>
 <li><p><strong>Move to bonds</strong>: Preserve capital but earn minimal returns in today’s low interest-rate environment</p></li>
 </ol>
-<p>With Baby Boomers entering retirement en masse, trillions of dollars are at risk. Traditional asset allocation strategies may no longer provide adequate protection.</p>
+<p><strong>The scale of this problem is unprecedented</strong>: The Population Reference Bureau projects that “the number of Americans ages 65 and older is projected to nearly double from 52 million in 2018 to 95 million by 2060.” Combined with longer lifespans (20-30+ year retirements) and persistent inflation risk, traditional asset allocation strategies may no longer provide adequate protection for the trillions of dollars at stake.</p>
+<p>For a deeper dive into why this problem matters, see our <a class="reference internal" href="motivation.html"><span class="std std-doc">detailed motivation</span></a>.</p>
 </section>
 <section id="our-approach">
 <h2>Our Approach<a class="headerlink" href="#our-approach" title="Permalink to this heading">#</a></h2>
-<p>We use operations research and optimization to answer: <strong>“What is the cheapest combination of put options needed to guarantee a portfolio won’t lose more than X% over a given period?”</strong></p>
+<p>We use operations research and optimization to address two key questions:</p>
+<ol class="arabic simple">
+<li><p><strong>“What is the optimal protection level?”</strong> - Determining the right balance between downside protection and cost (i.e., what maximum loss percentage makes sense for retirees)</p></li>
+<li><p><strong>“What is the cheapest way to achieve that protection?”</strong> - Finding the most cost-effective combination of put options to guarantee a portfolio won’t lose more than a specified percentage over a given period</p></li>
+</ol>
 <p>The optimization model:</p>
 <ul class="simple">
 <li><p><strong>Minimizes</strong>: Total cost of purchasing options</p></li>
 <li><p><strong>While ensuring</strong>: Portfolio is protected against a range of potential market scenarios</p></li>
 <li><p><strong>Allows</strong>: Full participation in market upside</p></li>
+<li><p><strong>Determines</strong>: The optimal protection level that balances safety and affordability</p></li>
 </ul>
 </section>
 <section id="project-team">

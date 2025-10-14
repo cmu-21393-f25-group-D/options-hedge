@@ -1,6 +1,7 @@
 """Tests for the options hedge optimization module."""
 
 import pytest
+
 from options_hedge.options_hedge import solve_simple_lp
 
 

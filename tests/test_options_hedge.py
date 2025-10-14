@@ -1,7 +1,7 @@
-"""Tests for the hello world Gurobi example."""
+"""Tests for the options hedge optimization module."""
 
 import pytest
-from src.hello_world import solve_simple_lp
+from options_hedge.options_hedge import solve_simple_lp
 
 
 def test_solve_simple_lp():

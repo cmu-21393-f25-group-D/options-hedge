@@ -40,7 +40,7 @@ It's like having your own personal workspace that's connected to the main projec
    ```bash
    git clone https://github.com/YOUR-USERNAME/options-hedge.git
    cd options-hedge
-   
+
    # Check that the clone worked
    git remote -v
    # You should see:
@@ -52,7 +52,7 @@ It's like having your own personal workspace that's connected to the main projec
 
    ```bash
    git remote add upstream https://github.com/akhilkarra/options-hedge.git
-   
+
    # Verify it worked - you should now see both origin and upstream:
    git remote -v
    # You should see four lines:
@@ -67,16 +67,19 @@ It's like having your own personal workspace that's connected to the main projec
    ```bash
    # Install our environment manager
    pip install uv
-   
+
    # Create a virtual environment in the .venv folder
    uv venv
-   
+
    # Activate the environment (choose the right command for your system)
    source .venv/bin/activate     # On Mac/Linux
    .venv\Scripts\activate        # On Windows
-   
+
    # Install all the development tools
    uv pip install -e ".[dev]"
+
+   # Set up automatic code quality checks
+   pre-commit install
    ```
 
 6. Install Gurobi (we use this for optimization):
@@ -90,13 +93,13 @@ It's like having your own personal workspace that's connected to the main projec
    ```bash
    # Switch to your main branch
    git checkout main
-   
+
    # Get updates from the original repository (upstream)
    git fetch upstream
-   
+
    # Add those updates to your fork's main branch
    git rebase upstream/main
-   
+
    # Update your fork on GitHub
    git push origin main
    ```
@@ -106,49 +109,53 @@ It's like having your own personal workspace that's connected to the main projec
    ```bash
    # For adding a new feature:
    git checkout -b feature/what-im-adding
-   
+
    # For fixing a bug:
    git checkout -b fix/what-im-fixing
-   
+
    # For updating docs:
    git checkout -b docs/what-im-changing
    ```
 
-3. Make your changes! After you're done, run these commands to check everything:
+3. Make your changes! As you work, our pre-commit hooks will automatically:
+   - Format your code with Ruff
+   - Fix common style issues
+   - Check for errors with Ruff
+   - Run type checking with mypy
+
+   These checks run every time you make a commit. If any issues are found:
+   - Formatting issues will be fixed automatically
+   - Other issues will be reported so you can fix them
+   - After fixes, add the changes and commit again
+
+   You can also run checks manually at any time:
 
    ```bash
-   # Make sure all developer tools are installed
-   uv pip install -e ".[dev]"
-   
-   # Format your code to look nice
-   uv run black .
-   
-   # Run the tests to make sure nothing broke
+   # Run all checks
+   pre-commit run --all-files
+
+   # Run tests
    uv run pytest
-   
-   # Check for type errors
-   uv run mypy src tests
    ```
 
-   If any of these commands show errors, don't worry! Just fix what they point out 
-   and run them again until they pass.
+   If any checks show errors, don't worry! The error messages will guide you on what to fix.
 
 4. Save your changes to GitHub:
 
    ```bash
    # Add all your changes
    git add .
-   
-   # Create a commit with a message describing what you did
+
+   # Create a commit - pre-commit hooks will run automatically
    git commit -m "feat: Add a cool new feature"    # If you added something new
    git commit -m "fix: Fix the calculation bug"    # If you fixed a bug
    git commit -m "docs: Update the instructions"   # If you updated docs
-   
+
    # Send your changes to your fork on GitHub
    git push origin your-branch-name
    ```
 
-4. **Creating the Pull Request**
+5. **Creating the Pull Request**
    - Push your changes to your fork with `git push origin your-branch-name`
    - Go to the original repository on GitHub
    - Click "Pull Requests" > "New Pull Request"
@@ -179,15 +186,15 @@ It's like having your own personal workspace that's connected to the main projec
 
    ```bash
    # Make the suggested changes in your code
-   
+
    # Add and commit them
    git add .
    git commit -m "fix: Update based on review feedback"
-   
+
    # Get any new changes from main
    git fetch upstream
    git rebase upstream/main
-   
+
    # Update your PR
    git push -f origin your-branch-name
    ```
@@ -202,9 +209,18 @@ It's like having your own personal workspace that's connected to the main projec
 
 ## Style Guide
 
-When writing code, try to:
-- Follow basic Python style (spaces, not tabs)
+Our code style is automatically enforced by pre-commit hooks, which will:
+
+- Format code according to Ruff's standards
+- Fix common style issues
+- Check type hints
+- Ensure consistent formatting
+
+When writing code, you should also:
+
 - Add type hints (like `def add(x: float, y: float) -> float:`)
 - Write clear docstrings explaining what your code does
 - Add comments for complex parts
 - Write tests for new features
+
+These practices help make our code more maintainable and easier to understand.

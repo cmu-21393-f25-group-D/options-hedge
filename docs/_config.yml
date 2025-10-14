@@ -1,27 +1,93 @@
 # Book settings
-title: Options Hedge Documentation
-author: Your Name
+title: Options Hedge
+author: Akhil Karra
 copyright: "2025"
 logo: ""
+description: "Documentation for the options-hedge package"
 
-# Force re-execution of notebooks on each build.
-# See https://jupyterbook.org/content/execute.html
+# Only build files specified in table of contents
+only_build_toc_files: true
+
+# Force re-execution of notebooks on each build
 execute:
   execute_notebooks: auto
+  timeout: 60
+  run_in_temp: true
 
-# Define the name of the latex output file for PDF builds
+# LaTeX settings
 latex:
+  latex_engine: xelatex
   latex_documents:
     targetname: options-hedge.tex
 
-# Information about where the book exists on the web
+# Bibliography settings
+bibtex_bibfiles:
+  - references.bib
+
+# Add GitHub buttons
 repository:
   url: https://github.com/akhilkarra/options-hedge
   path_to_book: docs
   branch: main
 
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+# HTML settings
 html:
   use_issues_button: true
   use_repository_button: true
+  use_edit_page_button: true
+  home_page_in_navbar: true
+  baseurl: https://akhilkarra.github.io/options-hedge
+  favicon: ""
+  use_fullscreen_button: true
+  extra_navbar: ""
+  extra_footer: ""
+  google_analytics_id: ""
+  comments:
+    hypothesis: false
+    utterances: false
+
+# Sphinx settings
+sphinx:
+  extra_extensions:
+    - sphinx.ext.autodoc
+    - sphinx.ext.viewcode
+    - sphinx.ext.napoleon
+    - sphinx.ext.autosummary
+    - sphinx.ext.intersphinx
+    - sphinxcontrib.bibtex
+    - sphinx_proof
+    - sphinx_togglebutton
+    - sphinx.ext.mathjax
+  config:
+    html_theme: quantecon_book_theme
+    html_theme_options:
+      header_organisation: "Options Hedge"
+      header_organisation_url: https://akhilkarra.github.io/options-hedge
+      repository_url: https://github.com/akhilkarra/options-hedge
+      nb_repository_url: https://github.com/akhilkarra/options-hedge
+      twitter: akhilkarra
+      twitter_url: https://twitter.com/akhilkarra
+      author: Akhil Karra
+      github_url: https://github.com/akhilkarra
+      description: Documentation for the options-hedge package
+      keywords: Python, Finance, Options, Hedging
+      analytics:
+        google_analytics: false
+      launch_buttons:
+        notebook_interface: "classic"
+        binderhub_url: ""
+        jupyterhub_url: ""
+        colab_url: ""
+    mathjax3_config:
+      tex:
+        macros:
+          "N": "\\mathbb{N}"
+          "floor": ["\\lfloor#1\\rfloor", 1]
+          "bmat": ["\\left[\\begin{array}"]
+          "emat": ["\\end{array}\\right]"]
+    latex_elements:
+        preamble: |
+          \\usepackage{amsmath,amsfonts,amssymb}
+          \\usepackage{mathrsfs}
+          \\usepackage{physics}
+          \\usepackage{cancel}

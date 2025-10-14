@@ -111,7 +111,7 @@ See the `examples/` directory for usage examples and the `notebooks/` directory 
 
 ## Documentation
 
-The documentation is built using Jupyter Book and hosted on GitHub Pages at [https://akhilkarra.github.io/options-hedge](https://akhilkarra.github.io/options-hedge).
+The documentation is built using Jupyter Book and hosted on GitHub Pages at [https://cmu-21393-f25-group-D.github.io/options-hedge](https://cmu-21393-f25-group-D.github.io/options-hedge).
 
 To build locally:
 

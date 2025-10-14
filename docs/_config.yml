@@ -36,7 +36,7 @@ html:
   use_repository_button: true
   use_edit_page_button: true
   home_page_in_navbar: true
-  baseurl: https://akhilkarra.github.io/options-hedge
+  baseurl: https://cmu-21393-f25-group-D.github.io/options-hedge
   favicon: ""
   use_fullscreen_button: true
   extra_navbar: ""
@@ -63,7 +63,7 @@ sphinx:
     html_theme: quantecon_book_theme
     html_theme_options:
       header_organisation: "Options Hedge"
-      header_organisation_url: https://akhilkarra.github.io/options-hedge
+      header_organisation_url: https://cmu-21393-f25-group-D.github.io/options-hedge
       repository_url: https://github.com/cmu-21393-f25-group-D/options-hedge
       nb_repository_url: ""
       twitter: akhilkarra

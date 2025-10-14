@@ -19,11 +19,28 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Jupyter Notebook
+# Python Testing and Quality Tools
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+htmlcov/
+.hypothesis/
+.benchmarks/
+
+# Jupyter
 .ipynb_checkpoints
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
 
-# Environment
+# Environment and Package Management
 .env
 .venv
 env/
@@ -31,16 +48,63 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Documentation
+docs/_build/
+docs/api/
+_build/
+site/
+.jekyll-cache/
+*.mo
+*.pot
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
+*~
+.vs/
+.settings/
+.project
+.classpath
+*.sublime-workspace
+*.sublime-project
 
 # macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
 # Distribution / packaging
 *.tar.gz
 *.tgz
+*.zip
+*.rar
+dist/
+downloads/
+
+# Lock files and logs
+*.lock
+!uv.lock
+*.log
+logs/
+pip-log.txt
+
+# Temporary and cache files
+*.tmp
+*.temp
+*.bak
+*~.nib
+*.swp
+*.cache

@@ -23,13 +23,17 @@ With Baby Boomers entering retirement en masse, trillions of dollars are at risk
 
 ## Our Approach
 
-We use operations research and optimization to answer: **"What is the cheapest combination of put options needed to guarantee a portfolio won't lose more than X% over a given period?"**
+We use operations research and optimization to address two key questions:
+
+1. **"What is the optimal protection level?"** - Determining the right balance between downside protection and cost (i.e., what maximum loss percentage makes sense for retirees)
+2. **"What is the cheapest way to achieve that protection?"** - Finding the most cost-effective combination of put options to guarantee a portfolio won't lose more than a specified percentage over a given period
 
 The optimization model:
 
 - **Minimizes**: Total cost of purchasing options
 - **While ensuring**: Portfolio is protected against a range of potential market scenarios
 - **Allows**: Full participation in market upside
+- **Determines**: The optimal protection level that balances safety and affordability
 
 ## Project Team
 

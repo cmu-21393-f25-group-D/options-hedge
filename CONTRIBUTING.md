@@ -18,14 +18,14 @@ We're using a branch-based workflow with pull requests. This is the same process
 1. Clone the repository directly (you're a collaborator, no fork needed!):
 
    ```bash
-   git clone https://github.com/options-hedge-cmu-21393/options-hedge.git
+   git clone https://github.com/cmu-21393-f25-group-D/options-hedge.git
    cd options-hedge
 
    # Verify the clone worked
    git remote -v
    # You should see:
-   # origin  https://github.com/options-hedge-cmu-21393/options-hedge.git (fetch)
-   # origin  https://github.com/options-hedge-cmu-21393/options-hedge.git (push)
+   # origin  https://github.com/cmu-21393-f25-group-D/options-hedge.git (fetch)
+   # origin  https://github.com/cmu-21393-f25-group-D/options-hedge.git (push)
    ```
 
 2. Set up your coding environment (we use Python's virtual environments to keep things clean):

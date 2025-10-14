@@ -26,7 +26,7 @@ bibtex_bibfiles:
 
 # Add GitHub buttons
 repository:
-  url: https://github.com/options-hedge-cmu-21393/options-hedge
+  url: https://github.com/cmu-21393-f25-group-D/options-hedge
   path_to_book: docs
   branch: main
 
@@ -64,7 +64,7 @@ sphinx:
     html_theme_options:
       header_organisation: "Options Hedge"
       header_organisation_url: https://akhilkarra.github.io/options-hedge
-      repository_url: https://github.com/options-hedge-cmu-21393/options-hedge
+      repository_url: https://github.com/cmu-21393-f25-group-D/options-hedge
       nb_repository_url: ""
       twitter: akhilkarra
       twitter_url: https://twitter.com/akhilkarra

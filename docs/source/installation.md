@@ -22,7 +22,7 @@ pip install uv
 ### 2. Clone the Repository
 
 ```bash
-git clone https://github.com/options-hedge-cmu-21393/options-hedge.git
+git clone https://github.com/cmu-21393-f25-group-D/options-hedge.git
 cd options-hedge
 ```
 

@@ -1,39 +1,42 @@
-# Portfolio Insurance Project
+# Portfolio Insurance Optimization
 
-Welcome to our Operations Research class project! This repository contains the starting point for implementing a portfolio insurance strategy using options on the S&P 500 index.
+Welcome to our portfolio insurance project! We're building a modern solution to help retirees protect their portfolios from market crashes while maintaining growth potential.
 
-## Project Overview
+## What is Portfolio Insurance?
 
-We're building a solution for retirees who want to:
-1. Keep their money in stocks for growth potential
-2. Protect against major market crashes using options
-3. Minimize the cost of this protection
+**Portfolio insurance** is a risk management strategy that uses financial derivatives (in our case, put options) to limit losses from declining asset prices. Think of it like home insurance for your investment portfolio:
 
-## Current Status
+- You pay a premium (the cost of the options)
+- If nothing bad happens (market goes up), you lose the premium but your portfolio gains value
+- If disaster strikes (market crashes), the insurance pays out to cover your losses
 
-This is currently a starter template with:
-1. Basic project structure
-2. Development environment setup
-3. CI/CD pipeline configuration
-4. Simple Gurobi example to verify setup
+By strategically purchasing put options on the S&P 500 index, we can create a "floor" that limits maximum portfolio losses while allowing participation in market gains.
 
-See the [Hello World Example](hello_world.md) to verify your setup is working correctly.
+## The Challenge
 
-## Getting Started
+Upcoming retirees face a critical trade-off:
 
-1. Clone the repository
-2. Follow the [Installation](installation.md) guide
-3. Run the hello world example
-4. Check that tests pass
+1. **Stay in stocks**: Maintain growth potential and inflation protection, but risk catastrophic losses right when income stops
+2. **Move to bonds**: Preserve capital but earn minimal returns in today's low interest-rate environment
 
-## Next Steps
+With Baby Boomers entering retirement en masse, trillions of dollars are at risk. Traditional asset allocation strategies may no longer provide adequate protection.
 
-As a team, we'll need to:
-1. Design the mathematical model
-2. Implement option pricing
-3. Create the optimization model
-4. Add analysis tools
-5. Write documentation
+## Our Approach
+
+We use operations research and optimization to answer: **"What is the cheapest combination of put options needed to guarantee a portfolio won't lose more than X% over a given period?"**
+
+The optimization model:
+
+- **Minimizes**: Total cost of purchasing options
+- **While ensuring**: Portfolio is protected against a range of potential market scenarios
+- **Allows**: Full participation in market upside
+
+## Project Team
+
+- Akhil Karra
+- Zoe Xu
+- Vivaan Shroff
+- Wendy Wang
 
 ## Documentation Contents
 

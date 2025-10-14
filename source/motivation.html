@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Portfolio Insurance Optimization &#8212; Options Hedge</title>
+    <title>Project Motivation &#8212; Options Hedge</title>
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -103,11 +103,12 @@
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'source/index';</script>
-    <link rel="canonical" href="https://akhilkarra.github.io/options-hedge/source/index.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/motivation';</script>
+    <link rel="canonical" href="https://akhilkarra.github.io/options-hedge/source/motivation.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Project Motivation" href="motivation.html" />
+    <link rel="next" title="Installation Guide" href="installation.html" />
+    <link rel="prev" title="Portfolio Insurance Optimization" href="index.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="Akhil Karra" />
@@ -117,22 +118,22 @@
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@akhilkarra" />
-<meta name="twitter:title" content="Portfolio Insurance Optimization"/>
+<meta name="twitter:title" content="Project Motivation"/>
 <meta name="twitter:description" content="Documentation for the options-hedge package">
 <meta name="twitter:creator" content="@akhilkarra">
 <meta name="twitter:image" content="">
 
 <!-- Opengraph tags -->
-<meta property="og:title" content="Portfolio Insurance Optimization" />
+<meta property="og:title" content="Project Motivation" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://akhilkarra.github.io/options-hedge/source/index.html" />
+<meta property="og:url" content="https://akhilkarra.github.io/options-hedge/source/motivation.html" />
 <meta property="og:image" content="" />
 <meta property="og:description" content="Documentation for the options-hedge package" />
 <meta property="og:site_name" content="Options Hedge" />
 <meta name="theme-color" content="#ffffff" />
 
   </head>
-<body class="main-index">
+<body>
 
 <!-- Override QuantEcon theme colors -->
 
@@ -142,7 +143,7 @@
 
         <div class="qe-main">
 
-            <div class="qe-page" id=source/index>
+            <div class="qe-page" id=source/motivation>
 
                 <div class="qe-page__toc">
 
@@ -156,11 +157,33 @@
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-portfolio-insurance">What is Portfolio Insurance?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach">Our Approach</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-team">Project Team</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-contents">Documentation Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-retirement-crisis">The Retirement Crisis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-growing-challenge">A Growing Challenge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-traditional-dilemma">The Traditional Dilemma</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-stay-in-stocks">Option 1: Stay in Stocks</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-move-to-bonds">Option 2: Move to Bonds</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sequence-of-returns-problem">The Sequence-of-Returns Problem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-traditional-solutions-fall-short">Why Traditional Solutions Fall Short</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-60-40-portfolio">The 60/40 Portfolio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#target-date-funds">Target-Date Funds</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annuities">Annuities</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#portfolio-insurance-a-better-approach">Portfolio Insurance: A Better Approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">The Core Idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-optimization-matters">Why Optimization Matters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-impact">Real-World Impact</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-scale-of-the-problem">The Scale of the Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#who-benefits">Who Benefits?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-goals">Project Goals</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -184,9 +207,9 @@
 
                     <div class="qe-page__header-copy">
 
-                        <p class="qe-page__header-heading"><a href="#">Options Hedge</a></p>
+                        <p class="qe-page__header-heading"><a href="index.html">Options Hedge</a></p>
 
-                        <p class="qe-page__header-subheading">Portfolio Insurance Optimization</p>
+                        <p class="qe-page__header-subheading">Project Motivation</p>
 
                     </div>
                     <!-- length 2, since its a string and empty dict has length 2 - {} -->
@@ -202,57 +225,145 @@
                     
                     <div>
                         
-  <section class="tex2jax_ignore mathjax_ignore" id="portfolio-insurance-optimization">
-<h1>Portfolio Insurance Optimization<a class="headerlink" href="#portfolio-insurance-optimization" title="Permalink to this heading">#</a></h1>
-<p>Welcome to our portfolio insurance project! We’re building a modern solution to help retirees protect their portfolios from market crashes while maintaining growth potential.</p>
-<section id="what-is-portfolio-insurance">
-<h2>What is Portfolio Insurance?<a class="headerlink" href="#what-is-portfolio-insurance" title="Permalink to this heading">#</a></h2>
-<p><strong>Portfolio insurance</strong> is a risk management strategy that uses financial derivatives (in our case, put options) to limit losses from declining asset prices. Think of it like home insurance for your investment portfolio:</p>
-<ul class="simple">
-<li><p>You pay a premium (the cost of the options)</p></li>
-<li><p>If nothing bad happens (market goes up), you lose the premium but your portfolio gains value</p></li>
-<li><p>If disaster strikes (market crashes), the insurance pays out to cover your losses</p></li>
-</ul>
-<p>By strategically purchasing put options on the S&amp;P 500 index, we can create a “floor” that limits maximum portfolio losses while allowing participation in market gains.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="project-motivation">
+<h1>Project Motivation<a class="headerlink" href="#project-motivation" title="Permalink to this heading">#</a></h1>
+<section id="the-retirement-crisis">
+<h2>The Retirement Crisis<a class="headerlink" href="#the-retirement-crisis" title="Permalink to this heading">#</a></h2>
+<section id="a-growing-challenge">
+<h3>A Growing Challenge<a class="headerlink" href="#a-growing-challenge" title="Permalink to this heading">#</a></h3>
+<p>The United States is experiencing a demographic shift as Baby Boomers enter retirement en masse. This generation controls trillions of dollars in retirement savings, and they face a critical challenge: how to preserve wealth while maintaining purchasing power in retirement.</p>
 </section>
-<section id="the-challenge">
-<h2>The Challenge<a class="headerlink" href="#the-challenge" title="Permalink to this heading">#</a></h2>
-<p>Upcoming retirees face a critical trade-off:</p>
+<section id="the-traditional-dilemma">
+<h3>The Traditional Dilemma<a class="headerlink" href="#the-traditional-dilemma" title="Permalink to this heading">#</a></h3>
+<p>Retirees traditionally face a difficult trade-off when managing their portfolios:</p>
+<section id="option-1-stay-in-stocks">
+<h4>Option 1: Stay in Stocks<a class="headerlink" href="#option-1-stay-in-stocks" title="Permalink to this heading">#</a></h4>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>Growth potential to keep pace with inflation</p></li>
+<li><p>Historical long-term returns of ~10% annually</p></li>
+<li><p>Participation in economic growth</p></li>
+</ul>
+<p><strong>Risks:</strong></p>
+<ul class="simple">
+<li><p>Catastrophic losses right when income stops</p></li>
+<li><p>Sequence-of-returns risk: a market crash early in retirement can permanently impair financial security</p></li>
+<li><p>Volatility that’s psychologically difficult to endure on a fixed income</p></li>
+</ul>
+</section>
+<section id="option-2-move-to-bonds">
+<h4>Option 2: Move to Bonds<a class="headerlink" href="#option-2-move-to-bonds" title="Permalink to this heading">#</a></h4>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>Capital preservation</p></li>
+<li><p>Predictable income streams</p></li>
+<li><p>Lower volatility</p></li>
+</ul>
+<p><strong>Risks:</strong></p>
+<ul class="simple">
+<li><p>Minimal returns in today’s low interest-rate environment</p></li>
+<li><p>Inflation risk: purchasing power erosion over 20-30 year retirement</p></li>
+<li><p>Opportunity cost of missing stock market gains</p></li>
+</ul>
+</section>
+</section>
+<section id="the-sequence-of-returns-problem">
+<h3>The Sequence-of-Returns Problem<a class="headerlink" href="#the-sequence-of-returns-problem" title="Permalink to this heading">#</a></h3>
+<p>Perhaps the most significant risk facing retirees is the <strong>sequence-of-returns risk</strong>. Consider two retirees with identical portfolios:</p>
+<ul class="simple">
+<li><p><strong>Retiree A</strong> experiences a 40% market crash in year 1 of retirement</p></li>
+<li><p><strong>Retiree B</strong> experiences the same crash 10 years into retirement</p></li>
+</ul>
+<p>Even if both experience identical average returns over their retirement, Retiree A will likely run out of money first. Why? Because they’re forced to sell stocks at depressed prices to fund living expenses, locking in losses and reducing the capital base for future growth.</p>
+<p>This is the retirement nightmare: working your entire life to build a nest egg, only to see it decimated right when you need it most.</p>
+</section>
+</section>
+<section id="why-traditional-solutions-fall-short">
+<h2>Why Traditional Solutions Fall Short<a class="headerlink" href="#why-traditional-solutions-fall-short" title="Permalink to this heading">#</a></h2>
+<section id="the-60-40-portfolio">
+<h3>The 60/40 Portfolio<a class="headerlink" href="#the-60-40-portfolio" title="Permalink to this heading">#</a></h3>
+<p>The classic “60% stocks, 40% bonds” allocation is designed to balance growth and stability. However:</p>
+<ul class="simple">
+<li><p>In today’s low interest-rate environment, the 40% bond allocation provides minimal returns</p></li>
+<li><p>The 60% stock allocation still exposes retirees to significant downside risk</p></li>
+<li><p>This static allocation doesn’t adapt to changing market conditions</p></li>
+</ul>
+</section>
+<section id="target-date-funds">
+<h3>Target-Date Funds<a class="headerlink" href="#target-date-funds" title="Permalink to this heading">#</a></h3>
+<p>These funds automatically shift to more conservative allocations as retirement approaches. But:</p>
+<ul class="simple">
+<li><p>The shift to bonds means missing out on potential stock gains</p></li>
+<li><p>They don’t provide explicit downside protection</p></li>
+<li><p>The one-size-fits-all approach may not match individual risk tolerance</p></li>
+</ul>
+</section>
+<section id="annuities">
+<h3>Annuities<a class="headerlink" href="#annuities" title="Permalink to this heading">#</a></h3>
+<p>Annuities provide guaranteed income but:</p>
+<ul class="simple">
+<li><p>High fees significantly reduce returns</p></li>
+<li><p>Lock up capital with limited liquidity</p></li>
+<li><p>Don’t provide inflation protection in many cases</p></li>
+<li><p>Expose retirees to counterparty risk</p></li>
+</ul>
+</section>
+</section>
+<section id="portfolio-insurance-a-better-approach">
+<h2>Portfolio Insurance: A Better Approach<a class="headerlink" href="#portfolio-insurance-a-better-approach" title="Permalink to this heading">#</a></h2>
+<section id="the-core-idea">
+<h3>The Core Idea<a class="headerlink" href="#the-core-idea" title="Permalink to this heading">#</a></h3>
+<p>What if we could create a “floor” for portfolio losses while maintaining full participation in upside gains? This is the promise of portfolio insurance using put options.</p>
+<p><strong>Put options</strong> give the holder the right (but not the obligation) to sell an asset at a predetermined price. For a portfolio invested in S&amp;P 500 index funds, we can purchase put options that:</p>
 <ol class="arabic simple">
-<li><p><strong>Stay in stocks</strong>: Maintain growth potential and inflation protection, but risk catastrophic losses right when income stops</p></li>
-<li><p><strong>Move to bonds</strong>: Preserve capital but earn minimal returns in today’s low interest-rate environment</p></li>
+<li><p><strong>Set a floor</strong>: Guarantee the portfolio won’t fall below a certain value</p></li>
+<li><p><strong>Preserve upside</strong>: Allow full participation if markets rise</p></li>
+<li><p><strong>Provide flexibility</strong>: Can be customized to different protection levels and time horizons</p></li>
 </ol>
-<p>With Baby Boomers entering retirement en masse, trillions of dollars are at risk. Traditional asset allocation strategies may no longer provide adequate protection.</p>
 </section>
-<section id="our-approach">
-<h2>Our Approach<a class="headerlink" href="#our-approach" title="Permalink to this heading">#</a></h2>
-<p>We use operations research and optimization to answer: <strong>“What is the cheapest combination of put options needed to guarantee a portfolio won’t lose more than X% over a given period?”</strong></p>
-<p>The optimization model:</p>
+<section id="why-optimization-matters">
+<h3>Why Optimization Matters<a class="headerlink" href="#why-optimization-matters" title="Permalink to this heading">#</a></h3>
+<p>The challenge: <strong>put options cost money</strong>. The premium paid for options reduces portfolio returns.</p>
+<p>This is where optimization comes in. Instead of buying expensive at-the-money puts, we can:</p>
 <ul class="simple">
-<li><p><strong>Minimizes</strong>: Total cost of purchasing options</p></li>
-<li><p><strong>While ensuring</strong>: Portfolio is protected against a range of potential market scenarios</p></li>
-<li><p><strong>Allows</strong>: Full participation in market upside</p></li>
+<li><p>Identify the most cost-effective combination of puts at different strike prices</p></li>
+<li><p>Balance protection across multiple time horizons</p></li>
+<li><p>Minimize total cost while ensuring adequate protection</p></li>
 </ul>
+<p>Our optimization model finds the <strong>cheapest</strong> combination of put options that guarantees protection against a specified range of market scenarios.</p>
 </section>
-<section id="project-team">
-<h2>Project Team<a class="headerlink" href="#project-team" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="real-world-impact">
+<h2>Real-World Impact<a class="headerlink" href="#real-world-impact" title="Permalink to this heading">#</a></h2>
+<section id="the-scale-of-the-problem">
+<h3>The Scale of the Problem<a class="headerlink" href="#the-scale-of-the-problem" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Akhil Karra</p></li>
-<li><p>Zoe Xu</p></li>
-<li><p>Vivaan Shroff</p></li>
-<li><p>Wendy Wang</p></li>
+<li><p>Over 10,000 Baby Boomers retire every day in the United States</p></li>
+<li><p>Total U.S. retirement assets exceed $35 trillion</p></li>
+<li><p>Even small improvements in portfolio efficiency can have enormous impact</p></li>
 </ul>
 </section>
-<section id="documentation-contents">
-<h2>Documentation Contents<a class="headerlink" href="#documentation-contents" title="Permalink to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html">Project Motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hello_world.html">Hello World Example</a></li>
-</ul>
-</div>
+<section id="who-benefits">
+<h3>Who Benefits?<a class="headerlink" href="#who-benefits" title="Permalink to this heading">#</a></h3>
+<p>This project has applications for:</p>
+<ol class="arabic simple">
+<li><p><strong>Individual retirees</strong> seeking cost-effective downside protection</p></li>
+<li><p><strong>Financial advisors</strong> looking to optimize client portfolios</p></li>
+<li><p><strong>Institutional investors</strong> managing pension funds and endowments</p></li>
+<li><p><strong>Researchers</strong> studying risk management and portfolio optimization</p></li>
+</ol>
+</section>
+</section>
+<section id="project-goals">
+<h2>Project Goals<a class="headerlink" href="#project-goals" title="Permalink to this heading">#</a></h2>
+<p>Through this project, we aim to:</p>
+<ol class="arabic simple">
+<li><p><strong>Develop a mathematical optimization model</strong> for cost-effective portfolio insurance</p></li>
+<li><p><strong>Integrate real market data</strong> from financial data providers</p></li>
+<li><p><strong>Create practical tools</strong> that can be used by retirees and financial professionals</p></li>
+<li><p><strong>Contribute to the field</strong> of financial optimization and risk management</p></li>
+</ol>
+<p>By combining operations research techniques with modern financial engineering, we can help address one of the most pressing challenges facing millions of Americans entering retirement.</p>
 </section>
 </section>
 
@@ -307,9 +418,9 @@
                 </div>
 
                 <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
-                    <ul class="nav bd-sidenav nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="motivation.html">
+                    <ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
    Project Motivation
   </a>
  </li>
@@ -346,7 +457,7 @@
 
                 <ul class="qe-toolbar__main">
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
-                    <li data-tippy-content="Home"><a href="#"><i data-feather="home"></i></a></li>
+                    <li data-tippy-content="Home"><a href="index.html"><i data-feather="home"></i></a></li>
                     <li class="btn__qelogo"><a href="https://akhilkarra.github.io/options-hedge" title=""><span class="show-for-sr">Options Hedge</span></a></li>
                 </ul>
 
@@ -364,7 +475,7 @@
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
                     <!--
                     # Enable if looking for link to specific document hosted on GitHub
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/akhilkarra/options-hedge/blob/main/docs/source/index.md" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/akhilkarra/options-hedge/blob/main/docs/source/motivation.md" download><i data-feather="github"></i></a></li>
                     -->
                     <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/akhilkarra/options-hedge" download><i data-feather="github"></i></a></li>
                 </ul>
@@ -434,7 +545,7 @@
                 }
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
-                const pageName = "source/index";
+                const pageName = "source/motivation";
                 const repoURL = "";
                 const urlPath = "";
                 const branch = ""

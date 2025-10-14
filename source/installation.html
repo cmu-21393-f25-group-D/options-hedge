@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Portfolio Insurance Optimization &#8212; Options Hedge</title>
+    <title>Installation Guide &#8212; Options Hedge</title>
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -103,11 +103,12 @@
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'source/index';</script>
-    <link rel="canonical" href="https://akhilkarra.github.io/options-hedge/source/index.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/installation';</script>
+    <link rel="canonical" href="https://akhilkarra.github.io/options-hedge/source/installation.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Project Motivation" href="motivation.html" />
+    <link rel="next" title="Contributing Guide" href="contributing.html" />
+    <link rel="prev" title="Project Motivation" href="motivation.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="Akhil Karra" />
@@ -117,22 +118,22 @@
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@akhilkarra" />
-<meta name="twitter:title" content="Portfolio Insurance Optimization"/>
+<meta name="twitter:title" content="Installation Guide"/>
 <meta name="twitter:description" content="Documentation for the options-hedge package">
 <meta name="twitter:creator" content="@akhilkarra">
 <meta name="twitter:image" content="">
 
 <!-- Opengraph tags -->
-<meta property="og:title" content="Portfolio Insurance Optimization" />
+<meta property="og:title" content="Installation Guide" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://akhilkarra.github.io/options-hedge/source/index.html" />
+<meta property="og:url" content="https://akhilkarra.github.io/options-hedge/source/installation.html" />
 <meta property="og:image" content="" />
 <meta property="og:description" content="Documentation for the options-hedge package" />
 <meta property="og:site_name" content="Options Hedge" />
 <meta name="theme-color" content="#ffffff" />
 
   </head>
-<body class="main-index">
+<body>
 
 <!-- Override QuantEcon theme colors -->
 
@@ -142,7 +143,7 @@
 
         <div class="qe-main">
 
-            <div class="qe-page" id=source/index>
+            <div class="qe-page" id=source/installation>
 
                 <div class="qe-page__toc">
 
@@ -156,11 +157,24 @@
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-portfolio-insurance">What is Portfolio Insurance?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach">Our Approach</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-team">Project Team</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-contents">Documentation Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-installation">Step-by-Step Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-uv-package-manager">1. Install uv Package Manager</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clone-the-repository">2. Clone the Repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-virtual-environment">3. Create a Virtual Environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-the-package">4. Install the Package</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-gurobi">5. Install Gurobi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-pre-commit-hooks-for-contributors">6. Install Pre-commit Hooks (For Contributors)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verify-installation">7. Verify Installation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">Troubleshooting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#virtual-environment-issues">Virtual Environment Issues</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gurobi-license-issues">Gurobi License Issues</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#package-installation-errors">Package Installation Errors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
 </ul>
                             <p class="logo">
                                 
@@ -184,9 +198,9 @@
 
                     <div class="qe-page__header-copy">
 
-                        <p class="qe-page__header-heading"><a href="#">Options Hedge</a></p>
+                        <p class="qe-page__header-heading"><a href="index.html">Options Hedge</a></p>
 
-                        <p class="qe-page__header-subheading">Portfolio Insurance Optimization</p>
+                        <p class="qe-page__header-subheading">Installation Guide</p>
 
                     </div>
                     <!-- length 2, since its a string and empty dict has length 2 - {} -->
@@ -202,57 +216,138 @@
                     
                     <div>
                         
-  <section class="tex2jax_ignore mathjax_ignore" id="portfolio-insurance-optimization">
-<h1>Portfolio Insurance Optimization<a class="headerlink" href="#portfolio-insurance-optimization" title="Permalink to this heading">#</a></h1>
-<p>Welcome to our portfolio insurance project! We’re building a modern solution to help retirees protect their portfolios from market crashes while maintaining growth potential.</p>
-<section id="what-is-portfolio-insurance">
-<h2>What is Portfolio Insurance?<a class="headerlink" href="#what-is-portfolio-insurance" title="Permalink to this heading">#</a></h2>
-<p><strong>Portfolio insurance</strong> is a risk management strategy that uses financial derivatives (in our case, put options) to limit losses from declining asset prices. Think of it like home insurance for your investment portfolio:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="installation-guide">
+<h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this heading">#</a></h1>
+<p>This guide will walk you through setting up the portfolio insurance optimization project on your local machine.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p>You pay a premium (the cost of the options)</p></li>
-<li><p>If nothing bad happens (market goes up), you lose the premium but your portfolio gains value</p></li>
-<li><p>If disaster strikes (market crashes), the insurance pays out to cover your losses</p></li>
-</ul>
-<p>By strategically purchasing put options on the S&amp;P 500 index, we can create a “floor” that limits maximum portfolio losses while allowing participation in market gains.</p>
-</section>
-<section id="the-challenge">
-<h2>The Challenge<a class="headerlink" href="#the-challenge" title="Permalink to this heading">#</a></h2>
-<p>Upcoming retirees face a critical trade-off:</p>
-<ol class="arabic simple">
-<li><p><strong>Stay in stocks</strong>: Maintain growth potential and inflation protection, but risk catastrophic losses right when income stops</p></li>
-<li><p><strong>Move to bonds</strong>: Preserve capital but earn minimal returns in today’s low interest-rate environment</p></li>
-</ol>
-<p>With Baby Boomers entering retirement en masse, trillions of dollars are at risk. Traditional asset allocation strategies may no longer provide adequate protection.</p>
-</section>
-<section id="our-approach">
-<h2>Our Approach<a class="headerlink" href="#our-approach" title="Permalink to this heading">#</a></h2>
-<p>We use operations research and optimization to answer: <strong>“What is the cheapest combination of put options needed to guarantee a portfolio won’t lose more than X% over a given period?”</strong></p>
-<p>The optimization model:</p>
-<ul class="simple">
-<li><p><strong>Minimizes</strong>: Total cost of purchasing options</p></li>
-<li><p><strong>While ensuring</strong>: Portfolio is protected against a range of potential market scenarios</p></li>
-<li><p><strong>Allows</strong>: Full participation in market upside</p></li>
+<li><p>Python 3.10 or higher</p></li>
+<li><p>Git</p></li>
+<li><p>A Gurobi license (free academic licenses available)</p></li>
 </ul>
 </section>
-<section id="project-team">
-<h2>Project Team<a class="headerlink" href="#project-team" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Akhil Karra</p></li>
-<li><p>Zoe Xu</p></li>
-<li><p>Vivaan Shroff</p></li>
-<li><p>Wendy Wang</p></li>
-</ul>
-</section>
-<section id="documentation-contents">
-<h2>Documentation Contents<a class="headerlink" href="#documentation-contents" title="Permalink to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html">Project Motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hello_world.html">Hello World Example</a></li>
-</ul>
+<section id="step-by-step-installation">
+<h2>Step-by-Step Installation<a class="headerlink" href="#step-by-step-installation" title="Permalink to this heading">#</a></h2>
+<section id="install-uv-package-manager">
+<h3>1. Install uv Package Manager<a class="headerlink" href="#install-uv-package-manager" title="Permalink to this heading">#</a></h3>
+<p>We use <code class="docutils literal notranslate"><span class="pre">uv</span></code> as our Python package manager because it ensures consistent package versions across all team members, preventing “it works on my machine” issues.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>uv
+</pre></div>
 </div>
+</section>
+<section id="clone-the-repository">
+<h3>2. Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Permalink to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/akhilkarra/options-hedge.git
+<span class="nb">cd</span><span class="w"> </span>options-hedge
+</pre></div>
+</div>
+</section>
+<section id="create-a-virtual-environment">
+<h3>3. Create a Virtual Environment<a class="headerlink" href="#create-a-virtual-environment" title="Permalink to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># On Unix/macOS</span>
+.venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate<span class="w">     </span><span class="c1"># On Windows</span>
+</pre></div>
+</div>
+</section>
+<section id="install-the-package">
+<h3>4. Install the Package<a class="headerlink" href="#install-the-package" title="Permalink to this heading">#</a></h3>
+<p>For basic usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<p>For development (includes testing, formatting, and linting tools):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+</pre></div>
+</div>
+<p>For Jupyter notebook support:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[jupyter]&quot;</span>
+</pre></div>
+</div>
+<p>For documentation building:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[docs]&quot;</span>
+</pre></div>
+</div>
+<p>For everything:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[all]&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="install-gurobi">
+<h3>5. Install Gurobi<a class="headerlink" href="#install-gurobi" title="Permalink to this heading">#</a></h3>
+<p>Gurobi is a commercial optimization solver that offers free academic licenses.</p>
+<ol class="arabic simple">
+<li><p>Visit the <a class="reference external" href="https://www.gurobi.com/documentation/quickstart.html">Gurobi Installation Guide</a></p></li>
+<li><p>Download and install Gurobi for your operating system</p></li>
+<li><p>Obtain an academic license from <a class="reference external" href="https://www.gurobi.com/academia/academic-program-and-licenses/">Gurobi Academic Licensing</a></p></li>
+<li><p>Activate your license following the instructions</p></li>
+</ol>
+</section>
+<section id="install-pre-commit-hooks-for-contributors">
+<h3>6. Install Pre-commit Hooks (For Contributors)<a class="headerlink" href="#install-pre-commit-hooks-for-contributors" title="Permalink to this heading">#</a></h3>
+<p>If you plan to contribute code, install pre-commit hooks to ensure code quality:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>install
+</pre></div>
+</div>
+<p>These hooks will automatically:</p>
+<ul class="simple">
+<li><p>Format your code with Ruff</p></li>
+<li><p>Check for style issues</p></li>
+<li><p>Run type checking with mypy</p></li>
+<li><p>Verify trailing whitespace and file endings</p></li>
+</ul>
+</section>
+<section id="verify-installation">
+<h3>7. Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this heading">#</a></h3>
+<p>Run the following command to verify everything is set up correctly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import options_hedge; print(&#39;Package successfully installed!&#39;)&quot;</span>
+</pre></div>
+</div>
+<p>You should also verify Gurobi is working:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import gurobipy; print(f&#39;Gurobi version: {gurobipy.gurobi.version()}&#39;)&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading">#</a></h2>
+<section id="virtual-environment-issues">
+<h3>Virtual Environment Issues<a class="headerlink" href="#virtual-environment-issues" title="Permalink to this heading">#</a></h3>
+<p>If you have trouble activating the virtual environment:</p>
+<ul class="simple">
+<li><p><strong>Unix/macOS</strong>: Make sure you’re using <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">.venv/bin/activate</span></code></p></li>
+<li><p><strong>Windows</strong>: Try <code class="docutils literal notranslate"><span class="pre">.venv\Scripts\activate.bat</span></code> if PowerShell doesn’t work</p></li>
+</ul>
+</section>
+<section id="gurobi-license-issues">
+<h3>Gurobi License Issues<a class="headerlink" href="#gurobi-license-issues" title="Permalink to this heading">#</a></h3>
+<p>If Gurobi can’t find your license:</p>
+<ol class="arabic simple">
+<li><p>Make sure you’ve activated the license using <code class="docutils literal notranslate"><span class="pre">grbgetkey</span> <span class="pre">YOUR-LICENSE-KEY</span></code></p></li>
+<li><p>Check that the <code class="docutils literal notranslate"><span class="pre">gurobi.lic</span></code> file exists in your home directory</p></li>
+<li><p>Set the <code class="docutils literal notranslate"><span class="pre">GRB_LICENSE_FILE</span></code> environment variable if needed</p></li>
+</ol>
+</section>
+<section id="package-installation-errors">
+<h3>Package Installation Errors<a class="headerlink" href="#package-installation-errors" title="Permalink to this heading">#</a></h3>
+<p>If you encounter dependency conflicts:</p>
+<ol class="arabic simple">
+<li><p>Delete the virtual environment: <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-rf</span> <span class="pre">.venv</span></code></p></li>
+<li><p>Recreate it: <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">venv</span></code></p></li>
+<li><p>Reinstall with fresh cache: <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--no-cache</span> <span class="pre">-e</span> <span class="pre">&quot;.[dev]&quot;</span></code></p></li>
+</ol>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">#</a></h2>
+<p>Once installation is complete:</p>
+<ol class="arabic simple">
+<li><p>Explore the <code class="docutils literal notranslate"><span class="pre">examples/</span></code> and <code class="docutils literal notranslate"><span class="pre">notebooks/</span></code> directories for usage examples</p></li>
+<li><p>Read the <a class="reference internal" href="contributing.html"><span class="std std-doc">Contributing Guide</span></a> to learn how to contribute</p></li>
+<li><p>Review the <a class="reference internal" href="motivation.html"><span class="std std-doc">Project Motivation</span></a> to understand the problem we’re solving</p></li>
+</ol>
 </section>
 </section>
 
@@ -307,14 +402,14 @@
                 </div>
 
                 <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
-                    <ul class="nav bd-sidenav nav sidenav_l1">
+                    <ul class="current nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="motivation.html">
    Project Motivation
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="installation.html">
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
    Installation Guide
   </a>
  </li>
@@ -346,7 +441,7 @@
 
                 <ul class="qe-toolbar__main">
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
-                    <li data-tippy-content="Home"><a href="#"><i data-feather="home"></i></a></li>
+                    <li data-tippy-content="Home"><a href="index.html"><i data-feather="home"></i></a></li>
                     <li class="btn__qelogo"><a href="https://akhilkarra.github.io/options-hedge" title=""><span class="show-for-sr">Options Hedge</span></a></li>
                 </ul>
 
@@ -364,7 +459,7 @@
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
                     <!--
                     # Enable if looking for link to specific document hosted on GitHub
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/akhilkarra/options-hedge/blob/main/docs/source/index.md" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/akhilkarra/options-hedge/blob/main/docs/source/installation.md" download><i data-feather="github"></i></a></li>
                     -->
                     <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/akhilkarra/options-hedge" download><i data-feather="github"></i></a></li>
                 </ul>
@@ -434,7 +529,7 @@
                 }
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
-                const pageName = "source/index";
+                const pageName = "source/installation";
                 const repoURL = "";
                 const urlPath = "";
                 const branch = ""

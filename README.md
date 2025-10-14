@@ -35,7 +35,7 @@ Follow the instructions at [Gurobi Installation Guide](https://www.gurobi.com/do
 
 5. Verify installation:
 ```bash
-uv run python -c "import options_hedge; print(options_hedge.__version__)"
+uv run python -c "import options_hedge; print('Package successfully installed!')"
 ```
 
 ## Usage

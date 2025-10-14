@@ -10,21 +10,14 @@ Thank you for your interest in contributing to the Portfolio Insurance Optimizat
 
 ## Development Workflow
 
-### 1. Fork and Clone
+### 1. Clone the Repository
 
-1. Fork the repository on GitHub
-2. Clone your fork locally:
+As a team member, you have direct access to the repository:
 
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/options-hedge.git
-   cd options-hedge
-   ```
-
-3. Add the upstream repository:
-
-   ```bash
-   git remote add upstream https://github.com/akhilkarra/options-hedge.git
-   ```
+```bash
+git clone https://github.com/options-hedge-cmu-21393/options-hedge.git
+cd options-hedge
+```
 
 ### 2. Create a Branch
 

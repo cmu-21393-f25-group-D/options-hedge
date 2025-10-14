@@ -1,68 +1,34 @@
 # Contributing
 
-This guide explains how to add your work to this project. In open source projects, the CONTRIBUTING.md file (this file!) is where you'll find step-by-step instructions for how to make changes to the codebase properly.
+This guide explains how to add your work to this project. As a team member and direct collaborator, you have write access to the repository and can push branches directly.
 
-Don't worry if some of these steps feel unfamiliar! We're using a workflow called "fork and pull request" - it's the same process used at companies like Microsoft, Google, and Meta when their engineers collaborate on code. Here's how it works:
+## Why This Workflow?
 
-1. First, you'll create your own copy (called a "fork") of this project on GitHub
-2. Make your changes in your copy
-3. Submit those changes back to the main repository
+We're using a branch-based workflow with pull requests. This is the same process used at companies like Microsoft, Google, and Meta when their engineers collaborate on code. Here's why it works well:
 
-This might seem like extra steps compared to editing files directly, but there's a good reason: When you fork the repository, you get your own copy that's permanently linked to your GitHub profile. This means:
+- **Your contributions are properly credited** - Every commit shows your name and GitHub profile
+- **Safe experimentation** - Work on feature branches without affecting the main codebase
+- **Code review process** - Team members review each other's work before merging
+- **Quality control** - Pre-commit hooks and CI checks ensure code standards
+- **Clear history** - Easy to track what changed, when, and why
+- **Portfolio ready** - Your work on this repo appears on your GitHub profile
 
-- Every contribution you make is properly credited to you
-- Your work appears in your GitHub portfolio (perfect for job or grad school applications!)
-- Future employers/schools can see not just your code, but also how well you:
-  - Collaborate with others through code reviews
-  - Write clear documentation and commit messages
-  - Handle feedback professionally
-  - Maintain high code quality standards
-- You can safely experiment without worrying about breaking anything
-- You can still contribute changes back to the main project seamlessly
+## Getting Started: Setting Up Your Local Copy
 
-It's like having your own personal workspace that's connected to the main project. Many of today's most popular open source projects, like React, TensorFlow, and VS Code, use this exact same workflow - and their hiring managers specifically look for these collaboration skills.
-
-## Getting Started: Setting Up Your Copy
-
-1. First, fork (make your own copy of) this repository:
-   - Go to [https://github.com/akhilkarra/options-hedge](https://github.com/akhilkarra/options-hedge)
-   - Click the "Fork" button in the top-right corner
-   - Wait for GitHub to create your copy
-   - You'll be redirected to your fork (it should show YOUR-USERNAME/options-hedge)
-
-2. Check that the fork worked:
-   - Your GitHub URL should now be `https://github.com/YOUR-USERNAME/options-hedge`
-   - You should see "forked from akhilkarra/options-hedge" under the repository name
-   - The commit history and code should be identical to the original
-
-3. Clone your fork to your computer (replace YOUR-USERNAME with your actual GitHub username):
+1. Clone the repository directly (you're a collaborator, no fork needed!):
 
    ```bash
-   git clone https://github.com/YOUR-USERNAME/options-hedge.git
+   git clone https://github.com/options-hedge-cmu-21393/options-hedge.git
    cd options-hedge
 
-   # Check that the clone worked
+   # Verify the clone worked
    git remote -v
    # You should see:
-   # origin  https://github.com/YOUR-USERNAME/options-hedge.git (fetch)
-   # origin  https://github.com/YOUR-USERNAME/options-hedge.git (push)
+   # origin  https://github.com/options-hedge-cmu-21393/options-hedge.git (fetch)
+   # origin  https://github.com/options-hedge-cmu-21393/options-hedge.git (push)
    ```
 
-4. Set up a connection to the original repository (so you can get updates later):
-
-   ```bash
-   git remote add upstream https://github.com/akhilkarra/options-hedge.git
-
-   # Verify it worked - you should now see both origin and upstream:
-   git remote -v
-   # You should see four lines:
-   # origin    https://github.com/YOUR-USERNAME/options-hedge.git (fetch)
-   # origin    https://github.com/YOUR-USERNAME/options-hedge.git (push)
-   # upstream  https://github.com/akhilkarra/options-hedge.git (fetch)
-   # upstream  https://github.com/akhilkarra/options-hedge.git (push)
-   ```
-
-5. Set up your coding environment (we use Python's virtual environments to keep things clean):
+2. Set up your coding environment (we use Python's virtual environments to keep things clean):
 
    ```bash
    # Install our environment manager
@@ -82,26 +48,20 @@ It's like having your own personal workspace that's connected to the main projec
    pre-commit install
    ```
 
-6. Install Gurobi (we use this for optimization):
+3. Install Gurobi (we use this for optimization):
    - Follow the installation guide at [Gurobi Installation Guide](https://www.gurobi.com/documentation/quickstart.html)
    - Get and set up your Gurobi license (they offer free academic licenses!)
 
 ## Making Changes
 
-1. Get the latest updates from the original repository:
+1. Get the latest updates from the repository:
 
    ```bash
    # Switch to your main branch
    git checkout main
 
-   # Get updates from the original repository (upstream)
-   git fetch upstream
-
-   # Add those updates to your fork's main branch
-   git rebase upstream/main
-
-   # Update your fork on GitHub
-   git push origin main
+   # Get the latest changes
+   git pull origin main
    ```
 
 2. Create a new branch for your changes:

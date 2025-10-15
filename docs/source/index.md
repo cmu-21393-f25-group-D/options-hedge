@@ -12,7 +12,7 @@ Welcome to our portfolio insurance project! We're building a modern solution to 
 
 By strategically purchasing put options on the S&P 500 index, we can create a "floor" that limits maximum portfolio losses while allowing participation in market gains.
 
-## The Challenge
+## Problem Statement
 
 Upcoming retirees face a critical trade-off:
 

@@ -8,54 +8,46 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-A modern solution to the retirement dilemma: How can retirees protect their portfolios from market crashes while maintaining growth potential?
+> **A modern solution to the retirement dilemma**: How can retirees protect their portfolios from market crashes while maintaining growth potential?
 
-This project uses operations research and optimization techniques to find the most cost-effective combination of S&P 500 put options that provide downside protection while preserving upside potential.
+This project uses operations research and optimization to find cost-effective combinations of S&P 500 put options that provide downside protection while preserving upside potential.
 
-## What is Portfolio Insurance?
+📖 **[Read the full documentation](https://cmu-21393-f25-group-D.github.io/options-hedge)**
 
-**Portfolio insurance** is a risk management strategy that uses financial derivatives (in our case, put options) to limit losses from declining asset prices. Think of it like home insurance for your investment portfolio:
+## Quick Start
 
-- You pay a premium (the cost of the options)
-- If nothing bad happens (market goes up), you lose the premium but your portfolio gains value
-- If disaster strikes (market crashes), the insurance pays out to cover your losses
+```bash
+# Install uv package manager
+pip install uv
 
-By strategically purchasing put options on the S&P 500 index, we can create a "floor" that limits maximum portfolio losses while allowing participation in market gains.
+# Clone and setup
+git clone https://github.com/cmu-21393-f25-group-D/options-hedge.git
+cd options-hedge
+uv venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 
-## The Problem We're Solving
+# Install with development tools
+uv pip install -e ".[dev]"
 
-### The Retirement Dilemma
+# Install pre-commit hooks
+pre-commit install
+```
 
-Upcoming retirees face a difficult trade-off:
+📚 **[Full installation guide](https://cmu-21393-f25-group-D.github.io/options-hedge/installation.html)**
 
-1. **Stay in stocks**: Maintain growth potential and inflation protection, but risk catastrophic losses right when income stops
-2. **Move to bonds**: Preserve capital but earn minimal returns in today's low interest-rate environment
+## The Problem
 
-**Why This Problem Matters Now More Than Ever:**
+With the U.S. population aged 65+ projected to nearly double from 52 million (2018) to 95 million (2060), millions of retirees face a critical challenge:
 
-- **Demographic shift**: The Population Reference Bureau projects that "the number of Americans ages 65 and older is projected to nearly double from 52 million in 2018 to 95 million by 2060"[^1]. This wave of retirements represents an unprecedented transfer of assets from accumulation to preservation mode.
+- **Stay in stocks?** Risk catastrophic losses right when income stops
+- **Move to bonds?** Accept minimal returns and lose purchasing power to inflation
 
-- **Longer lifespans**: People are living longer than ever before, meaning retirement portfolios must sustain 20-30+ years of withdrawals. A market crash early in retirement can devastate long-term financial security due to sequence-of-returns risk.
+We use optimization to determine:
 
-- **Persistent inflation risk**: With high inflation cycles expected in the future, retirees can't simply move to cash or bonds without risking their purchasing power over decades of retirement.
+1. What is the optimal protection level for retirement portfolios?
+2. What is the cheapest combination of options to achieve that protection?
 
-Traditional asset allocation strategies (like the "60/40 portfolio" or the "4% rule") were designed for different demographic and economic conditions. With trillions of dollars at stake and millions approaching retirement, we need smarter, more adaptive solutions.
-
-[^1]: Population Reference Bureau. "Fact Sheet: Aging in the United States." PRB, 2019.
-
-### Our Solution
-
-We use optimization to address two key questions:
-
-1. **"What is the optimal protection level?"** - Determining the right balance between downside protection and cost (i.e., what maximum loss percentage X% makes sense for retirees)
-2. **"What is the cheapest way to achieve that protection?"** - Finding the most cost-effective combination of put options to guarantee a portfolio won't lose more than X% over a given period
-
-The optimization model:
-
-- **Minimizes**: Total cost of purchasing options
-- **While ensuring**: Portfolio is protected against a range of potential market scenarios
-- **Allows**: Full participation in market upside
-- **Determines**: The optimal protection level that balances safety and affordability
+🔍 **[Explore the full motivation and problem statement](https://cmu-21393-f25-group-D.github.io/options-hedge/motivation.html)**
 
 ## Project Team
 
@@ -64,115 +56,33 @@ The optimization model:
 - Vivaan Shroff
 - Wendy Wang
 
-## Installation
+## Contributing
 
-1. Install uv (Python package manager that also stores versions of packages; makes sure nothing breaks due to mismatched versions):
+We welcome contributions! Please see our [contributing guide](https://cmu-21393-f25-group-D.github.io/options-hedge/contributing.html) for:
 
-   ```bash
-   python -m pip install --upgrade pip
-   pip install uv
-   ```
+- Development workflow
+- Code style guidelines
+- Testing requirements
+- Pull request process
 
-1. Create and activate a virtual environment:
+## Development Commands
 
-   ```bash
-   uv venv
-   source .venv/bin/activate  # On Unix/macOS
-   .venv\Scripts\activate     # On Windows
-   ```
+```bash
+# Run tests
+uv run pytest
 
-1. Install the package with development dependencies:
+# Code quality checks
+uv run ruff check .
+uv run mypy src tests
+uv run pre-commit run --all-files
 
-   ```bash
-   uv pip install -e ".[dev]"
-   ```
-
-1. Install Gurobi:
-
-   Follow the instructions at [Gurobi Installation Guide](https://www.gurobi.com/documentation/quickstart.html)
-
-1. Install and configure pre-commit hooks:
-
-   ```bash
-   pre-commit install
-   ```
-
-1. Verify installation:
-
-   ```bash
-   uv run python -c "import options_hedge; print('Package successfully installed!')"
-   ```
-
-## Code Quality
-
-This project uses pre-commit hooks to maintain code quality. When you commit changes, the following checks are automatically run:
-
-- Code formatting with Ruff
-- Style and error checks with Ruff
-- Type checking with mypy
-- Other checks like trailing whitespace and file endings
-
-If any issues are found:
-
-- For formatting issues: The hooks will automatically fix them
-- For other issues: The commit will be blocked until you fix them
-
-After a hook makes automated fixes, you'll need to stage the changes and commit again.
-
-## Usage
-
-See the `examples/` directory for usage examples and the `notebooks/` directory for detailed analysis.
-
-## Development
-
-- Run tests: `uv run pytest`
-- Format code: `uv run black .`
-- Run linter: `uv run ruff check .`
-- Type check: `uv run mypy src tests`
-- Run all checks: `uv run pre-commit run --all-files`
+# Build documentation
+cd docs && uv run jupyter-book build .
+```
 
 ## Documentation
 
-The documentation is built using Jupyter Book and hosted on GitHub Pages at [https://cmu-21393-f25-group-D.github.io/options-hedge](https://cmu-21393-f25-group-D.github.io/options-hedge).
-
-To build locally:
-
-```bash
-cd docs
-uv run jupyter-book build .
-```
-
-## Optional Dependencies
-
-The package can be installed with different sets of dependencies:
-
-```bash
-# Basic installation (core functionality only)
-uv pip install .
-
-# With development tools (black, ruff, pytest, etc.)
-uv pip install -e ".[dev]"
-
-# With Jupyter support (notebooks, plotting, etc.)
-uv pip install -e ".[jupyter]"
-
-# With documentation tools
-uv pip install -e ".[docs]"
-
-# With all dependencies
-uv pip install -e ".[all]"
-```
-
-## Development Status
-
-This project is under active development. Current focus areas:
-
-1. Integration with market data providers (e.g., Yahoo Finance, Alpha Vantage) for real-time option prices and market data
-2. Optimization model implementation using Gurobi
-3. Scenario generation for market conditions
-4. Visualization and analysis tools
-
-**Note**: We use market data providers for option pricing rather than implementing pricing models (e.g., Black-Scholes), which allows us to focus on the optimization and hedging strategy while using real market prices.
+Complete documentation is available at **[cmu-21393-f25-group-D.github.io/options-hedge](https://cmu-21393-f25-group-D.github.io/options-hedge)**
 
 ## License
 
@@ -181,7 +91,3 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Academic Integrity Notice
 
 This project was developed as coursework for CMU 21-393 (Operations Research). While the code is open source under the MIT License, we strongly encourage students in similar courses to develop their own solutions. This repository is intended as a reference and learning resource, not a template for submission.
-
-## Acknowledgments
-
-This project addresses a real-world challenge facing millions of upcoming retirees. We're grateful for feedback from finance professionals and the open-source community.

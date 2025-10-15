@@ -1,5 +1,21 @@
 # Project Motivation
 
+## What is Portfolio Insurance?
+
+**Portfolio insurance** is a risk management strategy that uses financial derivatives (in our case, put options) to limit losses from declining asset prices. Think of it like home insurance for your investment portfolio:
+
+- You pay a premium (the cost of the options)
+- If nothing bad happens (market goes up), you lose the premium but your portfolio gains value
+- If disaster strikes (market crashes), the insurance pays out to cover your losses
+
+By strategically purchasing put options on the S&P 500 index, we can create a "floor" that limits maximum portfolio losses while allowing participation in market gains.
+
+### How It Works
+
+Just as you insure your home against fire or theft, portfolio insurance protects your investments against market crashes. The key difference: you're using financial derivatives (options) rather than traditional insurance contracts.
+
+**A put option** gives you the right (but not obligation) to sell an asset at a predetermined price (the "strike price"). If the market crashes below that price, your put options increase in value, offsetting losses in your portfolio. If the market goes up, you simply don't exercise the options—the only cost is the premium you paid upfront.
+
 ## The Retirement Crisis
 
 ### A Growing Challenge
@@ -115,6 +131,23 @@ This is where optimization comes in. Instead of buying expensive at-the-money pu
 - Minimize total cost while ensuring adequate protection
 
 Our optimization model finds the **cheapest** combination of put options that guarantees protection against a specified range of market scenarios.
+
+### Our Research Questions
+
+This project addresses two key questions using operations research:
+
+1. **"What is the optimal protection level?"** - Determining the right balance between downside protection and cost. What maximum loss percentage makes sense for retirees given their financial situation, risk tolerance, and time horizon?
+
+2. **"What is the cheapest way to achieve that protection?"** - Finding the most cost-effective combination of put options to guarantee a portfolio won't lose more than a specified percentage over a given period.
+
+**The optimization model:**
+
+- **Minimizes**: Total cost of purchasing options
+- **While ensuring**: Portfolio is protected against a range of potential market scenarios
+- **Allows**: Full participation in market upside
+- **Determines**: The optimal protection level that balances safety and affordability
+
+By solving both questions, we create a comprehensive framework that doesn't just optimize option selection, but also helps retirees make informed decisions about their protection strategy.
 
 ## Real-World Impact
 

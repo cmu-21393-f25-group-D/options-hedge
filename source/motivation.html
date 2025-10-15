@@ -157,6 +157,10 @@
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
                             <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-portfolio-insurance">What is Portfolio Insurance?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-retirement-crisis">The Retirement Crisis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-growing-challenge">A Growing Challenge</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-this-problem-is-escalating">Why This Problem Is Escalating</a></li>
@@ -177,6 +181,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#portfolio-insurance-a-better-approach">Portfolio Insurance: A Better Approach</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">The Core Idea</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-optimization-matters">Why Optimization Matters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#our-research-questions">Our Research Questions</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-impact">Real-World Impact</a><ul class="nav section-nav flex-column">
@@ -228,6 +233,21 @@
                         
   <section class="tex2jax_ignore mathjax_ignore" id="project-motivation">
 <h1>Project Motivation<a class="headerlink" href="#project-motivation" title="Permalink to this heading">#</a></h1>
+<section id="what-is-portfolio-insurance">
+<h2>What is Portfolio Insurance?<a class="headerlink" href="#what-is-portfolio-insurance" title="Permalink to this heading">#</a></h2>
+<p><strong>Portfolio insurance</strong> is a risk management strategy that uses financial derivatives (in our case, put options) to limit losses from declining asset prices. Think of it like home insurance for your investment portfolio:</p>
+<ul class="simple">
+<li><p>You pay a premium (the cost of the options)</p></li>
+<li><p>If nothing bad happens (market goes up), you lose the premium but your portfolio gains value</p></li>
+<li><p>If disaster strikes (market crashes), the insurance pays out to cover your losses</p></li>
+</ul>
+<p>By strategically purchasing put options on the S&amp;P 500 index, we can create a “floor” that limits maximum portfolio losses while allowing participation in market gains.</p>
+<section id="how-it-works">
+<h3>How It Works<a class="headerlink" href="#how-it-works" title="Permalink to this heading">#</a></h3>
+<p>Just as you insure your home against fire or theft, portfolio insurance protects your investments against market crashes. The key difference: you’re using financial derivatives (options) rather than traditional insurance contracts.</p>
+<p><strong>A put option</strong> gives you the right (but not obligation) to sell an asset at a predetermined price (the “strike price”). If the market crashes below that price, your put options increase in value, offsetting losses in your portfolio. If the market goes up, you simply don’t exercise the options—the only cost is the premium you paid upfront.</p>
+</section>
+</section>
 <section id="the-retirement-crisis">
 <h2>The Retirement Crisis<a class="headerlink" href="#the-retirement-crisis" title="Permalink to this heading">#</a></h2>
 <section id="a-growing-challenge">
@@ -343,6 +363,22 @@
 <li><p>Minimize total cost while ensuring adequate protection</p></li>
 </ul>
 <p>Our optimization model finds the <strong>cheapest</strong> combination of put options that guarantees protection against a specified range of market scenarios.</p>
+</section>
+<section id="our-research-questions">
+<h3>Our Research Questions<a class="headerlink" href="#our-research-questions" title="Permalink to this heading">#</a></h3>
+<p>This project addresses two key questions using operations research:</p>
+<ol class="arabic simple">
+<li><p><strong>“What is the optimal protection level?”</strong> - Determining the right balance between downside protection and cost. What maximum loss percentage makes sense for retirees given their financial situation, risk tolerance, and time horizon?</p></li>
+<li><p><strong>“What is the cheapest way to achieve that protection?”</strong> - Finding the most cost-effective combination of put options to guarantee a portfolio won’t lose more than a specified percentage over a given period.</p></li>
+</ol>
+<p><strong>The optimization model:</strong></p>
+<ul class="simple">
+<li><p><strong>Minimizes</strong>: Total cost of purchasing options</p></li>
+<li><p><strong>While ensuring</strong>: Portfolio is protected against a range of potential market scenarios</p></li>
+<li><p><strong>Allows</strong>: Full participation in market upside</p></li>
+<li><p><strong>Determines</strong>: The optimal protection level that balances safety and affordability</p></li>
+</ul>
+<p>By solving both questions, we create a comprehensive framework that doesn’t just optimize option selection, but also helps retirees make informed decisions about their protection strategy.</p>
 </section>
 </section>
 <section id="real-world-impact">

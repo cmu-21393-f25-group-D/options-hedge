@@ -2,10 +2,10 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: source/index
+root: source/motivation
 chapters:
-  - file: source/motivation
-    title: Project Motivation
+  - file: source/options_primer
+    title: Put Options Primer
   - file: source/installation
     title: Installation Guide
   - file: source/contributing

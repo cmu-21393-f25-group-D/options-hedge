@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Put Options Primer &#8212; 21-393: Operations Research II, Carnegie Mellon University</title>
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+        <script>
+            MathJax = {
+            loader: {load: ['[tex]/boldsymbol', '[tex]/textmacros']},
+            tex: {
+                packages: {'[+]': ['boldsymbol', 'textmacros']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                macros: {
+                    "argmax" : "arg\\,max",
+                    "argmin" : "arg\\,min",
+                    "col"    : "col",
+                    "Span"   :  "span",
+                    "epsilon": "\\varepsilon",
+                    "EE": "\\mathbb{E}",
+                    "PP": "\\mathbb{P}",
+                    "RR": "\\mathbb{R}",
+                    "NN": "\\mathbb{N}",
+                    "ZZ": "\\mathbb{Z}",
+                    "aA": "\\mathcal{A}",
+                    "bB": "\\mathcal{B}",
+                    "cC": "\\mathcal{C}",
+                    "dD": "\\mathcal{D}",
+                    "eE": "\\mathcal{E}",
+                    "fF": "\\mathcal{F}",
+                    "gG": "\\mathcal{G}",
+                    "hH": "\\mathcal{H}",
+                }
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 0.92,
+                displayAlign: "center",
+            },
+            };
+        </script>
+    
+    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/quantecon-book-theme.css?digest=bd0785fbb14d8d2bd4d9ae501d79ed8d3bc089ec" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/scripts/quantecon-book-theme.js?digest=d9faaf6c4b57726f74ba012412af1f5681bdff87"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"N": "\\mathbb{N}", "floor": ["\\lfloor#1\\rfloor", 1], "bmat": ["\\left[\\begin{array}"], "emat": ["\\end{array}\\right]"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/options_primer';</script>
+    <link rel="canonical" href="https://cmu-21393-f25-group-D.github.io/options-hedge/source/options_primer.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installation Guide" href="installation.html" />
+    <link rel="prev" title="Portfolio Insurance Optimization" href="motivation.html" />
+
+<!-- Normal Meta Tags -->
+<meta name="author" context="Akhil Karra, Zoe Xu, Vivaan Shroff, Wendy Wang" />
+<meta name="keywords" content="Python, Finance, Options, Hedging" />
+<meta name="description" content=Documentation for the options-hedge package />
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:title" content="Put Options Primer"/>
+<meta name="twitter:description" content="Documentation for the options-hedge package">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:image" content="">
+
+<!-- Opengraph tags -->
+<meta property="og:title" content="Put Options Primer" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://cmu-21393-f25-group-D.github.io/options-hedge/source/options_primer.html" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="Documentation for the options-hedge package" />
+<meta property="og:site_name" content="21-393: Operations Research II, Carnegie Mellon University" />
+<meta name="theme-color" content="#ffffff" />
+
+  </head>
+<body>
+
+<!-- Override QuantEcon theme colors -->
+
+    <span id="top"></span>
+
+    <div class="qe-wrapper">
+
+        <div class="qe-main">
+
+            <div class="qe-page" id=source/options_primer>
+
+                <div class="qe-page__toc">
+
+                    <div class="inner">
+
+                        
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
+
+
+                        <nav id="bd-toc-nav" class="qe-page__toc-nav">
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-put-option">What is a Put Option?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-components">Key Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contract-parties">Contract Parties</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-moneyness">Option Moneyness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#value-components">Value Components</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-put-options-provide-protection">How Put Options Provide Protection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-insurance-analogy">The Insurance Analogy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#protective-put-example">Protective Put Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scenario-1-market-crashes-30-to-3-150">Scenario 1: Market crashes 30% to 3,150</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scenario-2-market-rises-20-to-5-400">Scenario 2: Market rises 20% to 5,400</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scenario-3-market-stays-flat-at-4-500">Scenario 3: Market stays flat at 4,500</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#portfolio-beta-and-hedging-requirements">Portfolio Beta and Hedging Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-beta">What is Beta?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-beta-matters-for-hedging">Why Beta Matters for Hedging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-hedging-examples">Beta Hedging Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-portfolio-matches-the-market-1-0">Example 1: Portfolio matches the market (β = 1.0)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-aggressive-growth-portfolio-1-5">Example 2: Aggressive growth portfolio (β = 1.5)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-conservative-portfolio-0-6">Example 3: Conservative portfolio (β = 0.6)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implications-for-portfolio-insurance">Implications for Portfolio Insurance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#important-note-on-basis-risk">Important Note on Basis Risk</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strike-price-selection">Strike Price Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-the-money-otm-puts">Out-of-the-Money (OTM) Puts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#at-the-money-atm-puts">At-the-Money (ATM) Puts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-strike-strategies">Multi-Strike Strategies</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+                            <p class="logo">
+                                
+                            </p>
+
+                            <p class="powered">Powered by <a href="https://jupyterbook.org/">Jupyter Book</a></p>
+
+                        </nav>
+
+                        <div class="qe-page__toc-footer">
+                            
+                            
+                            <p><a href="#top"><strong>Back to top</strong></a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="qe-page__header">
+
+                    <div class="qe-page__header-copy">
+
+                        <p class="qe-page__header-heading"><a href="motivation.html">21-393: Operations Research II, Carnegie Mellon University</a></p>
+
+                        <p class="qe-page__header-subheading">Put Options Primer</p>
+
+                    </div>
+                    <!-- length 2, since its a string and empty dict has length 2 - {} -->
+                        <p class="qe-page__header-authors" font-size="18">Akhil Karra, Zoe Xu, Vivaan Shroff, Wendy Wang</p>
+
+
+                </div> <!-- .page__header -->
+
+
+
+                
+                <main class="qe-page__content" role="main">
+                    
+                    <div>
+                        
+  <section class="tex2jax_ignore mathjax_ignore" id="put-options-primer">
+<h1>Put Options Primer<a class="headerlink" href="#put-options-primer" title="Permalink to this heading">#</a></h1>
+<p>This primer provides essential background on put options and how they’re used for portfolio protection. Understanding these concepts is crucial for working with the optimization models in this project.</p>
+<section id="what-is-a-put-option">
+<h2>What is a Put Option?<a class="headerlink" href="#what-is-a-put-option" title="Permalink to this heading">#</a></h2>
+<p>A <strong>put option</strong> is a financial contract that gives the buyer the <strong>right, but not the obligation</strong>, to sell an underlying asset at a predetermined price on or before a specific date.</p>
+<section id="key-components">
+<h3>Key Components<a class="headerlink" href="#key-components" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Underlying asset</strong>: The security the option contract is based on (e.g., S&amp;P 500 index)</p></li>
+<li><p><strong>Strike price (K)</strong>: The price at which you have the right to sell the underlying asset</p></li>
+<li><p><strong>Expiration date</strong>: The last day the option can be exercised</p></li>
+<li><p><strong>Premium (C)</strong>: The upfront cost to purchase the option contract</p></li>
+<li><p><strong>Contract size</strong>: Number of shares covered by one contract (typically 100 for equity options)</p></li>
+</ul>
+</section>
+<section id="contract-parties">
+<h3>Contract Parties<a class="headerlink" href="#contract-parties" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Buyer (holder)</strong>: Pays the premium and gets the right to sell at the strike price</p></li>
+<li><p><strong>Seller (writer)</strong>: Receives the premium and is obligated to buy at the strike price if exercised</p></li>
+</ul>
+</section>
+</section>
+<section id="option-moneyness">
+<h2>Option Moneyness<a class="headerlink" href="#option-moneyness" title="Permalink to this heading">#</a></h2>
+<p>The relationship between the strike price and current market price determines the option’s “moneyness”:</p>
+<ul class="simple">
+<li><p><strong>In-the-money (ITM)</strong>: Strike price &gt; Current market price</p>
+<ul>
+<li><p>The option has intrinsic value</p></li>
+<li><p>Example: S&amp;P at 4,000, put strike at 4,200</p></li>
+</ul>
+</li>
+<li><p><strong>At-the-money (ATM)</strong>: Strike price ≈ Current market price</p>
+<ul>
+<li><p>The option has minimal intrinsic value, mostly time value</p></li>
+<li><p>Example: S&amp;P at 4,000, put strike at 4,000</p></li>
+</ul>
+</li>
+<li><p><strong>Out-of-the-money (OTM)</strong>: Strike price &lt; Current market price</p>
+<ul>
+<li><p>The option has no intrinsic value, only time value</p></li>
+<li><p>Example: S&amp;P at 4,000, put strike at 3,600</p></li>
+</ul>
+</li>
+</ul>
+<section id="value-components">
+<h3>Value Components<a class="headerlink" href="#value-components" title="Permalink to this heading">#</a></h3>
+<p>An option’s premium consists of two parts:</p>
+<ul class="simple">
+<li><p><strong>Intrinsic value</strong>: <code class="docutils literal notranslate"><span class="pre">max(K</span> <span class="pre">-</span> <span class="pre">S,</span> <span class="pre">0)</span></code> where S is the current market price</p></li>
+<li><p><strong>Time value</strong>: Premium - Intrinsic value (represents uncertainty and time remaining)</p></li>
+</ul>
+</section>
+</section>
+<section id="how-put-options-provide-protection">
+<h2>How Put Options Provide Protection<a class="headerlink" href="#how-put-options-provide-protection" title="Permalink to this heading">#</a></h2>
+<section id="the-insurance-analogy">
+<h3>The Insurance Analogy<a class="headerlink" href="#the-insurance-analogy" title="Permalink to this heading">#</a></h3>
+<p>A put option works like insurance for your portfolio:</p>
+<ol class="arabic simple">
+<li><p><strong>Pay premium upfront</strong>: You buy the option contract</p></li>
+<li><p><strong>Set your “deductible”</strong>: The strike price determines your protection level</p></li>
+<li><p><strong>Claim if needed</strong>: Exercise the option if the market crashes below the strike</p></li>
+<li><p><strong>Premium is sunk cost</strong>: If the market rises, you let the option expire worthless</p></li>
+</ol>
+</section>
+<section id="protective-put-example">
+<h3>Protective Put Example<a class="headerlink" href="#protective-put-example" title="Permalink to this heading">#</a></h3>
+<p><strong>Setup:</strong></p>
+<ul class="simple">
+<li><p>Portfolio value: $1,000,000 in stocks</p></li>
+<li><p>Current S&amp;P 500 level: 4,500</p></li>
+<li><p>Buy put option with strike: 4,050 (10% below current level)</p></li>
+<li><p>Premium paid: $30,000</p></li>
+<li><p>Expiration: 1 year</p></li>
+</ul>
+<section id="scenario-1-market-crashes-30-to-3-150">
+<h4>Scenario 1: Market crashes 30% to 3,150<a class="headerlink" href="#scenario-1-market-crashes-30-to-3-150" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Stock portfolio value: $700,000</p></li>
+<li><p>Put option payoff per contract: <span class="math notranslate nohighlight">\((4,050 - 3,150) = \)</span>900$</p></li>
+<li><p>Number of contracts: <span class="math notranslate nohighlight">\(\frac{\$1,000,000}{1 \times 4,500 \times 100} \approx 2.22\)</span> (rounded down to 2 contracts for whole contracts)</p></li>
+<li><p>Total payoff: <span class="math notranslate nohighlight">\(900 \times 100 \times 2 = \$180,000\)</span></p></li>
+<li><p>The put offsets most of the losses below the 4,050 level</p></li>
+</ul>
+</section>
+<section id="scenario-2-market-rises-20-to-5-400">
+<h4>Scenario 2: Market rises 20% to 5,400<a class="headerlink" href="#scenario-2-market-rises-20-to-5-400" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Stock portfolio value: $1,200,000</p></li>
+<li><p>Put option payoff: $0 (expires worthless)</p></li>
+<li><p>Net cost: $30,000 premium</p></li>
+<li><p>You still capture the upside, minus the insurance cost</p></li>
+</ul>
+</section>
+<section id="scenario-3-market-stays-flat-at-4-500">
+<h4>Scenario 3: Market stays flat at 4,500<a class="headerlink" href="#scenario-3-market-stays-flat-at-4-500" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Stock portfolio value: $1,000,000</p></li>
+<li><p>Put option payoff: $0</p></li>
+<li><p>Net cost: $30,000 premium</p></li>
+<li><p>This is the cost of protection you didn’t need to use</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="portfolio-beta-and-hedging-requirements">
+<h2>Portfolio Beta and Hedging Requirements<a class="headerlink" href="#portfolio-beta-and-hedging-requirements" title="Permalink to this heading">#</a></h2>
+<section id="what-is-beta">
+<h3>What is Beta?<a class="headerlink" href="#what-is-beta" title="Permalink to this heading">#</a></h3>
+<p><strong>Beta (β)</strong> measures how much a portfolio moves relative to the market (typically the S&amp;P 500):</p>
+<ul class="simple">
+<li><p><strong>β = 1.0</strong>: Portfolio moves in lockstep with the market</p>
+<ul>
+<li><p>A 10% market decline → 10% portfolio decline</p></li>
+</ul>
+</li>
+<li><p><strong>β &gt; 1.0</strong>: Portfolio is more volatile than the market</p>
+<ul>
+<li><p>Example: β = 1.5 means a 10% market decline → 15% portfolio decline</p></li>
+</ul>
+</li>
+<li><p><strong>β &lt; 1.0</strong>: Portfolio is less volatile than the market</p>
+<ul>
+<li><p>Example: β = 0.7 means a 10% market decline → 7% portfolio decline</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="why-beta-matters-for-hedging">
+<h3>Why Beta Matters for Hedging<a class="headerlink" href="#why-beta-matters-for-hedging" title="Permalink to this heading">#</a></h3>
+<p>Since put options are based on the S&amp;P 500 index, but your portfolio may not perfectly track the index, you need to adjust the number of contracts based on beta.</p>
+<p><strong>Number of put contracts needed:</strong></p>
+<div class="math notranslate nohighlight">
+\[
+N_{\text{puts}} = \frac{\text{Portfolio Value}}{\text{Index Value} \times \text{Contract Multiplier}} \times \beta
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p>Portfolio Value = Total dollar value of your portfolio</p></li>
+<li><p>Index Value = Current S&amp;P 500 level</p></li>
+<li><p>Contract Multiplier = 100 (standard for S&amp;P 500 index options)</p></li>
+<li><p>β = Portfolio beta relative to S&amp;P 500</p></li>
+</ul>
+</section>
+<section id="beta-hedging-examples">
+<h3>Beta Hedging Examples<a class="headerlink" href="#beta-hedging-examples" title="Permalink to this heading">#</a></h3>
+<section id="example-1-portfolio-matches-the-market-1-0">
+<h4>Example 1: Portfolio matches the market (β = 1.0)<a class="headerlink" href="#example-1-portfolio-matches-the-market-1-0" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Portfolio value: $1,000,000</p></li>
+<li><p>S&amp;P 500 level: 4,500</p></li>
+<li><p>Beta: 1.0</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+N_{\text{puts}} = \frac{1,000,000}{4,500 \times 100} \times 1.0 = 2.22 \approx 2 \text{ contracts}
+\]</div>
+</section>
+<section id="example-2-aggressive-growth-portfolio-1-5">
+<h4>Example 2: Aggressive growth portfolio (β = 1.5)<a class="headerlink" href="#example-2-aggressive-growth-portfolio-1-5" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Portfolio value: $1,000,000</p></li>
+<li><p>S&amp;P 500 level: 4,500</p></li>
+<li><p>Beta: 1.5 (portfolio is 50% more volatile)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+N_{\text{puts}} = \frac{1,000,000}{4,500 \times 100} \times 1.5 = 3.33 \approx 3 \text{ contracts}
+\]</div>
+<p>You need more puts because your portfolio drops faster than the market.</p>
+</section>
+<section id="example-3-conservative-portfolio-0-6">
+<h4>Example 3: Conservative portfolio (β = 0.6)<a class="headerlink" href="#example-3-conservative-portfolio-0-6" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Portfolio value: $1,000,000</p></li>
+<li><p>S&amp;P 500 level: 4,500</p></li>
+<li><p>Beta: 0.6 (portfolio is 40% less volatile)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+N_{\text{puts}} = \frac{1,000,000}{4,500 \times 100} \times 0.6 = 1.33 \approx 1 \text{ contract}
+\]</div>
+<p>You need fewer puts because your portfolio drops slower than the market.</p>
+</section>
+</section>
+<section id="implications-for-portfolio-insurance">
+<h3>Implications for Portfolio Insurance<a class="headerlink" href="#implications-for-portfolio-insurance" title="Permalink to this heading">#</a></h3>
+<p>The beta-adjusted hedging approach means:</p>
+<ol class="arabic simple">
+<li><p><strong>High-beta portfolios</strong> (aggressive, growth-focused):</p>
+<ul class="simple">
+<li><p>Need more put contracts</p></li>
+<li><p>Higher insurance costs</p></li>
+<li><p>But also have greater downside risk to protect against</p></li>
+</ul>
+</li>
+<li><p><strong>Low-beta portfolios</strong> (conservative, value-focused):</p>
+<ul class="simple">
+<li><p>Need fewer put contracts</p></li>
+<li><p>Lower insurance costs</p></li>
+<li><p>Less downside risk to begin with</p></li>
+</ul>
+</li>
+<li><p><strong>Diversified portfolios</strong> (β ≈ 1.0):</p>
+<ul class="simple">
+<li><p>Hedge ratio close to 1:1</p></li>
+<li><p>Straightforward calculation</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="important-note-on-basis-risk">
+<h3>Important Note on Basis Risk<a class="headerlink" href="#important-note-on-basis-risk" title="Permalink to this heading">#</a></h3>
+<p>Using S&amp;P 500 puts to hedge a portfolio with β ≠ 1.0 introduces <strong>basis risk</strong>:</p>
+<ul class="simple">
+<li><p>The hedge may not perfectly offset losses if your portfolio’s actual movements diverge from the beta prediction</p></li>
+<li><p>Beta is estimated from historical data and can change over time</p></li>
+<li><p>During market stress, correlations can change (stocks may become more correlated)</p></li>
+</ul>
+<p>Despite this imperfection, beta-adjusted hedging with index options is standard practice because:</p>
+<ul class="simple">
+<li><p>Index options are liquid and cost-effective</p></li>
+<li><p>Beta provides a reasonable first-order approximation</p></li>
+<li><p>It’s far more practical than hedging each individual stock</p></li>
+</ul>
+</section>
+</section>
+<section id="strike-price-selection">
+<h2>Strike Price Selection<a class="headerlink" href="#strike-price-selection" title="Permalink to this heading">#</a></h2>
+<p>When choosing put options for protection, the strike price determines the trade-off between cost and coverage:</p>
+<section id="out-of-the-money-otm-puts">
+<h3>Out-of-the-Money (OTM) Puts<a class="headerlink" href="#out-of-the-money-otm-puts" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lower strikes</strong> (e.g., 10-15% below market)</p></li>
+<li><p><strong>Cheaper premiums</strong> → lower insurance cost</p></li>
+<li><p><strong>Catastrophic protection only</strong> → only pays off in severe crashes</p></li>
+<li><p>Analogous to high-deductible insurance</p></li>
+</ul>
+</section>
+<section id="at-the-money-atm-puts">
+<h3>At-the-Money (ATM) Puts<a class="headerlink" href="#at-the-money-atm-puts" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Strike near current market price</strong></p></li>
+<li><p><strong>Higher premiums</strong> → expensive insurance</p></li>
+<li><p><strong>Immediate protection</strong> → pays off for any market decline</p></li>
+<li><p>Analogous to low-deductible insurance</p></li>
+</ul>
+</section>
+<section id="multi-strike-strategies">
+<h3>Multi-Strike Strategies<a class="headerlink" href="#multi-strike-strategies" title="Permalink to this heading">#</a></h3>
+<p>Rather than buying a single strike, sophisticated strategies use multiple puts:</p>
+<ul class="simple">
+<li><p>Combine OTM puts (cheap, severe crash protection)</p></li>
+<li><p>With ATM or slightly OTM puts (moderate crash protection)</p></li>
+<li><p>Creates layered protection at optimized cost</p></li>
+</ul>
+<p>This is where mathematical optimization becomes valuable—finding the best combination of strikes, expirations, and contract quantities to achieve a protection goal at minimum cost.</p>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p><strong>Key Takeaways:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Put options</strong> give you the right to sell at a predetermined price, providing downside protection</p></li>
+<li><p><strong>Option moneyness</strong> (ITM/ATM/OTM) determines the premium cost and protection level</p></li>
+<li><p><strong>Beta</strong> measures portfolio volatility relative to the market and determines how many puts you need</p></li>
+<li><p><strong>Beta-adjusted hedging</strong>: <span class="math notranslate nohighlight">\(N_{\text{puts}} = \frac{\text{Portfolio Value (\$)}}{\text{Index Value} \times 100} \times \beta\)</span> (contracts)</p></li>
+<li><p><strong>Strike selection</strong> involves a cost-coverage tradeoff that can be optimized</p></li>
+</ol>
+<p>Understanding these fundamentals is essential for analyzing portfolio insurance strategies and working with the optimization models in this project.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./source"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                    </div>
+                    
+                </main> <!-- .page__content -->
+                
+
+
+                <footer class="qe-page__footer">
+
+                    <p><a href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/80x15.png"></a></p>
+
+                    <p>Creative Commons License &ndash; This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International.</p>
+
+                    <p>A theme by <a href="https://quantecon.org">QuantEcon</a></p>
+
+                </footer> <!-- .page__footer -->
+
+            </div> <!-- .page -->
+
+            
+
+            
+            <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
+
+                <div class="qe-sidebar__header">
+
+
+                    Contents
+
+                </div>
+
+                <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
+                    <ul class="current nav bd-sidenav nav sidenav_l1">
+ <li class="toctree-l1 current active active">
+  <a class="current reference internal" href="#">
+   Put Options Primer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="installation.html">
+   Installation Guide
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="contributing.html">
+   Contributing Guide
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hello_world.html">
+   Hello World Example
+  </a>
+ </li>
+</ul>
+
+                </nav>
+
+                <div class="qe-sidebar__footer">
+
+                </div>
+
+            </div> <!-- .sidebar -->
+            
+        </div> <!-- .main -->
+
+        <div class="qe-toolbar">
+
+            <div class="qe-toolbar__inner">
+
+                <ul class="qe-toolbar__main">
+                    <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
+                    <li data-tippy-content="Home"><a href="motivation.html"><i data-feather="home"></i></a></li>
+                    <li class="btn__qelogo"><a href="https://cmu-21393-f25-group-D.github.io/options-hedge" title=""><span class="show-for-sr">Options Hedge</span></a></li>
+                </ul>
+
+                <ul class="qe-toolbar__links">
+                    <li class="btn__search">
+                        <form action="../search.html" method="get">
+                            <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
+                            <i data-feather="search" id="search-icon"></i>
+                        </form>
+                    </li>
+                    <li data-tippy-content="Fullscreen" class="btn__fullscreen"><i data-feather="maximize"></i></li>
+                    <li data-tippy-content="Increase font size" class="btn__plus"><i data-feather="plus-circle"></i></li>
+                    <li data-tippy-content="Decrease font size" class="btn__minus"><i data-feather="minus-circle"></i></li>
+                    <li data-tippy-content="Change contrast" class="btn__contrast"><i data-feather="sunset"></i></li>
+                        <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
+                    <!--
+                    # Enable if looking for link to specific document hosted on GitHub
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/cmu-21393-f25-group-D/options-hedge/blob/main/docs/source/options_primer.md" download><i data-feather="github"></i></a></li>
+                    -->
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/cmu-21393-f25-group-D/options-hedge" download><i data-feather="github"></i></a></li>
+                </ul>
+
+            </div>
+
+        </div> <!-- .toolbar -->
+        <div id="downloadPDFModal" style="display: none;">
+            <ul class="pdf-options" style="display: block;">
+                <li class="download-pdf-book" onClick="window.print()">
+                    <p>Lecture (PDF)</p>
+                </li>
+                <li class="download-pdf-file">
+                    <a href="" download><p>Book (PDF)</p></a>
+                </li>
+            </ul>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <p class="modal-title"> Notebook Launcher </p>
+            <div class="modal-desc">
+            <p>
+                Choose public or private cloud service for "Launch" button.
+            </p>
+            </div>
+            <p class="modal-subtitle">Select a server</p>
+            <ul class="modal-servers">
+            <li class="active launcher-public">
+                <span class="label">Public</span>
+                <select id="launcher-public-input">
+                
+                </select>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            <li class="launcher-private">
+                <span class="label">Private</span>
+                <input type="text" id="launcher-private-input" data-repourl="" data-urlpath="" data-branch=>
+                <i class="fas fa-check-circle"></i>
+            </li>
+            </ul>
+            <p class="launch"><a href="" id="advancedLaunchButton" target="_blank">Launch Notebook</a></p>
+            <script>
+                // QuantEcon Notebook Launcher
+                const launcherTypeElements = document.querySelectorAll('#settingsModal .modal-servers li');
+                // Highlight the server type if previous selection exists
+                if (typeof localStorage.launcherType !== 'undefined') {
+                  for (var i = 0; i < launcherTypeElements.length; i++) {
+                    launcherTypeElements[i].classList.remove('active');
+                    if ( launcherTypeElements[i].classList.contains(localStorage.launcherType) ) {
+                      launcherTypeElements[i].classList.add('active');
+                    }
+                  }
+                }
+                // Highlight server type on click and set local storage value
+                for (var i = 0; i < launcherTypeElements.length; i++) {
+                  launcherTypeElements[i].addEventListener('click', function() {
+                    for (var j = 0; j < launcherTypeElements.length; j++) {
+                      launcherTypeElements[j].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    if ( this.classList.contains('launcher-private') ) {
+                      localStorage.launcherType = 'launcher-private';
+                    } else if ( this.classList.contains('launcher-public') ) {
+                      localStorage.launcherType = 'launcher-public';
+                    }
+                    setLaunchServer();
+                  })
+                }
+                const launcherPublic = document.getElementById('launcher-public-input');
+                const launcherPrivate = document.getElementById('launcher-private-input');
+                const pageName = "source/options_primer";
+                const repoURL = "";
+                const urlPath = "";
+                const branch = ""
+                const launchNotebookLink = document.getElementById('advancedLaunchButton');
+
+                // Highlight public server option if previous selection exists
+                if (typeof localStorage.launcherPublic !== 'undefined') {
+                  launcherPublic.value = localStorage.launcherPublic;
+                }
+                // Update local storage upon public server selection
+                launcherPublic.addEventListener('change', (event) => {
+                  setLaunchServer();
+                });
+                // Populate private server input if previous entry exists
+                if (typeof localStorage.launcherPrivate !== 'undefined') {
+                  launcherPrivate.value = localStorage.launcherPrivate;
+                }
+                // Update local storage when a private server is entered
+                launcherPrivate.addEventListener('input', (event) => {
+                  setLaunchServer();
+                });
+
+                // Function to update the "Launch Notebook" link href
+                function setLaunchServer() {
+                  launchNotebookLink.removeAttribute("style")
+                  if ( localStorage.launcherType == 'launcher-private' ) {
+                    let repoPrefix = "/user-redirect/git-pull?repo=" + repoURL + "&branch=" + branch + "&urlpath=" + urlPath;
+                    launcherPrivateValue = launcherPrivate.value
+                    if (!launcherPrivateValue) {
+                        launchNotebookLink.removeAttribute("href")
+                        launchNotebookLink.style.background = "grey"
+                        return
+                    }
+                    localStorage.launcherPrivate = launcherPrivateValue;
+                    privateServer = localStorage.launcherPrivate.replace(/\/$/, "")
+                    if (!privateServer.includes("http")) {
+                        privateServer = "http://" + privateServer
+                    }
+                    launchNotebookLinkURL = privateServer + repoPrefix;
+                  } else if ( localStorage.launcherType == 'launcher-public' ) {
+                    launcherPublicValue = launcherPublic.options[launcherPublic.selectedIndex].value;
+                    localStorage.launcherPublic = launcherPublicValue;
+                    launchNotebookLinkURL = localStorage.launcherPublic;
+                  }
+                  if (launchNotebookLinkURL) launchNotebookLink.href = launchNotebookLinkURL;
+                }
+                // Check if user has previously selected a server
+                if ( (typeof localStorage.launcherPrivate !== 'undefined') || (typeof localStorage.launcherPublic !== 'undefined') ) {
+                  setLaunchServer();
+                }
+                </script>
+
+        </div>
+
+    </div> <!-- .wrapper-->
+  </body>
+</html>

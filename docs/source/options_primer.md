@@ -220,7 +220,7 @@ This is where mathematical optimization becomes valuable—finding the best comb
 1. **Put options** give you the right to sell at a predetermined price, providing downside protection
 2. **Option moneyness** (ITM/ATM/OTM) determines the premium cost and protection level
 3. **Beta** measures portfolio volatility relative to the market and determines how many puts you need
-4. **Beta-adjusted hedging**: $N_{\text{puts}} = \frac{\text{Portfolio Value}}{\text{Index Value} \times 100} \times \beta$
+4. **Beta-adjusted hedging**: $N_{\text{puts}} = \frac{\text{Portfolio Value (\$)}}{\text{Index Value} \times 100} \times \beta$ (contracts)
 5. **Strike selection** involves a cost-coverage tradeoff that can be optimized
 
 Understanding these fundamentals is essential for analyzing portfolio insurance strategies and working with the optimization models in this project.

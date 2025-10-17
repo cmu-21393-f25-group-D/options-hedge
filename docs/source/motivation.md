@@ -1,4 +1,15 @@
-# Project Motivation
+# Portfolio Insurance Optimization
+
+Welcome to our portfolio insurance project! We're building a modern solution to help retirees protect their portfolios from market crashes while maintaining growth potential.
+
+**New to options?** Check out our [Put Options Primer](options_primer.md) for essential background.
+
+## Project Team
+
+- Akhil Karra
+- Zoe Xu
+- Vivaan Shroff
+- Wendy Wang
 
 ## What is Portfolio Insurance?
 

@@ -67,7 +67,7 @@ A put option works like insurance for your portfolio:
 
 - Stock portfolio value: $700,000
 - Put option payoff per contract: $(4,050 - 3,150) = $900$
-- Number of contracts: $\frac{\$1,000,000}{4,500 \times 100} \approx 2.22$ (rounded down to 2 contracts for whole contracts)
+- Number of contracts: $\frac{\$1,000,000}{1 \times 4,500 \times 100} \approx 2.22$ (rounded down to 2 contracts for whole contracts)
 - Total payoff: $900 \times 100 \times 2 = \$180,000$
 - The put offsets most of the losses below the 4,050 level
 

@@ -4,8 +4,6 @@
 format: jb-book
 root: source/index
 chapters:
-  - file: source/motivation
-    title: Project Motivation
   - file: source/options_primer
     title: Put Options Primer
   - file: source/installation

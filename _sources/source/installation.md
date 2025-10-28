@@ -135,4 +135,4 @@ Once installation is complete:
 
 1. Explore the `examples/` and `notebooks/` directories for usage examples
 2. Read the [Contributing Guide](contributing.md) to learn how to contribute
-3. Review the [Project Motivation](motivation.md) to understand the problem we're solving
+3. Visit the [homepage](index.md) to understand the problem we're solving

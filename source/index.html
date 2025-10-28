@@ -7,8 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; 21-393: Operations Research II, Carnegie Mellon University</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Portfolio Insurance Optimization &#8212; 21-393: Operations Research II, Carnegie Mellon University</title>
     <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -59,53 +60,54 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/quantecon-book-theme.css?digest=bd0785fbb14d8d2bd4d9ae501d79ed8d3bc089ec" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/quantecon-book-theme.css?digest=bd0785fbb14d8d2bd4d9ae501d79ed8d3bc089ec" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
-    <script src="_static/scripts/quantecon-book-theme.js?digest=d9faaf6c4b57726f74ba012412af1f5681bdff87"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/scripts/quantecon-book-theme.js?digest=d9faaf6c4b57726f74ba012412af1f5681bdff87"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
-    <link rel="canonical" href="https://cmu-21393-f25-group-D.github.io/options-hedge/genindex.html" />
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" />
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/index';</script>
+    <link rel="canonical" href="https://cmu-21393-f25-group-D.github.io/options-hedge/source/index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Portfolio Insurance Optimization" href="motivation.html" />
 
 <!-- Normal Meta Tags -->
 <meta name="author" context="Akhil Karra, Zoe Xu, Vivaan Shroff, Wendy Wang" />
@@ -115,22 +117,22 @@
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@" />
-<meta name="twitter:title" content="Index"/>
+<meta name="twitter:title" content="Portfolio Insurance Optimization"/>
 <meta name="twitter:description" content="Documentation for the options-hedge package">
 <meta name="twitter:creator" content="@">
 <meta name="twitter:image" content="">
 
 <!-- Opengraph tags -->
-<meta property="og:title" content="21-393: Operations Research II, Carnegie Mellon University" />
+<meta property="og:title" content="Portfolio Insurance Optimization" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://cmu-21393-f25-group-D.github.io/options-hedge/genindex.html" />
+<meta property="og:url" content="https://cmu-21393-f25-group-D.github.io/options-hedge/source/index.html" />
 <meta property="og:image" content="" />
 <meta property="og:description" content="Documentation for the options-hedge package" />
 <meta property="og:site_name" content="21-393: Operations Research II, Carnegie Mellon University" />
 <meta name="theme-color" content="#ffffff" />
 
   </head>
-<body>
+<body class="main-index">
 
 <!-- Override QuantEcon theme colors -->
 
@@ -140,17 +142,29 @@
 
         <div class="qe-main">
 
-            <div class="qe-page" id=genindex>
+            <div class="qe-page" id=source/index>
 
                 <div class="qe-page__toc">
 
                     <div class="inner">
 
                         
+                        <div class="qe-page__toc-header">
+                            On this page
+                        </div>
 
 
                         <nav id="bd-toc-nav" class="qe-page__toc-nav">
-                            
+                            <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-team">Project Team</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-portfolio-insurance">What is Portfolio Insurance?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach">Our Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-contents">Documentation Contents</a></li>
+</ul>
                             <p class="logo">
                                 
                             </p>
@@ -173,9 +187,9 @@
 
                     <div class="qe-page__header-copy">
 
-                        <p class="qe-page__header-heading"><a href="source/index.html">21-393: Operations Research II, Carnegie Mellon University</a></p>
+                        <p class="qe-page__header-heading"><a href="#">21-393: Operations Research II, Carnegie Mellon University</a></p>
 
-                        <p class="qe-page__header-subheading"></p>
+                        <p class="qe-page__header-subheading">Portfolio Insurance Optimization</p>
 
                     </div>
                     <!-- length 2, since its a string and empty dict has length 2 - {} -->
@@ -191,13 +205,92 @@
                     
                     <div>
                         
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
+  <section class="tex2jax_ignore mathjax_ignore" id="portfolio-insurance-optimization">
+<h1>Portfolio Insurance Optimization<a class="headerlink" href="#portfolio-insurance-optimization" title="Permalink to this heading">#</a></h1>
+<p>Welcome to our portfolio insurance project! We’re building a modern solution to help retirees protect their portfolios from market crashes while maintaining growth potential.</p>
+<p><strong>New to options?</strong> Check out our <a class="reference internal" href="options_primer.html"><span class="std std-doc">Put Options Primer</span></a> for essential background.</p>
+<section id="project-team">
+<h2>Project Team<a class="headerlink" href="#project-team" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Akhil Karra</p></li>
+<li><p>Zoe Xu</p></li>
+<li><p>Vivaan Shroff</p></li>
+<li><p>Wendy Wang</p></li>
+</ul>
+</section>
+<section id="what-is-portfolio-insurance">
+<h2>What is Portfolio Insurance?<a class="headerlink" href="#what-is-portfolio-insurance" title="Permalink to this heading">#</a></h2>
+<p><strong>Portfolio insurance</strong> is a risk management strategy that uses financial derivatives (in our case, put options) to limit losses from declining asset prices. Think of it like home insurance for your investment portfolio:</p>
+<ul class="simple">
+<li><p>You pay a premium (the cost of the options)</p></li>
+<li><p>If nothing bad happens (market goes up), you lose the premium but your portfolio gains value</p></li>
+<li><p>If disaster strikes (market crashes), the insurance pays out to cover your losses</p></li>
+</ul>
+<p>By strategically purchasing put options on the S&amp;P 500 index, we can create a “floor” that limits maximum portfolio losses while allowing participation in market gains.</p>
+<section id="how-it-works">
+<h3>How It Works<a class="headerlink" href="#how-it-works" title="Permalink to this heading">#</a></h3>
+<p>Just as you insure your home against fire or theft, portfolio insurance protects your investments against market crashes. The key difference: you’re using financial derivatives (options) rather than traditional insurance contracts.</p>
+<p><strong>A put option</strong> gives you the right (but not obligation) to sell an asset at a predetermined price (the “strike price”). If the market crashes below that price, your put options increase in value, offsetting losses in your portfolio. If the market goes up, you simply don’t exercise the options—the only cost is the premium you paid upfront.</p>
+</section>
+</section>
+<section id="the-challenge">
+<h2>The Challenge<a class="headerlink" href="#the-challenge" title="Permalink to this heading">#</a></h2>
+<p>Upcoming retirees face a critical trade-off:</p>
+<ol class="arabic simple">
+<li><p><strong>Stay in stocks</strong>: Maintain growth potential and inflation protection, but risk catastrophic losses right when income stops</p></li>
+<li><p><strong>Move to bonds</strong>: Preserve capital but earn minimal returns in today’s low interest-rate environment</p></li>
+</ol>
+<p><strong>The scale of this problem is unprecedented</strong>: The Population Reference Bureau projects that “the number of Americans ages 65 and older is projected to nearly double from 52 million in 2018 to 95 million by 2060.” Combined with longer lifespans (20-30+ year retirements) and persistent inflation risk, traditional asset allocation strategies may no longer provide adequate protection for the trillions of dollars at stake.</p>
+<p>For a deeper dive into why this problem matters, see our <a class="reference internal" href="motivation.html"><span class="std std-doc">detailed motivation</span></a>.</p>
+</section>
+<section id="our-approach">
+<h2>Our Approach<a class="headerlink" href="#our-approach" title="Permalink to this heading">#</a></h2>
+<p>We use operations research and optimization to address two key questions:</p>
+<ol class="arabic simple">
+<li><p><strong>“What is the optimal protection level?”</strong> - Determining the right balance between downside protection and cost (i.e., what maximum loss percentage makes sense for retirees)</p></li>
+<li><p><strong>“What is the cheapest way to achieve that protection?”</strong> - Finding the most cost-effective combination of put options to guarantee a portfolio won’t lose more than a specified percentage over a given period</p></li>
+</ol>
+<p>The optimization model:</p>
+<ul class="simple">
+<li><p><strong>Minimizes</strong>: Total cost of purchasing options</p></li>
+<li><p><strong>While ensuring</strong>: Portfolio is protected against a range of potential market scenarios</p></li>
+<li><p><strong>Allows</strong>: Full participation in market upside</p></li>
+<li><p><strong>Determines</strong>: The optimal protection level that balances safety and affordability</p></li>
+</ul>
+</section>
+<section id="documentation-contents">
+<h2>Documentation Contents<a class="headerlink" href="#documentation-contents" title="Permalink to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Project Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="options_primer.html">Put Options Primer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hello_world.html">Hello World Example</a></li>
+</ul>
 </div>
+</section>
+</section>
 
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./source"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
 
                     </div>
                     
@@ -232,27 +325,27 @@
                 <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
                     <ul class="nav bd-sidenav nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="source/motivation.html">
+  <a class="reference internal" href="motivation.html">
    Project Motivation
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="source/options_primer.html">
+  <a class="reference internal" href="options_primer.html">
    Put Options Primer
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="source/installation.html">
+  <a class="reference internal" href="installation.html">
    Installation Guide
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="source/contributing.html">
+  <a class="reference internal" href="contributing.html">
    Contributing Guide
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="source/hello_world.html">
+  <a class="reference internal" href="hello_world.html">
    Hello World Example
   </a>
  </li>
@@ -274,13 +367,13 @@
 
                 <ul class="qe-toolbar__main">
                     <li data-tippy-content="Table of Contents" class="btn__sidebar"><i data-feather="menu"></i></li>
-                    <li data-tippy-content="Home"><a href="source/index.html"><i data-feather="home"></i></a></li>
+                    <li data-tippy-content="Home"><a href="#"><i data-feather="home"></i></a></li>
                     <li class="btn__qelogo"><a href="https://cmu-21393-f25-group-D.github.io/options-hedge" title=""><span class="show-for-sr">Options Hedge</span></a></li>
                 </ul>
 
                 <ul class="qe-toolbar__links">
                     <li class="btn__search">
-                        <form action="search.html" method="get">
+                        <form action="../search.html" method="get">
                             <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" accesskey="k">
                             <i data-feather="search" id="search-icon"></i>
                         </form>
@@ -292,7 +385,7 @@
                         <li data-tippy-content="Download PDF" onClick="window.print()"><i data-feather="file"></i></li>
                     <!--
                     # Enable if looking for link to specific document hosted on GitHub
-                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/cmu-21393-f25-group-D/options-hedge/blob/main/docs/" download><i data-feather="github"></i></a></li>
+                    <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/cmu-21393-f25-group-D/options-hedge/blob/main/docs/source/index.md" download><i data-feather="github"></i></a></li>
                     -->
                     <li data-tippy-content="View Source"><a target="_blank" href="https://github.com/cmu-21393-f25-group-D/options-hedge" download><i data-feather="github"></i></a></li>
                 </ul>
@@ -362,7 +455,7 @@
                 }
                 const launcherPublic = document.getElementById('launcher-public-input');
                 const launcherPrivate = document.getElementById('launcher-private-input');
-                const pageName = "genindex";
+                const pageName = "source/index";
                 const repoURL = "";
                 const urlPath = "";
                 const branch = ""

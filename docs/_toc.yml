@@ -12,3 +12,5 @@ chapters:
     title: Contributing Guide
   - file: source/hello_world
     title: Hello World Example
+  - file: source/portfolio_simulation
+    title: Portfolio Simulation & Hedging

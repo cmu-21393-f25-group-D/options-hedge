@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/cmu-21393-f25-group-D/options-hedge/actions/workflows/ci.yml/badge.svg)](https://github.com/cmu-21393-f25-group-D/options-hedge/actions/workflows/ci.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/cmu-21393-f25-group-D/options-hedge/main.svg)](https://results.pre-commit.ci/latest/github/cmu-21393-f25-group-D/options-hedge/main)
+[![Coverage](https://raw.githubusercontent.com/cmu-21393-f25-group-D/options-hedge/main/coverage.svg)](https://github.com/cmu-21393-f25-group-D/options-hedge)
 [![Jupyter Book](https://img.shields.io/badge/Jupyter%20Book-Docs-blue?logo=jupyter)](https://cmu-21393-f25-group-D.github.io/options-hedge)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -11,6 +12,27 @@
 > **A modern solution to the retirement dilemma**: How can retirees protect their portfolios from market crashes while maintaining growth potential?
 
 This project uses operations research and optimization to find cost-effective combinations of S&P 500 put options that provide downside protection while preserving upside potential.
+
+## ⚠️ IMPORTANT DISCLAIMER
+
+**This is an educational project developed for CMU 21-393 (Operations Research II). NOT suitable for actual investment decisions.**
+
+**Key limitations and simplifying assumptions:**
+
+- **Simplified option pricing:** Uses intrinsic value only (no Black-Scholes, no Greeks, no time decay, no implied volatility surface)
+- **Free-tier data:** Uses yfinance instead of professional data vendors (subject to survivorship bias and data quality issues)
+- **Educational focus:** Designed to demonstrate OR concepts, not production portfolio management
+
+**Always consult a licensed financial advisor for real investment decisions.**
+
+**What this project demonstrates:**
+
+- ✅ Linear programming for cost minimization under portfolio floor constraints
+- ✅ VIX-adaptive hedging strategies
+- ✅ Transaction cost modeling (bid-ask spreads for options)
+- ✅ Simulation framework with multiple hedging strategies
+- ✅ Software engineering best practices (testing, type hints, CI/CD)
+- ✅ Integration of optimization with financial simulations
 
 📖 **[Read the full documentation](https://cmu-21393-f25-group-D.github.io/options-hedge)**
 
@@ -42,10 +64,12 @@ With the U.S. population aged 65+ projected to nearly double from 52 million (20
 - **Stay in stocks?** Risk catastrophic losses right when income stops
 - **Move to bonds?** Accept minimal returns and lose purchasing power to inflation
 
-We use optimization to determine:
+We use **linear programming** to determine:
 
-1. What is the optimal protection level for retirement portfolios?
-2. What is the cheapest combination of options to achieve that protection?
+1. What is the optimal protection level for retirement portfolios? (VIX-adaptive floor)
+2. What is the cheapest combination of put options to achieve that protection? (LP cost minimization)
+
+**Key OR contribution:** `vix_floor_lp.py` implements a scenario-free linear program that minimizes premium costs subject to portfolio floor constraints, with adaptive floor levels based on market volatility (VIX) and portfolio beta.
 
 🔍 **[Explore the full motivation and problem statement](https://cmu-21393-f25-group-D.github.io/options-hedge/motivation.html)**
 
@@ -90,4 +114,12 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Academic Integrity Notice
 
-This project was developed as coursework for CMU 21-393 (Operations Research). While the code is open source under the MIT License, we strongly encourage students in similar courses to develop their own solutions. This repository is intended as a reference and learning resource, not a template for submission.
+This project was developed as coursework for CMU 21-393 (Operations Research). While the code is open source under the MIT License, we strongly encourage students in similar courses to develop their own solutions.
+
+**This repository demonstrates:**
+
+- How to apply linear programming to real-world portfolio problems
+- Software engineering practices for OR projects (testing, type hints, documentation)
+- Integration of optimization with financial simulations
+
+**Use this as inspiration, not a template.** The learning comes from wrestling with the problem yourself.

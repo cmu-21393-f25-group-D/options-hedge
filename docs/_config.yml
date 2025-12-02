@@ -11,8 +11,9 @@ only_build_toc_files: true
 # Force re-execution of notebooks on each build
 execute:
   execute_notebooks: auto
-  timeout: 60
+  timeout: 300  # 5 minutes for portfolio simulation
   run_in_temp: true
+  allow_errors: false
 
 # LaTeX settings
 latex:

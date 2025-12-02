@@ -12,3 +12,5 @@ chapters:
     title: Contributing Guide
   - file: source/hello_world
     title: Hello World Example
+  - file: simulate_portfolio
+    title: Portfolio Simulation (VIX-Ladder LP)

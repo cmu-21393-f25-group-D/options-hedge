@@ -8,7 +8,7 @@ on:
 
 # Default permissions; override per-job
 permissions:
-  contents: read
+  contents: write  # Needed to push coverage badge
 
 jobs:
   test:
@@ -58,12 +58,32 @@ jobs:
 
     - name: Run tests with pytest
       run: |
-        uv pip install pytest pytest-cov
-        uv run pytest --cov=src tests/
+        uv pip install pytest pytest-cov coverage-badge
+        uv run pytest --cov=src --cov-report=term --cov-report=xml tests/
+
+    - name: Generate coverage badge
+      if: github.ref == 'refs/heads/main' && success()
+      run: |
+        uv run coverage-badge -o coverage.svg -f
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       if: success()
+
+    - name: Commit coverage badge
+      if: github.ref == 'refs/heads/main' && success()
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add coverage.svg || true
+        git diff --staged --quiet || git commit -m "Update coverage badge [skip ci]"
+
+    - name: Push coverage badge
+      if: github.ref == 'refs/heads/main' && success()
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
 
   docs:
     runs-on: ubuntu-latest

@@ -1,7 +1,30 @@
 """Portfolio insurance optimization using options."""
 
-from .options_hedge import solve_simple_lp
+from .analyzer import PortfolioAnalyzer
+from .market import Market
+from .option import Option
+from .portfolio import Portfolio
+from .simulation import run_simulation
+from .strategies import (
+    conditional_hedging_strategy,
+    quarterly_protective_put_strategy,
+    vix_ladder_strategy,
+)
+from .vix_floor_lp import PutOption, solve_vix_ladder_lp
 
-__version__ = "0.1.0"
-
-__all__ = ["solve_simple_lp"]
+__all__ = [
+    # Core components
+    "Market",
+    "Option",
+    "Portfolio",
+    "run_simulation",
+    # Analysis
+    "PortfolioAnalyzer",
+    # Strategies
+    "quarterly_protective_put_strategy",
+    "conditional_hedging_strategy",
+    "vix_ladder_strategy",
+    # VIX-Ladder LP
+    "PutOption",
+    "solve_vix_ladder_lp",
+]

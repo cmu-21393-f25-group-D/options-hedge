@@ -108,3 +108,5 @@ pip-log.txt
 *~.nib
 *.swp
 *.cache
+src/options_hedge/_version.py
+*.bak

@@ -12,7 +12,7 @@ from options_hedge.strategies import vix_ladder_strategy
 class SimpleMock:
     """Simple mock object for testing."""
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         for key, value in kwargs.items():
             setattr(self, key, value)
 

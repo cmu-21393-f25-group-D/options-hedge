@@ -20,6 +20,10 @@ class FakeMarket:
             index=idx,
         )
 
+    def get_vix(self, date: pd.Timestamp) -> float:
+        """Mock VIX getter."""
+        return 20.0
+
 
 def dummy_strategy(
     portfolio: Portfolio,

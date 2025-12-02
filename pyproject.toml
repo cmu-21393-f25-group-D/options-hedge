@@ -92,10 +92,6 @@ disallow_untyped_defs = true
 check_untyped_defs = true
 exclude = ["tests/", "notebooks/"]
 
-[[tool.mypy.overrides]]
-module = ["tests.*", "notebooks.*"]
-disallow_untyped_defs = false
-
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = "-ra -q --cov=src"

@@ -16,6 +16,12 @@ repos:
       args: [--fix]
     - id: ruff-format
 
+- repo: https://github.com/kynan/nbstripout
+  rev: 0.8.1
+  hooks:
+    - id: nbstripout
+      files: ^notebooks/.*\.ipynb$
+
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.19.0
   hooks:

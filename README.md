@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/cmu-21393-f25-group-D/options-hedge/actions/workflows/ci.yml/badge.svg)](https://github.com/cmu-21393-f25-group-D/options-hedge/actions/workflows/ci.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/cmu-21393-f25-group-D/options-hedge/main.svg)](https://results.pre-commit.ci/latest/github/cmu-21393-f25-group-D/options-hedge/main)
-[![Coverage](https://raw.githubusercontent.com/cmu-21393-f25-group-D/options-hedge/main/coverage.svg)](https://github.com/cmu-21393-f25-group-D/options-hedge)
+[![codecov](https://codecov.io/gh/cmu-21393-f25-group-D/options-hedge/branch/main/graph/badge.svg)](https://codecov.io/gh/cmu-21393-f25-group-D/options-hedge)
 [![Jupyter Book](https://img.shields.io/badge/Jupyter%20Book-Docs-blue?logo=jupyter)](https://cmu-21393-f25-group-D.github.io/options-hedge)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

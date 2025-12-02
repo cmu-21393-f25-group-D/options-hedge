@@ -2786,7 +2786,7 @@ wheels = [
 
 [[package]]
 name = "options-hedge"
-version = "0.1.dev73+g69e198fa9.d20251202"
+version = "0.1.dev77+gc7274b7fc"
 source = { editable = "." }
 dependencies = [
     { name = "gurobipy" },

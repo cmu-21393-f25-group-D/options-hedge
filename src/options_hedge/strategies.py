@@ -95,7 +95,7 @@ def estimate_put_premium(
         premium_pct = intrinsic_pct + time_value_pct
 
     # Floor at 0.1% (minimum for transaction costs)
-    return max(premium_pct, 0.001)
+    return float(max(premium_pct, 0.001))
 
 
 def quarterly_protective_put_strategy(
@@ -230,13 +230,13 @@ def conditional_hedging_strategy(
 
 
 def vix_ladder_strategy(
-    portfolio,
-    current_price,
-    current_date,
-    params,
-    market,
-    verbose=False,
-):
+    portfolio: Portfolio,
+    current_price: float,
+    current_date: datetime,
+    params: Dict[str, Any],
+    market: MarketLike,
+    verbose: bool = False,
+) -> float:
     """
     VIX-responsive ladder strategy using the VIX-Ladder LP.
 
@@ -277,7 +277,7 @@ def vix_ladder_strategy(
     # Extract parameters
     vix = params.get("vix", None)
     if vix is None:
-        vix = market.get_vix(current_date)
+        vix = market.get_vix(pd.Timestamp(current_date))
         if vix is None:
             raise ValueError(
                 f"VIX data not available for {current_date}. "

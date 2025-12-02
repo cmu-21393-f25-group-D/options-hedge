@@ -6,6 +6,8 @@ American-style put options before expiration.
 
 from __future__ import annotations
 
+from typing import Any
+
 import pandas as pd
 
 from .option import Option
@@ -15,7 +17,7 @@ def should_exercise_never(
     option: Option,
     current_price: float,
     current_date: pd.Timestamp,
-    **kwargs,
+    **kwargs: Any,
 ) -> bool:
     """Never exercise early (European-style behavior).
 
@@ -42,7 +44,7 @@ def should_exercise_at_expiry_only(
     option: Option,
     current_price: float,
     current_date: pd.Timestamp,
-    **kwargs,
+    **kwargs: Any,
 ) -> bool:
     """Exercise only at expiration (current behavior).
 
@@ -73,7 +75,7 @@ def should_exercise_threshold(
     current_price: float,
     current_date: pd.Timestamp,
     time_value_threshold: float = 0.02,
-    **kwargs,
+    **kwargs: Any,
 ) -> bool:
     """Exercise when time value falls below threshold.
 
@@ -127,7 +129,7 @@ def should_exercise_vix_regime(
     prev_vix: float,
     vix_decline_threshold: float = 0.15,
     moneyness_threshold: float = 0.90,
-    **kwargs,
+    **kwargs: Any,
 ) -> bool:
     """Exercise when VIX drops significantly (market stabilizing).
 
@@ -195,7 +197,7 @@ def should_exercise_optimal_boundary(
     volatility: float,
     risk_free_rate: float = 0.045,
     min_days_to_expiry: int = 30,
-    **kwargs,
+    **kwargs: Any,
 ) -> bool:
     """Exercise based on approximate optimal stopping boundary.
 
@@ -254,7 +256,7 @@ def should_exercise_optimal_boundary(
         return False
 
     # Compute moneyness S/K
-    moneyness = current_price / option.strike
+    moneyness: float = current_price / option.strike
 
     # Approximate optimal exercise boundary
     # Rule: Exercise when S/K < critical_moneyness
@@ -269,7 +271,7 @@ def should_exercise_optimal_boundary(
     # High vol → wait longer before exercising
     vol_adjustment = 0.15 * (time_to_expiry_years**0.5) * volatility
 
-    critical_moneyness = base_level + vol_adjustment
+    critical_moneyness: float = base_level + vol_adjustment
 
     # Exercise if current moneyness below critical level
     return moneyness < critical_moneyness
@@ -283,7 +285,7 @@ def should_exercise_hybrid(
     prev_vix: float,
     volatility: float,
     risk_free_rate: float = 0.045,
-    **kwargs,
+    **kwargs: Any,
 ) -> bool:
     """Hybrid rule combining VIX regime and optimal boundary.
 

@@ -176,14 +176,16 @@ class PortfolioAnalyzer:
             self.data[strategy_col].iloc[-1] / self.data[strategy_col].iloc[0]
         )
         n_years = len(self.data) / 252  # Trading days per year
-        cagr = total_return ** (1 / n_years) - 1
+        cagr = float(total_return ** (1 / n_years) - 1)
 
         # Downside standard deviation (annualized)
         neg_returns = self.returns.loc[self.returns[strategy_col] < 0, strategy_col]
-        downside_std = neg_returns.std() * np.sqrt(252) if len(neg_returns) > 0 else 0
+        downside_std = (
+            float(neg_returns.std() * np.sqrt(252)) if len(neg_returns) > 0 else 0.0
+        )
 
         if downside_std == 0:
-            return np.nan
+            return float(np.nan)
 
         return float((cagr - self.rf) / downside_std)
 
@@ -215,15 +217,15 @@ class PortfolioAnalyzer:
             self.data[strategy_col].iloc[-1] / self.data[strategy_col].iloc[0]
         )
         n_years = len(self.data) / 252
-        cagr = total_return ** (1 / n_years) - 1
+        cagr = float(total_return ** (1 / n_years) - 1)
 
         # Maximum drawdown
         peaks = self.data[strategy_col].cummax()
         drawdowns = (self.data[strategy_col] - peaks) / peaks
-        max_drawdown = drawdowns.min()
+        max_drawdown = float(drawdowns.min())
 
         if max_drawdown == 0:
-            return np.nan
+            return float(np.nan)
 
         return float(cagr / abs(max_drawdown))
 

@@ -7,7 +7,7 @@ API:
 """
 
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 # Constants
 DEFAULT_ALPHA = 0.05
@@ -46,7 +46,7 @@ def solve_vix_ladder_lp(
     T_years: float,
     alpha: float = DEFAULT_ALPHA,
     vix: float = 20.0,
-    ladder_budget_allocations=None,
+    ladder_budget_allocations: Optional[List[Tuple[float, float, float]]] = None,
     transaction_cost_rate: float = 0.0,
 ) -> Tuple[List[float], float, float]:
     """Solve ladder LP with VIX-responsive budget for diversified protection.
@@ -124,7 +124,7 @@ def solve_vix_ladder_lp(
     ]
 
     # Categorize options into rungs
-    rung_indices = [[] for _ in range(4)]
+    rung_indices: List[List[int]] = [[] for _ in range(4)]
     for j, opt in enumerate(options):
         otm_pct = (S0 - opt.strike) / S0
         for k, (_, otm_min, otm_max) in enumerate(ladder_rungs):
@@ -180,7 +180,7 @@ def solve_vix_ladder_lp(
     # Greedy fallback: allocate budget proportionally to ladder requirements
     x_sol = [0.0] * len(options)
 
-    for k, (name, _, _) in enumerate(ladder_rungs):
+    for k, (_name, _, _) in enumerate(ladder_rungs):
         budget_frac = budget_fracs[k]
         if not rung_indices[k] or budget_frac <= 0:
             continue

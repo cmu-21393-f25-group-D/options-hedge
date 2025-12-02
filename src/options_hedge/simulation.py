@@ -15,6 +15,10 @@ from .portfolio import Portfolio
 class MarketLike(Protocol):  # pragma: no cover - structural typing aid
     data: pd.DataFrame
 
+    def get_vix(self, date: pd.Timestamp) -> float:
+        """Get VIX value for a specific date."""
+        ...
+
 
 StrategyFunction = Callable[
     [Portfolio, float, datetime, Dict[str, Any], MarketLike], None

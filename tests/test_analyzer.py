@@ -338,5 +338,6 @@ class TestPortfolioAnalyzer:
         summary = analyzer.get_summary()
 
         # Should still produce metrics
-        assert summary.loc["Strategy", "Total Return (%)"] < 0
+        total_return = summary.loc["Strategy", "Total Return (%)"]
+        assert total_return < 0  # type: ignore[operator]
         assert isinstance(summary.loc["Strategy", "Beta"], (int, float))

@@ -168,8 +168,10 @@ def conditional_hedging_strategy(
     expiry_days = params.get("expiry_days", DEFAULT_EXPIRY_DAYS)
 
     ts_date = pd.Timestamp(current_date)
-    past_data = market.data.loc[:ts_date].tail(ANNUAL_TRADING_DAYS)
-    recent_data = market.data.loc[:ts_date].tail(lookback_days)
+    past_data = market.data.loc[:ts_date].tail(  # type: ignore[misc]
+        ANNUAL_TRADING_DAYS
+    )
+    recent_data = market.data.loc[:ts_date].tail(lookback_days)  # type: ignore[misc]  # noqa: E501
     if len(recent_data) < lookback_days or len(past_data) < MIN_HISTORICAL_DAYS:
         return
 

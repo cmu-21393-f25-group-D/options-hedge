@@ -136,7 +136,7 @@ class Market:
         KeyError
             If date not in index (e.g., weekend, holiday, out of range)
         """
-        value = self.data.loc[date, "Close"]  # type: ignore[call-overload]
+        value = self.data.loc[date, "Close"]  # type: ignore[index]
         return float(value)  # type: ignore[arg-type]
 
     def get_returns(self) -> pd.Series:  # pragma: no cover

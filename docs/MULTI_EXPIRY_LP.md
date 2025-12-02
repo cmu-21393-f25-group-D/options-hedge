@@ -209,20 +209,20 @@ Coverage: Through March 24 (near market trough)
 
 ### V-Shaped Crashes (COVID, 1987)
 
-**Single expiry:** -5% to -7% drag (overpay for recovery coverage)  
-**Multi-expiry:** -1% to -2% drag (short-dated during crash)  
+**Single expiry:** -5% to -7% drag (overpay for recovery coverage)
+**Multi-expiry:** -1% to -2% drag (short-dated during crash)
 **Improvement:** +3% to +5%
 
 ### Extended Volatility (GFC 2008-2009)
 
-**Single expiry:** -3% to -4% drag  
-**Multi-expiry:** -2% to -3% drag (can roll short-dated)  
+**Single expiry:** -3% to -4% drag
+**Multi-expiry:** -2% to -3% drag (can roll short-dated)
 **Improvement:** +1% to +2%
 
 ### False Alarms (VIX spike with no crash)
 
-**Single expiry:** Locked into 90-day premium  
-**Multi-expiry:** 14-day expires quickly, minimal loss  
+**Single expiry:** Locked into 90-day premium
+**Multi-expiry:** 14-day expires quickly, minimal loss
 **Improvement:** +0.5% to +1%
 
 ---
@@ -310,7 +310,7 @@ lp_params_covid = {
 }
 
 results_lp_covid = run_simulation(
-    market_covid, portfolio_lp_covid, 
+    market_covid, portfolio_lp_covid,
     lp_vix_adaptive_floor_strategy, lp_params_covid
 )
 ```

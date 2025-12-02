@@ -240,7 +240,7 @@ portfolio = Portfolio(initial_value=1_000_000)
 # Daily loop
 for date, price in market_data:
     # ... strategy logic ...
-    
+
     # Check early exercise
     num_exercised = portfolio.check_early_exercise(
         current_price=price,
@@ -251,7 +251,7 @@ for date, price in market_data:
         volatility=0.40,
         risk_free_rate=0.045,
     )
-    
+
     # ... continue simulation ...
 ```
 

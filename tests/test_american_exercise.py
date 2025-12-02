@@ -1,9 +1,8 @@
 """Tests for American option early exercise rules."""
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import pandas as pd
-import pytest
 
 from options_hedge.american_exercise import (
     should_exercise_at_expiry_only,
@@ -333,9 +332,15 @@ class TestPortfolioEarlyExercise:
 
         # Buy 3 puts with different strikes
         expiry = datetime(2024, 12, 31)
-        portfolio.buy_put(strike=4200, premium=100, expiry=expiry, quantity=1)  # Deep ITM
-        portfolio.buy_put(strike=4000, premium=80, expiry=expiry, quantity=1)  # Moderate ITM
-        portfolio.buy_put(strike=3800, premium=50, expiry=expiry, quantity=1)  # Shallow ITM
+        portfolio.buy_put(
+            strike=4200, premium=100, expiry=expiry, quantity=1
+        )  # Deep ITM
+        portfolio.buy_put(
+            strike=4000, premium=80, expiry=expiry, quantity=1
+        )  # Moderate ITM
+        portfolio.buy_put(
+            strike=3800, premium=50, expiry=expiry, quantity=1
+        )  # Shallow ITM
 
         current_date = pd.Timestamp("2024-12-20")
         current_price = 3500

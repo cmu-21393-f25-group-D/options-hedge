@@ -1,8 +1,10 @@
 """Tests for VIX-Ladder strategy."""
 
-from datetime import datetime, timedelta
+from datetime import datetime
+
 import pandas as pd
 import pytest
+
 from options_hedge.portfolio import Portfolio
 from options_hedge.strategies import vix_ladder_strategy
 
@@ -13,13 +15,13 @@ class SimpleMock:
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-        
+
         # If not provided, create a simple DataFrame with Close prices
-        if not hasattr(self, 'data'):
+        if not hasattr(self, "data"):
             # Create 100 days of fake price data with realistic volatility
-            dates = pd.date_range(start='2020-01-01', periods=100)
+            dates = pd.date_range(start="2020-01-01", periods=100)
             closes = [4000.0 * (1.0 + i * 0.0001) for i in range(100)]
-            self.data = pd.DataFrame({'Close': closes}, index=dates)
+            self.data = pd.DataFrame({"Close": closes}, index=dates)
 
 
 class TestVixLadderStrategy:
@@ -40,10 +42,8 @@ class TestVixLadderStrategy:
         }
 
         initial_options = len(portfolio.options)
-        
-        cost = vix_ladder_strategy(
-            portfolio, 4000.0, current_date, params, market
-        )
+
+        cost = vix_ladder_strategy(portfolio, 4000.0, current_date, params, market)
 
         # Should have purchased some options
         assert len(portfolio.options) > initial_options
@@ -65,9 +65,7 @@ class TestVixLadderStrategy:
             "strike_density": 0.10,
         }
 
-        cost = vix_ladder_strategy(
-            portfolio, 4000.0, current_date, params, market
-        )
+        cost = vix_ladder_strategy(portfolio, 4000.0, current_date, params, market)
 
         # Should have created some hedge
         assert "last_lp_hedge" in params
@@ -109,9 +107,7 @@ class TestVixLadderStrategy:
             "strike_density": 0.15,
         }
 
-        cost = vix_ladder_strategy(
-            portfolio, 4000.0, current_date, params, market
-        )
+        cost = vix_ladder_strategy(portfolio, 4000.0, current_date, params, market)
 
         # Should use explicit VIX and complete
         assert "last_lp_hedge" in params
@@ -139,9 +135,7 @@ class TestVixLadderStrategy:
             "strike_density": 0.15,
         }
 
-        cost = vix_ladder_strategy(
-            portfolio, 4000.0, current_date, params, market
-        )
+        cost = vix_ladder_strategy(portfolio, 4000.0, current_date, params, market)
 
         assert "last_lp_hedge" in params
         assert cost > 0
@@ -162,9 +156,7 @@ class TestVixLadderStrategy:
 
         initial_equity = portfolio.equity_value
 
-        cost = vix_ladder_strategy(
-            portfolio, 4000.0, current_date, params, market
-        )
+        cost = vix_ladder_strategy(portfolio, 4000.0, current_date, params, market)
 
         # Should have sold equity to raise cash
         assert portfolio.equity_value < initial_equity
@@ -220,9 +212,7 @@ class TestVixLadderStrategy:
             "strike_density": 0.15,
         }
 
-        cost = vix_ladder_strategy(
-            portfolio, 4000.0, current_date, params, market
-        )
+        cost = vix_ladder_strategy(portfolio, 4000.0, current_date, params, market)
 
         assert "last_lp_hedge" in params
         assert cost > 0
@@ -246,6 +236,4 @@ class TestVixLadderStrategy:
 
         # Should raise error when VIX not provided and market lacks get_vix
         with pytest.raises(AttributeError):
-            vix_ladder_strategy(
-                portfolio, 4000.0, current_date, params, market
-            )
+            vix_ladder_strategy(portfolio, 4000.0, current_date, params, market)

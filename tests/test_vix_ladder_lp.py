@@ -1,6 +1,7 @@
 """Tests for VIX-Ladder LP solver."""
 
 import pytest
+
 from options_hedge.vix_floor_lp import PutOption, solve_vix_ladder_lp
 
 
@@ -85,7 +86,9 @@ class TestSolveVixLadderLP:
             PutOption(strike=3800, premium=20, expiry_years=0.25),  # 5% OTM - shallow
             PutOption(strike=3400, premium=15, expiry_years=0.25),  # 15% OTM - medium
             PutOption(strike=3000, premium=12, expiry_years=0.25),  # 25% OTM - deep
-            PutOption(strike=2400, premium=8, expiry_years=0.25),   # 40% OTM - catastrophic
+            PutOption(
+                strike=2400, premium=8, expiry_years=0.25
+            ),  # 40% OTM - catastrophic
         ]
 
         quantities, total_cost, budget = solve_vix_ladder_lp(

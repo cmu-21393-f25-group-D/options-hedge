@@ -32,7 +32,7 @@ def estimate_put_premium(strike, spot, days_to_expiry, vix=20):
     moneyness = strike / spot
     implied_vol = vix / 100.0
     time_factor = (days_to_expiry / 365.0) ** 0.5
-    
+
     if moneyness < 1.0:  # OTM put
         distance = 1.0 - moneyness
         premium_pct = distance * implied_vol * time_factor * 0.4
@@ -40,7 +40,7 @@ def estimate_put_premium(strike, spot, days_to_expiry, vix=20):
         intrinsic_pct = (strike - spot) / spot
         time_value_pct = implied_vol * time_factor * 0.1
         premium_pct = intrinsic_pct + time_value_pct
-    
+
     return max(premium_pct, 0.001)  # Floor at 0.1%
 ```
 
@@ -244,4 +244,3 @@ This is why most institutions:
 - Calibration to match CBOE SPX option quotes (2015-2024)
 - VIX data from CBOE VIX Index (historical)
 - Transaction costs: 5% bid-ask spread (conservative estimate)
-

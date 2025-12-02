@@ -18,7 +18,7 @@ def should_exercise_never(
     **kwargs,
 ) -> bool:
     """Never exercise early (European-style behavior).
-    
+
     Parameters
     ----------
     option : Option
@@ -29,7 +29,7 @@ def should_exercise_never(
         Current date
     **kwargs
         Ignored (for interface compatibility)
-    
+
     Returns
     -------
     bool
@@ -45,7 +45,7 @@ def should_exercise_at_expiry_only(
     **kwargs,
 ) -> bool:
     """Exercise only at expiration (current behavior).
-    
+
     Parameters
     ----------
     option : Option
@@ -56,7 +56,7 @@ def should_exercise_at_expiry_only(
         Current date
     **kwargs
         Ignored (for interface compatibility)
-    
+
     Returns
     -------
     bool
@@ -64,7 +64,7 @@ def should_exercise_at_expiry_only(
     """
     expiry_ts = pd.Timestamp(option.expiry)
     intrinsic = max(option.strike - current_price, 0)
-    
+
     return current_date >= expiry_ts and intrinsic > 0
 
 
@@ -76,10 +76,10 @@ def should_exercise_threshold(
     **kwargs,
 ) -> bool:
     """Exercise when time value falls below threshold.
-    
+
     Exercise if intrinsic value is positive and remaining time value
     is less than threshold fraction of intrinsic value.
-    
+
     Parameters
     ----------
     option : Option
@@ -92,12 +92,12 @@ def should_exercise_threshold(
         Exercise when time_value < threshold × intrinsic (default: 0.02 = 2%)
     **kwargs
         Ignored (for interface compatibility)
-    
+
     Returns
     -------
     bool
         True if should exercise now
-        
+
     Examples
     --------
     >>> opt = Option(strike=4000, premium=100, expiry=datetime(2024, 12, 31))
@@ -107,14 +107,14 @@ def should_exercise_threshold(
     True  # Time value only 2% of intrinsic, exercise now
     """
     intrinsic = max(option.strike - current_price, 0)
-    
+
     if intrinsic == 0:
         return False
-    
+
     # Current option value includes both intrinsic and time value
     total_value = option.value(current_price, current_date)
     time_value = total_value - intrinsic
-    
+
     # Exercise if time value has decayed to negligible amount
     return time_value < time_value_threshold * intrinsic
 
@@ -130,10 +130,10 @@ def should_exercise_vix_regime(
     **kwargs,
 ) -> bool:
     """Exercise when VIX drops significantly (market stabilizing).
-    
+
     Exercises deep ITM puts when volatility regime shifts from high to low,
     indicating market has likely bottomed and is stabilizing.
-    
+
     Parameters
     ----------
     option : Option
@@ -152,12 +152,12 @@ def should_exercise_vix_regime(
         Exercise when S/K below this level (default: 0.90 = 10% ITM)
     **kwargs
         Ignored (for interface compatibility)
-    
+
     Returns
     -------
     bool
         True if should exercise now
-        
+
     Examples
     --------
     >>> # COVID crash: VIX peaked at 82, then dropped to 60 (-27%)
@@ -169,21 +169,21 @@ def should_exercise_vix_regime(
     True  # VIX dropped 27%, exercise to lock in gains
     """
     intrinsic = max(option.strike - current_price, 0)
-    
+
     if intrinsic == 0:
         return False
-    
+
     # Check moneyness (S/K)
     moneyness = current_price / option.strike
     is_deep_itm = moneyness < moneyness_threshold
-    
+
     # Check VIX decline (signal of market stabilization)
     if prev_vix <= 0:
         return False  # Invalid previous VIX
-    
+
     vix_change = (current_vix - prev_vix) / prev_vix
     vix_declining_sharply = vix_change < -vix_decline_threshold
-    
+
     # Exercise if deep ITM AND VIX has dropped significantly
     return is_deep_itm and vix_declining_sharply
 
@@ -198,11 +198,11 @@ def should_exercise_optimal_boundary(
     **kwargs,
 ) -> bool:
     """Exercise based on approximate optimal stopping boundary.
-    
+
     Uses simplified Longstaff-Schwartz approximation. Exercises when
     moneyness crosses below critical threshold that depends on time
     remaining and volatility.
-    
+
     Parameters
     ----------
     option : Option
@@ -219,19 +219,19 @@ def should_exercise_optimal_boundary(
         Don't exercise if more than this many days remain (default: 30)
     **kwargs
         Ignored (for interface compatibility)
-    
+
     Returns
     -------
     bool
         True if should exercise now
-        
+
     Notes
     -----
     Approximate optimal boundary for American puts:
     S* / K ≈ 0.80 + 0.15 × sqrt(T) × σ
-    
+
     Where T = time to expiry (years), σ = volatility
-    
+
     Examples
     --------
     >>> # Deep ITM put with 20 days to expiry, high vol (40%)
@@ -242,35 +242,35 @@ def should_exercise_optimal_boundary(
     True  # Below optimal boundary, exercise now
     """
     intrinsic = max(option.strike - current_price, 0)
-    
+
     if intrinsic == 0:
         return False
-    
+
     expiry_ts = pd.Timestamp(option.expiry)
     days_to_expiry = (expiry_ts - current_date).days
-    
+
     # Don't exercise if too far from expiry (preserve optionality)
     if days_to_expiry > min_days_to_expiry:
         return False
-    
+
     # Compute moneyness S/K
     moneyness = current_price / option.strike
-    
+
     # Approximate optimal exercise boundary
     # Rule: Exercise when S/K < critical_moneyness
     # Formula: S*/K ≈ base_level + volatility_adjustment
     time_to_expiry_years = days_to_expiry / 365.0
-    
+
     # Base level decreases with interest rates (carrying cost)
     # High rates → exercise earlier to capture intrinsic value
     base_level = 0.85 - 0.10 * risk_free_rate
-    
+
     # Volatility adjustment increases boundary (more optionality)
     # High vol → wait longer before exercising
-    vol_adjustment = 0.15 * (time_to_expiry_years ** 0.5) * volatility
-    
+    vol_adjustment = 0.15 * (time_to_expiry_years**0.5) * volatility
+
     critical_moneyness = base_level + vol_adjustment
-    
+
     # Exercise if current moneyness below critical level
     return moneyness < critical_moneyness
 
@@ -286,14 +286,14 @@ def should_exercise_hybrid(
     **kwargs,
 ) -> bool:
     """Hybrid rule combining VIX regime and optimal boundary.
-    
+
     Exercises when EITHER:
     1. VIX regime shift detected (market stabilizing), OR
     2. Optimal boundary crossed (deep ITM near expiry)
-    
+
     This combines market timing signal (VIX) with mathematical
     optimality (boundary), providing robust exercise decisions.
-    
+
     Parameters
     ----------
     option : Option
@@ -312,12 +312,12 @@ def should_exercise_hybrid(
         Risk-free rate (default: 0.045 = 4.5%)
     **kwargs
         Additional parameters passed to sub-rules
-    
+
     Returns
     -------
     bool
         True if should exercise now
-        
+
     Examples
     --------
     >>> # COVID crash recovery (VIX 80→55, S=2600, K=3200)
@@ -329,17 +329,21 @@ def should_exercise_hybrid(
     """
     # Try VIX regime rule first (market signal)
     if should_exercise_vix_regime(
-        option, current_price, current_date,
+        option,
+        current_price,
+        current_date,
         current_vix=current_vix,
         prev_vix=prev_vix,
-        **kwargs
+        **kwargs,
     ):
         return True
-    
+
     # Fall back to optimal boundary (mathematical rule)
     return should_exercise_optimal_boundary(
-        option, current_price, current_date,
+        option,
+        current_price,
+        current_date,
         volatility=volatility,
         risk_free_rate=risk_free_rate,
-        **kwargs
+        **kwargs,
     )

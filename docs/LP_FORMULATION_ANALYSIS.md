@@ -38,11 +38,11 @@ where:
 **Issue**: LP assumes crash happens EXACTLY at option expiry (e.g., 90 days)
 
 **Example (GFC Jan 2008)**:
-- LP expects: S&P drops to $1107 (-23.5%) in 90 days  
+- LP expects: S&P drops to $1107 (-23.5%) in 90 days
 - Reality: S&P was $1370 (-5.3%) in 90 days
 - **Options expired worthless** (crash came later in Oct 2008)
 
-**Impact**: 
+**Impact**:
 - Bought protection for timing that didn't match reality
 - $1,392 in premiums wasted
 - Portfolio underperformed unhedged by $29K (-3%)
@@ -77,7 +77,7 @@ Gap G: $0 ← NO GAP!
 
 **Why this happens**:
 - α=0.05 (2-sigma) expects -17% to -25% crash
-- Floor targets 80-85% of portfolio  
+- Floor targets 80-85% of portfolio
 - If crash is only -17%, unhedged portfolio at $827K already above $826K target
 - Mathematically correct, but economically wrong (ignores path dependency, timing)
 
@@ -85,7 +85,7 @@ Gap G: $0 ← NO GAP!
 
 **Issue**: LP assumes European-style terminal payoff only
 
-**Reality**: 
+**Reality**:
 - American puts can exercise early if profitable
 - Volatility path matters for option value
 - LP model: `payoff = max(K - S_final, 0)`
@@ -104,7 +104,7 @@ Constraints: Σ(a_j^k * x_j) ≥ G_k  ∀k ∈ scenarios
 
 where scenarios include:
 - Immediate crash (-20% in 30 days)
-- Gradual decline (-30% over 90 days)  
+- Gradual decline (-30% over 90 days)
 - Delayed crash (flat 60 days, then -25%)
 - No crash (sideways)
 
@@ -123,7 +123,7 @@ where scenarios include:
 
 **Formulation**:
 ```
-Decision variables: 
+Decision variables:
   x_j ≥ 0 (option quantities)
   s ≥ 0   (slack/shortfall)
 
@@ -199,7 +199,7 @@ where delta_j = option sensitivity to underlying price
 
 **Why this is best for OR II**:
 
-1. **Pedagogical Value**: 
+1. **Pedagogical Value**:
    - Shows how objective function design affects solution quality
    - Demonstrates soft vs hard constraints
    - Explores Pareto frontier (cost vs coverage)
@@ -226,7 +226,7 @@ where delta_j = option sensitivity to underlying price
 ### Expected Results
 
 **With λ=0 (current)**:
-- Buys cheap deep OTM puts  
+- Buys cheap deep OTM puts
 - Low cost ($1-2K)
 - Poor protection
 - Underperforms unhedged by -3%
@@ -309,7 +309,7 @@ The current LP formulation demonstrates a classic OR pitfall: **optimizing the w
 
 **For OR II project**, implementing **Solution 2 (Risk-Adjusted Cost)** provides:
 - ✅ Clear problem statement
-- ✅ Theoretical justification  
+- ✅ Theoretical justification
 - ✅ Empirical testing framework
 - ✅ Sensitivity analysis opportunities
 - ✅ Real-world impact
@@ -324,7 +324,7 @@ The current LP formulation demonstrates a classic OR pitfall: **optimizing the w
 
 ---
 
-**File**: `docs/LP_FORMULATION_ANALYSIS.md`  
-**Date**: December 2, 2025  
-**Course**: OR II  
+**File**: `docs/LP_FORMULATION_ANALYSIS.md`
+**Date**: December 2, 2025
+**Course**: OR II
 **Topic**: Linear Programming, Portfolio Optimization, Financial Engineering

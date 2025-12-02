@@ -8,7 +8,7 @@ import pytest
 from options_hedge.portfolio import Portfolio
 
 
-def test_option_exercise_at_expiry():
+def test_option_exercise_at_expiry() -> None:
     """Verify that ITM options are exercised and payoff realized in cash."""
     # Setup
     portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
@@ -46,7 +46,7 @@ def test_option_exercise_at_expiry():
     )
 
 
-def test_option_expires_worthless():
+def test_option_expires_worthless() -> None:
     """Verify that OTM options expire worthless without cash impact."""
     portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
@@ -69,7 +69,7 @@ def test_option_expires_worthless():
     assert portfolio.cash == cash_after_purchase, "OTM option should not add cash"
 
 
-def test_option_not_exercised_before_expiry():
+def test_option_not_exercised_before_expiry() -> None:
     """Verify that options are not exercised before expiry date."""
     portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
@@ -90,7 +90,7 @@ def test_option_not_exercised_before_expiry():
     assert len(portfolio.options) == 1, "Option should not be exercised before expiry"
 
 
-def test_multiple_options_exercise():
+def test_multiple_options_exercise() -> None:
     """Verify that multiple options exercise correctly."""
     portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 

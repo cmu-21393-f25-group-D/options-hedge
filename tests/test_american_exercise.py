@@ -19,7 +19,7 @@ from options_hedge.portfolio import Portfolio
 class TestExerciseRules:
     """Test suite for early exercise decision rules."""
 
-    def test_should_exercise_never(self):
+    def test_should_exercise_never(self) -> None:
         """Verify never-exercise rule always returns False."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -40,7 +40,7 @@ class TestExerciseRules:
             is False
         )
 
-    def test_should_exercise_at_expiry_only_before_expiry(self):
+    def test_should_exercise_at_expiry_only_before_expiry(self) -> None:
         """Verify at-expiry rule doesn't exercise early."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -53,7 +53,7 @@ class TestExerciseRules:
         )
         assert result is False
 
-    def test_should_exercise_at_expiry_only_at_expiry_itm(self):
+    def test_should_exercise_at_expiry_only_at_expiry_itm(self) -> None:
         """Verify at-expiry rule exercises ITM options at expiration."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -66,7 +66,7 @@ class TestExerciseRules:
         )
         assert result is True
 
-    def test_should_exercise_at_expiry_only_at_expiry_otm(self):
+    def test_should_exercise_at_expiry_only_at_expiry_otm(self) -> None:
         """Verify at-expiry rule doesn't exercise OTM options."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -79,7 +79,7 @@ class TestExerciseRules:
         )
         assert result is False
 
-    def test_should_exercise_threshold_high_time_value(self):
+    def test_should_exercise_threshold_high_time_value(self) -> None:
         """Verify threshold rule preserves options with significant time value."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -100,7 +100,7 @@ class TestExerciseRules:
         # With intrinsic-only pricing, time_value = 0, so always exercises ITM
         assert result is True
 
-    def test_should_exercise_threshold_low_time_value(self):
+    def test_should_exercise_threshold_low_time_value(self) -> None:
         """Verify threshold rule exercises when time value negligible."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -119,7 +119,7 @@ class TestExerciseRules:
         # Should exercise (time value < 2% of intrinsic near expiry)
         assert result is True
 
-    def test_should_exercise_vix_regime_vix_rising(self):
+    def test_should_exercise_vix_regime_vix_rising(self) -> None:
         """Verify VIX rule doesn't exercise when volatility rising."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -137,7 +137,7 @@ class TestExerciseRules:
 
         assert result is False  # Don't exercise when VIX rising
 
-    def test_should_exercise_vix_regime_vix_falling_deep_itm(self):
+    def test_should_exercise_vix_regime_vix_falling_deep_itm(self) -> None:
         """Verify VIX rule exercises when volatility drops and deep ITM."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -156,7 +156,7 @@ class TestExerciseRules:
 
         assert result is True  # Exercise: VIX fell >15% and deep ITM
 
-    def test_should_exercise_vix_regime_shallow_itm(self):
+    def test_should_exercise_vix_regime_shallow_itm(self) -> None:
         """Verify VIX rule doesn't exercise shallow ITM options."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -175,7 +175,7 @@ class TestExerciseRules:
 
         assert result is False  # Not deep enough ITM
 
-    def test_should_exercise_optimal_boundary_far_from_expiry(self):
+    def test_should_exercise_optimal_boundary_far_from_expiry(self) -> None:
         """Verify optimal boundary rule preserves optionality when far from expiry."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -193,7 +193,7 @@ class TestExerciseRules:
 
         assert result is False  # Don't exercise with >30 days remaining
 
-    def test_should_exercise_optimal_boundary_near_expiry_deep_itm(self):
+    def test_should_exercise_optimal_boundary_near_expiry_deep_itm(self) -> None:
         """Verify optimal boundary rule exercises deep ITM near expiry."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -212,7 +212,7 @@ class TestExerciseRules:
 
         assert result is True  # Exercise: below boundary, near expiry
 
-    def test_should_exercise_optimal_boundary_high_volatility(self):
+    def test_should_exercise_optimal_boundary_high_volatility(self) -> None:
         """Verify optimal boundary preserves options in high volatility."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -234,7 +234,7 @@ class TestExerciseRules:
         # S/K = 0.85 < 0.87, should exercise
         assert result is True
 
-    def test_should_exercise_hybrid_vix_trigger(self):
+    def test_should_exercise_hybrid_vix_trigger(self) -> None:
         """Verify hybrid rule exercises on VIX regime shift."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -254,7 +254,7 @@ class TestExerciseRules:
 
         assert result is True  # VIX regime shift triggers exercise
 
-    def test_should_exercise_hybrid_boundary_trigger(self):
+    def test_should_exercise_hybrid_boundary_trigger(self) -> None:
         """Verify hybrid rule exercises on optimal boundary crossing."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -275,7 +275,7 @@ class TestExerciseRules:
         # VIX rule won't trigger, but boundary rule should
         assert result is True
 
-    def test_should_exercise_hybrid_no_trigger(self):
+    def test_should_exercise_hybrid_no_trigger(self) -> None:
         """Verify hybrid rule preserves options when neither condition met."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -300,7 +300,7 @@ class TestExerciseRules:
 class TestPortfolioEarlyExercise:
     """Test portfolio integration with early exercise."""
 
-    def test_check_early_exercise_basic(self):
+    def test_check_early_exercise_basic(self) -> None:
         """Verify basic early exercise functionality."""
         portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
@@ -326,7 +326,7 @@ class TestPortfolioEarlyExercise:
         expected_cash = -105 + 1000  # ≈ 895
         assert abs(portfolio.cash - expected_cash) < 1.0
 
-    def test_check_early_exercise_multiple_options(self):
+    def test_check_early_exercise_multiple_options(self) -> None:
         """Verify selective exercise of multiple options."""
         portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
@@ -365,7 +365,7 @@ class TestPortfolioEarlyExercise:
         remaining_strikes = {opt.strike for opt in portfolio.options}
         assert remaining_strikes == {4000, 3800}
 
-    def test_check_early_exercise_skip_expired(self):
+    def test_check_early_exercise_skip_expired(self) -> None:
         """Verify early exercise skips already-expired options."""
         portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
@@ -386,7 +386,7 @@ class TestPortfolioEarlyExercise:
         assert num_exercised == 0  # Expired options handled separately
         assert len(portfolio.options) == 1  # Still in list (not removed)
 
-    def test_check_early_exercise_otm_options(self):
+    def test_check_early_exercise_otm_options(self) -> None:
         """Verify early exercise doesn't exercise OTM options."""
         portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
@@ -407,7 +407,7 @@ class TestPortfolioEarlyExercise:
         assert num_exercised == 0
         assert len(portfolio.options) == 1  # Option preserved
 
-    def test_early_exercise_hybrid_covid_scenario(self):
+    def test_early_exercise_hybrid_covid_scenario(self) -> None:
         """Verify hybrid rule in COVID crash recovery scenario."""
         portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 

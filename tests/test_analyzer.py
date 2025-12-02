@@ -9,7 +9,7 @@ from options_hedge.analyzer import PortfolioAnalyzer
 class TestPortfolioAnalyzer:
     """Test PortfolioAnalyzer class."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test analyzer initialization."""
         data = pd.DataFrame(
             {
@@ -27,7 +27,7 @@ class TestPortfolioAnalyzer:
         assert "Strategy_A" in analyzer.returns.columns
         assert "Benchmark" in analyzer.returns.columns
 
-    def test_beta_calculation(self):
+    def test_beta_calculation(self) -> None:
         """Test beta calculation."""
         # Create data where strategy returns are proportional to benchmark
         dates = pd.date_range("2020-01-01", periods=100)
@@ -53,7 +53,7 @@ class TestPortfolioAnalyzer:
         # Beta should be close to 1.5
         assert 1.4 < beta < 1.6
 
-    def test_beta_perfect_correlation(self):
+    def test_beta_perfect_correlation(self) -> None:
         """Test beta with perfect positive correlation."""
         dates = pd.date_range("2020-01-01", periods=100)
         benchmark = np.linspace(100, 120, 100)
@@ -72,7 +72,7 @@ class TestPortfolioAnalyzer:
 
         assert abs(beta - 1.0) < 0.01
 
-    def test_capture_ratios(self):
+    def test_capture_ratios(self) -> None:
         """Test upside and downside capture ratios."""
         dates = pd.date_range("2020-01-01", periods=100)
 
@@ -103,7 +103,7 @@ class TestPortfolioAnalyzer:
         assert 70 < up < 90
         assert 40 < down < 60
 
-    def test_capture_ratios_all_positive(self):
+    def test_capture_ratios_all_positive(self) -> None:
         """Test capture ratios with only positive returns."""
         dates = pd.date_range("2020-01-01", periods=50)
         benchmark = np.linspace(100, 150, 50)  # Always increasing
@@ -123,7 +123,7 @@ class TestPortfolioAnalyzer:
         assert up > 0  # Should have upside capture
         assert pd.isna(down) or down == 0  # No down markets
 
-    def test_sortino_ratio(self):
+    def test_sortino_ratio(self) -> None:
         """Test Sortino ratio calculation."""
         dates = pd.date_range("2020-01-01", periods=252)  # 1 year
 
@@ -148,7 +148,7 @@ class TestPortfolioAnalyzer:
         assert isinstance(sortino, float)
         assert not pd.isna(sortino)
 
-    def test_sortino_no_downside(self):
+    def test_sortino_no_downside(self) -> None:
         """Test Sortino ratio with no negative returns."""
         dates = pd.date_range("2020-01-01", periods=100)
         strategy = np.linspace(100, 150, 100)  # Always increasing
@@ -168,7 +168,7 @@ class TestPortfolioAnalyzer:
         # No downside volatility -> should be NaN or very high
         assert pd.isna(sortino) or sortino > 10
 
-    def test_calmar_ratio(self):
+    def test_calmar_ratio(self) -> None:
         """Test Calmar ratio calculation."""
         dates = pd.date_range("2020-01-01", periods=252)
 
@@ -191,7 +191,7 @@ class TestPortfolioAnalyzer:
         assert not pd.isna(calmar)
         assert calmar > 0  # Positive return, should be positive
 
-    def test_calmar_no_drawdown(self):
+    def test_calmar_no_drawdown(self) -> None:
         """Test Calmar ratio with no drawdown."""
         dates = pd.date_range("2020-01-01", periods=100)
         strategy = np.linspace(100, 150, 100)  # Always increasing
@@ -211,7 +211,7 @@ class TestPortfolioAnalyzer:
         # No drawdown -> should be NaN or very high
         assert pd.isna(calmar) or calmar > 100
 
-    def test_get_summary(self):
+    def test_get_summary(self) -> None:
         """Test summary table generation."""
         dates = pd.date_range("2020-01-01", periods=252)
 
@@ -242,7 +242,7 @@ class TestPortfolioAnalyzer:
         assert "Strategy_B" in summary.index
         assert "Benchmark" in summary.index
 
-    def test_summary_values_reasonable(self):
+    def test_summary_values_reasonable(self) -> None:
         """Test that summary values are in reasonable ranges."""
         dates = pd.date_range("2020-01-01", periods=252)
 
@@ -266,7 +266,7 @@ class TestPortfolioAnalyzer:
             assert -500 < summary.loc[strategy, "Up Capture (%)"] < 500
             assert -500 < summary.loc[strategy, "Down Capture (%)"] < 500
 
-    def test_custom_risk_free_rate(self):
+    def test_custom_risk_free_rate(self) -> None:
         """Test analyzer with custom risk-free rate."""
         dates = pd.date_range("2020-01-01", periods=100)
 
@@ -284,7 +284,7 @@ class TestPortfolioAnalyzer:
 
         assert analyzer.rf == 0.03
 
-    def test_empty_strategy_column(self):
+    def test_empty_strategy_column(self) -> None:
         """Test behavior with strategy that has no data."""
         dates = pd.date_range("2020-01-01", periods=100)
 
@@ -302,7 +302,7 @@ class TestPortfolioAnalyzer:
         beta = analyzer.calculate_beta("Strategy")
         assert isinstance(beta, float)
 
-    def test_benchmark_beta_is_one(self):
+    def test_benchmark_beta_is_one(self) -> None:
         """Test that benchmark's beta vs itself is 1.0."""
         dates = pd.date_range("2020-01-01", periods=100)
 
@@ -318,7 +318,7 @@ class TestPortfolioAnalyzer:
 
         assert abs(beta - 1.0) < 0.01  # Should be very close to 1
 
-    def test_negative_returns_handling(self):
+    def test_negative_returns_handling(self) -> None:
         """Test handling of strategies with negative total returns."""
         dates = pd.date_range("2020-01-01", periods=252)
 

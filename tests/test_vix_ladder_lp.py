@@ -8,14 +8,14 @@ from options_hedge.vix_floor_lp import PutOption, solve_vix_ladder_lp
 class TestPutOption:
     """Test PutOption dataclass."""
 
-    def test_put_option_creation(self):
+    def test_put_option_creation(self) -> None:
         """Test creating a PutOption instance."""
         opt = PutOption(strike=4000.0, premium=50.0, expiry_years=0.25)
         assert opt.strike == 4000.0
         assert opt.premium == 50.0
         assert opt.expiry_years == 0.25
 
-    def test_put_option_fields(self):
+    def test_put_option_fields(self) -> None:
         """Test PutOption has correct fields."""
         opt = PutOption(strike=3800.0, premium=30.0, expiry_years=0.5)
         assert hasattr(opt, "strike")
@@ -26,7 +26,7 @@ class TestPutOption:
 class TestSolveVixLadderLP:
     """Test solve_vix_ladder_lp function."""
 
-    def test_empty_options(self):
+    def test_empty_options(self) -> None:
         """Test LP with no options returns empty solution."""
         quantities, total_cost, budget = solve_vix_ladder_lp(
             options=[],
@@ -41,7 +41,7 @@ class TestSolveVixLadderLP:
         assert total_cost == 0.0
         assert budget == 0.0
 
-    def test_budget_calculation(self):
+    def test_budget_calculation(self) -> None:
         """Test VIX-responsive budget formula."""
         # Base case: VIX=20, beta=1.0 → 1% budget
         _, _, budget1 = solve_vix_ladder_lp(
@@ -79,7 +79,7 @@ class TestSolveVixLadderLP:
         )
         assert budget3 == pytest.approx(15_000, rel=0.01)  # 1.5% of 1M
 
-    def test_ladder_rungs_categorization(self):
+    def test_ladder_rungs_categorization(self) -> None:
         """Test options are categorized into correct ladder rungs."""
         S0 = 4000.0
         options = [
@@ -107,7 +107,7 @@ class TestSolveVixLadderLP:
         # At least some options should be purchased
         assert sum(1 for q in quantities if q > 0) > 0
 
-    def test_transaction_costs(self):
+    def test_transaction_costs(self) -> None:
         """Test transaction costs are applied correctly."""
         # Need multiple options across rungs for meaningful comparison
         options = [
@@ -146,7 +146,7 @@ class TestSolveVixLadderLP:
         assert cost_no_txn >= 0
         assert cost_with_txn >= 0
 
-    def test_ladder_budget_allocations_tuple_format(self):
+    def test_ladder_budget_allocations_tuple_format(self) -> None:
         """Test ladder allocations with tuple format."""
         options = [
             PutOption(strike=3800, premium=20, expiry_years=0.25),
@@ -176,7 +176,7 @@ class TestSolveVixLadderLP:
         assert total_cost > 0
         assert total_cost <= budget
 
-    def test_ladder_budget_allocations_float_format(self):
+    def test_ladder_budget_allocations_float_format(self) -> None:
         """Test ladder allocations with float format."""
         options = [
             PutOption(strike=3800, premium=20, expiry_years=0.25),
@@ -195,13 +195,13 @@ class TestSolveVixLadderLP:
             sigma=0.2,
             T_years=0.25,
             vix=20.0,
-            ladder_budget_allocations=ladder_allocs,
+            ladder_budget_allocations=ladder_allocs,  # type: ignore[arg-type]
         )
 
         assert total_cost > 0
         assert total_cost <= budget
 
-    def test_greedy_fallback(self):
+    def test_greedy_fallback(self) -> None:
         """Test greedy fallback when Gurobi not available."""
         options = [
             PutOption(strike=3800, premium=50, expiry_years=0.25),
@@ -226,7 +226,7 @@ class TestSolveVixLadderLP:
         assert total_cost >= 0
         assert budget > 0
 
-    def test_low_vix_reduces_budget(self):
+    def test_low_vix_reduces_budget(self) -> None:
         """Test that low VIX reduces budget."""
         options = [PutOption(strike=3800, premium=50, expiry_years=0.25)]
 
@@ -254,7 +254,7 @@ class TestSolveVixLadderLP:
 
         assert budget_low < budget_high
 
-    def test_beta_below_one_uses_one(self):
+    def test_beta_below_one_uses_one(self) -> None:
         """Test that beta < 1.0 is clamped to 1.0."""
         options = [PutOption(strike=3800, premium=50, expiry_years=0.25)]
 
@@ -283,7 +283,7 @@ class TestSolveVixLadderLP:
         # Should be equal (beta clamped to min 1.0)
         assert budget1 == pytest.approx(budget2)
 
-    def test_returns_correct_tuple_length(self):
+    def test_returns_correct_tuple_length(self) -> None:
         """Test that function returns 3-tuple."""
         options = [PutOption(strike=3800, premium=50, expiry_years=0.25)]
 

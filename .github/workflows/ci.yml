@@ -118,6 +118,23 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-uv-docs-
 
+    - name: Execute notebooks and copy to docs
+      run: |
+        # Install jupyter and nbconvert
+        uv pip install jupyter nbconvert
+
+        # Execute each notebook and save to docs with outputs
+        for notebook in notebooks/*.ipynb; do
+          basename=$(basename "$notebook")
+          echo "Executing $basename..."
+          uv run jupyter nbconvert --to notebook --execute \
+            --output-dir=docs \
+            --output="$basename" \
+            "$notebook"
+        done
+
+        echo "Executed notebooks copied to docs/"
+
     - name: Build documentation
       run: |
         cd docs

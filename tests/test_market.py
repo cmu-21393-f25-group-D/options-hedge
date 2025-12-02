@@ -43,9 +43,7 @@ def test_market_initialization_with_mock(
         assert len(market.data) == 5  # type: ignore[arg-type]
 
         # First return should be 0.0 (no previous day)
-        first_return = (
-            market.data["Returns"].iloc[0]  # type: ignore[attr-defined]
-        )
+        first_return = market.data["Returns"].iloc[0]  # type: ignore[attr-defined]
         assert first_return == 0.0
 
 

@@ -3,8 +3,8 @@ from gurobipy import GRB
 
 
 def solve_portfolio_insurance(
-    Is: list, S: list, K: dict, p: dict, Q: float, r: dict, L: float,
-    name: str = "Test") -> None:
+    Is: list, S: list, K: dict, p: dict, Q: float, r: dict, L: float, name: str = "Test"
+) -> None:
     print("\n" + "=" * 60)
     print(f"  {name}")
     print("=" * 60)

@@ -219,68 +219,25 @@ class Portfolio:
 
     def check_early_exercise(
         self,
-        current_price: float,
-        current_date: pd.Timestamp,
-        exercise_rule: Callable[..., bool],
-        **kwargs: Any,
+        current_price: float,  # noqa: ARG002
+        current_date: pd.Timestamp,  # noqa: ARG002
+        exercise_rule: Callable[..., bool],  # noqa: ARG002
+        **kwargs: Any,  # noqa: ARG002
     ) -> int:
-        """Check and execute early exercise for American options.
+        """Early exercise disabled (European-style behavior).
 
-        Evaluates each option using the provided exercise rule and exercises
-        those where the rule returns True. Exercised options realize their
-        payoff and are removed from the portfolio.
+        This project adopts European-style options for simplicity and clarity.
+        Early exercise is not permitted; payoffs are realized only at expiry
+        via `exercise_expired_options`.
 
-        Parameters
-        ----------
-        current_price : float
-            Current underlying price
-        current_date : pd.Timestamp
-            Current date
-        exercise_rule : Callable
-            Function with signature:
-            (option, current_price, current_date, **kwargs) -> bool
-            Returns True if option should be exercised
-        **kwargs
-            Additional parameters passed to exercise_rule (e.g., current_vix,
-            prev_vix, volatility, risk_free_rate)
+        Parameters are accepted for API compatibility but ignored.
 
         Returns
         -------
         int
-            Number of options exercised
-
-        Examples
-        --------
-        >>> from options_hedge.american_exercise import should_exercise_hybrid
-        >>> portfolio.check_early_exercise(
-        ...     current_price=2800,
-        ...     current_date=pd.Timestamp('2020-03-25'),
-        ...     exercise_rule=should_exercise_hybrid,
-        ...     current_vix=65, prev_vix=82, volatility=0.60
-        ... )
-        2  # Exercised 2 options based on VIX regime shift
+            Always 0; no options are exercised early.
         """
-        exercised: List[Option] = []
-
-        for opt in self.options:
-            # Skip expired options (handled by exercise_expired_options)
-            expiry_ts = pd.Timestamp(opt.expiry)
-            if current_date >= expiry_ts:
-                continue
-
-            # Check if should exercise now
-            if exercise_rule(opt, current_price, current_date, **kwargs):
-                # Realize payoff
-                payoff = opt.payoff(current_price)
-                if payoff > 0:
-                    self.cash += payoff
-                exercised.append(opt)
-
-        # Remove exercised options
-        if exercised:
-            self.options = [o for o in self.options if o not in exercised]
-
-        return len(exercised)
+        return 0
 
     def record(self, date: datetime, total_value: float) -> None:
         """Record portfolio value at a given date.

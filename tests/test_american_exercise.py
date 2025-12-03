@@ -35,7 +35,9 @@ class TestExerciseRules:
         # At expiry, should still not exercise
         assert (
             should_exercise_never(
-                opt, current_price=3500, current_date=pd.Timestamp("2024-12-31")
+                opt,
+                current_price=3500,
+                current_date=pd.Timestamp("2024-12-31"),
             )
             is False
         )
@@ -80,13 +82,15 @@ class TestExerciseRules:
         assert result is False
 
     def test_should_exercise_threshold_high_time_value(self) -> None:
-        """Verify threshold rule preserves options with significant time value."""
+        """Verify threshold rule preserves options with significant time
+        value."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
         )
         current_date = pd.Timestamp("2024-01-01")  # Far from expiry
 
-        # NOTE: Current Option.value() returns intrinsic value only (no time value)
+        # NOTE: Current Option.value() returns intrinsic value only
+        # (no time value)
         # So threshold rule will always exercise ITM options
         # This test documents current behavior; with Black-Scholes pricing,
         # the rule would preserve options with significant time value
@@ -176,7 +180,8 @@ class TestExerciseRules:
         assert result is False  # Not deep enough ITM
 
     def test_should_exercise_optimal_boundary_far_from_expiry(self) -> None:
-        """Verify optimal boundary rule preserves optionality when far from expiry."""
+        """Verify optimal boundary rule preserves optionality when far from
+        expiry."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
         )
@@ -193,7 +198,9 @@ class TestExerciseRules:
 
         assert result is False  # Don't exercise with >30 days remaining
 
-    def test_should_exercise_optimal_boundary_near_expiry_deep_itm(self) -> None:
+    def test_should_exercise_optimal_boundary_near_expiry_deep_itm(
+        self,
+    ) -> None:
         """Verify optimal boundary rule exercises deep ITM near expiry."""
         opt = Option(
             strike=4000, premium=100, expiry=datetime(2024, 12, 31), quantity=1
@@ -301,7 +308,7 @@ class TestPortfolioEarlyExercise:
     """Test portfolio integration with early exercise."""
 
     def test_check_early_exercise_basic(self) -> None:
-        """Verify basic early exercise functionality."""
+        """Verify no early exercise occurs under European policy."""
         portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
         # Buy deep ITM put near expiry
@@ -311,7 +318,7 @@ class TestPortfolioEarlyExercise:
         current_date = pd.Timestamp("2024-12-20")
         current_price = 3000  # Deep ITM
 
-        # Exercise using threshold rule
+        # Attempt early exercise (European policy should prevent)
         num_exercised = portfolio.check_early_exercise(
             current_price=current_price,
             current_date=current_date,
@@ -319,15 +326,15 @@ class TestPortfolioEarlyExercise:
             time_value_threshold=0.02,
         )
 
-        assert num_exercised == 1
-        assert len(portfolio.options) == 0  # Option removed
-        # Cash should increase by payoff: (4000 - 3000) × 1 = 1000
-        # Initial cash was -105 (premium + 5% TC), so final ≈ 895
-        expected_cash = -105 + 1000  # ≈ 895
+        # Early exercise disabled: no exercises, option remains
+        assert num_exercised == 0
+        assert len(portfolio.options) == 1
+        # Cash unchanged from purchase cost only
+        expected_cash = -105
         assert abs(portfolio.cash - expected_cash) < 1.0
 
     def test_check_early_exercise_multiple_options(self) -> None:
-        """Verify selective exercise of multiple options."""
+        """Verify no early exercises under European policy."""
         portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
         # Buy 3 puts with different strikes
@@ -345,7 +352,7 @@ class TestPortfolioEarlyExercise:
         current_date = pd.Timestamp("2024-12-20")
         current_price = 3500
 
-        # Exercise using VIX regime rule (VIX falling)
+        # Attempt early exercise (European policy should prevent)
         num_exercised = portfolio.check_early_exercise(
             current_price=current_price,
             current_date=current_date,
@@ -355,15 +362,9 @@ class TestPortfolioEarlyExercise:
             moneyness_threshold=0.85,  # Require S/K < 0.85
         )
 
-        # Should exercise strike=4200 (S/K = 3500/4200 = 0.833)
-        # Should NOT exercise strike=4000 (S/K = 3500/4000 = 0.875)
-        # Should NOT exercise strike=3800 (S/K = 3500/3800 = 0.921)
-        assert num_exercised == 1
-        assert len(portfolio.options) == 2
-
-        # Verify correct option was exercised (4200 strike removed)
-        remaining_strikes = {opt.strike for opt in portfolio.options}
-        assert remaining_strikes == {4000, 3800}
+        # Early exercise disabled: no exercises, all options remain
+        assert num_exercised == 0
+        assert len(portfolio.options) == 3
 
     def test_check_early_exercise_skip_expired(self) -> None:
         """Verify early exercise skips already-expired options."""
@@ -408,7 +409,7 @@ class TestPortfolioEarlyExercise:
         assert len(portfolio.options) == 1  # Option preserved
 
     def test_early_exercise_hybrid_covid_scenario(self) -> None:
-        """Verify hybrid rule in COVID crash recovery scenario."""
+        """Verify no early exercise in COVID scenario under European policy."""
         portfolio = Portfolio(initial_value=1_000_000, beta=1.0)
 
         # COVID scenario: bought 10 put contracts during panic
@@ -422,7 +423,7 @@ class TestPortfolioEarlyExercise:
         current_date = pd.Timestamp("2020-04-01")
         current_price = 2600  # S/K = 0.8125
 
-        # Exercise using hybrid rule
+        # Attempt early exercise using hybrid rule (should be disabled)
         num_exercised = portfolio.check_early_exercise(
             current_price=current_price,
             current_date=current_date,
@@ -433,14 +434,9 @@ class TestPortfolioEarlyExercise:
             risk_free_rate=0.01,  # Near-zero rates in 2020
         )
 
-        # Should exercise all 10: VIX regime shift detected
-        assert num_exercised == 10
-        assert len(portfolio.options) == 0
-
-        # Payoff per contract: (3200 - 2600) = 600
-        # Total payoff: 600 × 10 = 6000
-        # Premium + TC per contract: 200 × 1.05 = 210
-        # Total cost: 210 × 10 = 2100
-        # Final cash: -2100 + 6000 = 3900
-        expected_cash = -2100 + 6000
+        # Early exercise disabled: no exercises, options remain until expiry
+        assert num_exercised == 0
+        assert len(portfolio.options) == 10
+        # Cash should reflect only purchase costs
+        expected_cash = -(200 * 1.05) * 10
         assert abs(portfolio.cash - expected_cash) < 10.0

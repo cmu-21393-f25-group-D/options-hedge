@@ -1,8 +1,8 @@
 import gurobipy as gp
 from gurobipy import GRB
 
-def solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test"):
 
+def solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test"):
     print("\n" + "=" * 60)
     print(f"  {name}")
     print("=" * 60)
@@ -23,7 +23,7 @@ def solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test"):
     for s in S:
         m.addConstr(
             V[s] + gp.quicksum(Payoff[i, s] * x[i] for i in Is) + z[s] >= F,
-            name=f"downside_protection[{s}]"
+            name=f"downside_protection[{s}]",
         )
 
     m.optimize()
@@ -60,12 +60,13 @@ def test_case_1():
 
     r = {
         "crash": -0.40,
-        "mild":  -0.10,
-        "up":     0.10,
+        "mild": -0.10,
+        "up": 0.10,
     }
 
     solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 1")
     return None
+
 
 def test_case_2A():
     Is = ["K90", "K100"]
@@ -79,8 +80,8 @@ def test_case_2A():
 
     r = {
         "crash": -0.40,
-        "mild":  -0.10,
-        "up":     0.10,
+        "mild": -0.10,
+        "up": 0.10,
     }
 
     solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 2A (L=0.10)")
@@ -99,8 +100,8 @@ def test_case_2B():
 
     r = {
         "crash": -0.40,
-        "mild":  -0.10,
-        "up":     0.10,
+        "mild": -0.10,
+        "up": 0.10,
     }
 
     solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 2B (L=0.30)")
@@ -119,9 +120,9 @@ def test_case_3():
 
     r = {
         "crash": -0.50,
-        "bad":   -0.20,
-        "flat":   0.00,
-        "good":   0.15,
+        "bad": -0.20,
+        "flat": 0.00,
+        "good": 0.15,
     }
 
     solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 3")
@@ -140,9 +141,9 @@ def test_case_4():
 
     r = {
         "crash": -0.50,
-        "bad":   -0.20,
-        "flat":   0.00,
-        "good":   0.15,
+        "bad": -0.20,
+        "flat": 0.00,
+        "good": 0.15,
     }
 
     solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 4 (Q=1000)")
@@ -161,9 +162,9 @@ def test_case_5():
 
     r = {
         "crash": -0.35,
-        "down":  -0.15,
-        "flat":   0.00,
-        "up":     0.20,
+        "down": -0.15,
+        "flat": 0.00,
+        "up": 0.20,
     }
 
     solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 5")
@@ -188,9 +189,9 @@ def test_case_6():
         "s1": -0.50,
         "s2": -0.30,
         "s3": -0.15,
-        "s4":  0.00,
-        "s5":  0.10,
-        "s6":  0.25,
+        "s4": 0.00,
+        "s5": 0.10,
+        "s6": 0.25,
     }
 
     solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 6")

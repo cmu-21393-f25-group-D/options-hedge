@@ -2,7 +2,8 @@ import gurobipy as gp
 from gurobipy import GRB
 
 
-def solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test") -> None:
+def solve_portfolio_insurance(Is: list, S: list , K: dict, p: dict, Q: float,
+    r: dict, L: float, name="Test") -> None:
     print("\n" + "=" * 60)
     print(f"  {name}")
     print("=" * 60)
@@ -84,7 +85,8 @@ def test_case_2A() -> None:
         "up": 0.10,
     }
 
-    solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 2A (L=0.10)")
+    solve_portfolio_insurance(Is, S, K, p, Q, r, L, 
+                              name="Test Case 2A (L=0.10)")
     return None
 
 
@@ -104,7 +106,8 @@ def test_case_2B() -> None:
         "up": 0.10,
     }
 
-    solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 2B (L=0.30)")
+    solve_portfolio_insurance(Is, S, K, p, Q, r, L,
+                              name="Test Case 2B (L=0.30)")
     return None
 
 
@@ -146,7 +149,8 @@ def test_case_4() -> None:
         "good": 0.15,
     }
 
-    solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test Case 4 (Q=1000)")
+    solve_portfolio_insurance(Is, S, K, p, Q, r, L,
+                              name="Test Case 4 (Q=1000)")
     return None
 
 

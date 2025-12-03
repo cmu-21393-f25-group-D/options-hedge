@@ -2,7 +2,7 @@ from gurobipy import GRB
 import gurobipy as gp
 
 
-def solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test"):
+def solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test") -> None:
     print("\n" + "=" * 60)
     print(f"  {name}")
     print("=" * 60)
@@ -48,7 +48,7 @@ def solve_portfolio_insurance(Is, S, K, p, Q, r, L, name="Test"):
     return None
 
 
-def test_case_1():
+def test_case_1() -> None:
     Is = ["K90", "K100"]
     S = ["crash", "mild", "up"]
 
@@ -68,7 +68,7 @@ def test_case_1():
     return None
 
 
-def test_case_2A():
+def test_case_2A() -> None:
     Is = ["K90", "K100"]
     S = ["crash", "mild", "up"]
 
@@ -88,7 +88,7 @@ def test_case_2A():
     return None
 
 
-def test_case_2B():
+def test_case_2B() -> None:
     Is = ["K90", "K100"]
     S = ["crash", "mild", "up"]
 
@@ -108,7 +108,7 @@ def test_case_2B():
     return None
 
 
-def test_case_3():
+def test_case_3() -> None:
     Is = ["K80", "K90", "K100"]
     S = ["crash", "bad", "flat", "good"]
 
@@ -129,7 +129,7 @@ def test_case_3():
     return None
 
 
-def test_case_4():
+def test_case_4() -> None:
     Is = ["K80", "K90", "K100"]
     S = ["crash", "bad", "flat", "good"]
 
@@ -150,7 +150,7 @@ def test_case_4():
     return None
 
 
-def test_case_5():
+def test_case_5() -> None:
     Is = ["K85", "K95", "K105"]
     S = ["crash", "down", "flat", "up"]
 
@@ -171,7 +171,7 @@ def test_case_5():
     return None
 
 
-def test_case_6():
+def test_case_6() -> None:
     """
     Test Case 6 – More scenarios (stress testing)
     I = {K80, K90, K100, K110}, S = {s1,...,s6}

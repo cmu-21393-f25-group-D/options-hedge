@@ -169,9 +169,9 @@ class Market:
         if self._vix_series is None:
             raise ValueError("VIX data not fetched (fetch_vix=False).")
         if date in self._vix_series.index:
-            return float(self._vix_series.loc[date])
+            return float(self._vix_series.loc[date].iloc[0])
         # Use previous available date
         prior_dates = self._vix_series.index[self._vix_series.index <= date]
         if len(prior_dates) == 0:
             raise ValueError(f"No VIX data available on or before {date}.")
-        return float(self._vix_series.loc[prior_dates[-1]])
+        return float(self._vix_series.loc[prior_dates[-1]].iloc[0])

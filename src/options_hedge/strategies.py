@@ -9,6 +9,7 @@ from typing import Any, Dict
 
 import pandas as pd
 
+from .fixed_floor_lp import solve_fixed_floor_lp
 from .portfolio import Portfolio
 from .simulation import MarketLike  # structural typing
 from .vix_floor_lp import PutOption, solve_vix_ladder_lp
@@ -445,3 +446,219 @@ def vix_ladder_strategy(
     params["last_lp_hedge"] = current_date
 
     return total_cost
+
+
+def fixed_floor_lp_strategy(
+    portfolio: Portfolio,
+    current_price: float,
+    current_date: datetime,
+    params: Dict[str, Any],
+    market: MarketLike,
+    verbose: bool = False,
+) -> Dict[str, Any]:
+    """
+    Fixed floor portfolio insurance using LP optimization.
+
+    Solves an LP to minimize option premium cost while ensuring
+    portfolio value stays above a specified floor (1 - L) × Q across
+    all market scenarios.
+
+    Parameters
+    ----------
+    portfolio : Portfolio
+        Current portfolio state
+    current_price : float
+        Current market price
+    current_date : datetime
+        Current simulation date
+    params : dict
+        Strategy parameters:
+        - floor_ratio (L) : float (default 0.20, i.e., 20% max loss)
+        - scenario_returns : dict (default crash/mild/up scenarios)
+        - strike_levels : list of float (default [0.90, 1.00])
+        - expiry_days : int (default 90)
+        - hedge_interval : int (default 90, days between rehedging)
+    market : MarketLike
+        Market data (for VIX-based pricing)
+    verbose : bool
+        Print detailed execution logs
+
+    Returns
+    -------
+    dict
+        Dictionary with 'total_cost' and solution details
+    """
+    # Extract parameters
+    floor_ratio = params.get("floor_ratio", 0.20)  # L = 20% max loss
+    hedge_interval = params.get("hedge_interval", 90)
+    expiry_days = params.get("expiry_days", 90)
+
+    # Default scenario returns (crash, mild, up)
+    scenario_returns = params.get(
+        "scenario_returns",
+        {
+            "crash": -0.40,
+            "mild": -0.10,
+            "up": 0.10,
+        },
+    )
+
+    # Default strike levels as ratios of current price
+    strike_ratios = params.get("strike_ratios", [0.50, 0.70, 0.90, 1.00])
+
+    # Check if we should hedge (based on interval)
+    last_action = params.get("last_fixed_floor_action")
+    if last_action is not None and (current_date - last_action).days < hedge_interval:
+        return {"total_cost": 0.0, "action": "skipped"}
+
+    # Get VIX for realistic pricing
+    current_vix = DEFAULT_VIX_FOR_PRICING
+    if hasattr(market, "get_vix"):
+        try:
+            current_vix = market.get_vix(pd.Timestamp(current_date))
+        except (KeyError, AttributeError):
+            pass
+
+    # Build inputs for LP solver
+    Q = portfolio.equity_value + portfolio.cash  # Total portfolio value
+    L = floor_ratio
+
+    # Create strike labels and strike dict
+    Is = [f"K{int(ratio * 100)}" for ratio in strike_ratios]
+    K = {f"K{int(ratio * 100)}": current_price * ratio for ratio in strike_ratios}
+
+    # Estimate premiums using VIX-based pricing
+    p = {}
+    for label, strike in K.items():
+        premium_pct = estimate_put_premium(
+            strike, current_price, expiry_days, current_vix
+        )
+        # Premium per unit (percentage of Q)
+        p[label] = premium_pct * Q
+
+    # Scenario labels and returns
+    S = list(scenario_returns.keys())
+    r = scenario_returns
+
+    if verbose:
+        print(f"\n{'=' * 60}")
+        print(f"Fixed Floor LP Strategy - {current_date.date()}")
+        print(f"{'=' * 60}")
+        print(f"Portfolio Value (Q): ${Q:,.2f}")
+        print(f"Floor Ratio (L): {L:.1%}")
+        print(f"Floor Value (F): ${Q * (1 - L):,.2f}")
+        print(f"Current Price: ${current_price:,.2f}")
+        print(f"VIX: {current_vix:.2f}")
+        print("\nStrikes and Premiums:")
+        for label in Is:
+            print(f"  {label}: K=${K[label]:.2f}, p=${p[label]:.2f}")
+        print("\nScenarios:")
+        for scenario, ret in r.items():
+            print(f"  {scenario}: {ret:+.1%}")
+
+    # Solve LP
+    solution = solve_fixed_floor_lp(
+        Is=Is,
+        S=S,
+        K=K,
+        p=p,
+        Q=Q,
+        r=r,
+        L=L,
+        name=f"Fixed_Floor_{current_date.date()}",
+    )
+
+    # Check if solution is valid
+    if solution["status"] != "optimal" or solution["total_cost"] == 0.0:
+        # ALWAYS print infeasibility for debugging
+        print(
+            f"  ⚠️  {current_date.date()}: LP status={solution['status']}, "
+            f"strikes={len(Is)}, floor={L:.0%} - SKIPPED"
+        )
+        return {
+            "total_cost": 0.0,
+            "action": "skipped",
+            "note": f"LP {solution['status']}",
+        }
+
+    # Cash management: Ensure we have enough cash for purchases
+    total_cost = solution["total_cost"]
+    if portfolio.cash < total_cost:
+        cash_deficit = total_cost - portfolio.cash
+        equity_to_sell = cash_deficit * 1.01  # Small buffer
+
+        if portfolio.equity_value >= equity_to_sell:
+            portfolio.equity_value -= equity_to_sell
+            portfolio.cash += equity_to_sell
+            if verbose:
+                print(
+                    f"\n  💵 Rebalanced: Sold ${equity_to_sell:,.0f} "
+                    f"equity to fund Fixed Floor hedge"
+                )
+        else:
+            # Not enough equity - skip this round
+            if verbose:
+                print(
+                    f"  ⚠️  Insufficient equity to fund Fixed Floor "
+                    f"(need ${equity_to_sell:,.0f}, "
+                    f"have ${portfolio.equity_value:,.0f})"
+                )
+            return {
+                "total_cost": 0.0,
+                "action": "skipped",
+                "note": "Insufficient funds",
+            }
+
+    # Purchase options based on LP solution
+    expiry_date = current_date + timedelta(days=expiry_days)
+    options_purchased = 0
+
+    for label, quantity in solution["quantities"].items():
+        if quantity > 0.01:  # Only buy if quantity is meaningful
+            strike = K[label]
+            premium = p[label]
+
+            try:
+                portfolio.buy_put(
+                    strike=strike,
+                    expiry=expiry_date,
+                    premium=premium,
+                    quantity=int(quantity),
+                )
+                options_purchased += 1
+
+                if verbose:
+                    otm_pct = ((strike - current_price) / current_price) * 100
+                    days_to_exp = (expiry_date - current_date).days
+                    print(
+                        f"  🛡️  Bought {quantity:.2f} put(s): "
+                        f"K=${strike:.2f} "
+                        f"({otm_pct:+.1f}% {'OTM' if otm_pct < 0 else 'ITM'}), "
+                        f"exp={expiry_date.date()} ({days_to_exp}d), "
+                        f"cost=${premium * quantity:,.2f}"
+                    )
+            except ValueError as e:
+                if verbose:
+                    print(f"  ⚠️  Failed to purchase option {label}: {e}")
+                break
+
+    # Mark that we took action
+    params["last_fixed_floor_action"] = current_date
+
+    if verbose:
+        print(
+            f"\n  ✓ Fixed Floor hedge executed: "
+            f"{options_purchased} option types purchased"
+        )
+        print(f"  ✓ Total cost: ${total_cost:,.2f}")
+        print(
+            f"  ✓ Floor guarantee: ${Q * (1 - L):,.2f} "
+            f"({(1 - L) * 100:.0f}% of portfolio)"
+        )
+
+    return {
+        "total_cost": total_cost,
+        "action": "executed",
+        "options_purchased": options_purchased,
+        "floor_met": solution["floor_met"],
+    }

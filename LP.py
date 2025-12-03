@@ -1,5 +1,5 @@
-import gurobipy as gp
 from gurobipy import GRB
+import gurobipy as gp
 
 
 def solve_portfolio_insurance(Is: list, S: list , K: dict, p: dict, Q: float,

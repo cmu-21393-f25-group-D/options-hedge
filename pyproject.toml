@@ -24,9 +24,8 @@ dependencies = [
     "scipy>=1.10.0",
     "matplotlib>=3.7.0",
     "pandas-stubs>=2.2.2.240807",
-    "yfinance>=0.2.0",
-    "cryptography>=41.0.0", # For WRDS data encryption/decryption
-    "wrds>=3.4.0",
+    "yfinance>=0.2.0",  # Fallback market data when use_wrds=False
+    "cryptography>=41.0.0",  # For WRDS data encryption/decryption
 ]
 
 [project.optional-dependencies]

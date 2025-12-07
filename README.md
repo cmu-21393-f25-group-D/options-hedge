@@ -19,8 +19,8 @@ This project uses operations research and optimization to find cost-effective co
 
 **Key limitations and simplifying assumptions:**
 
-- **Simplified option pricing:** Uses intrinsic value only (no Black-Scholes, no Greeks, no time decay, no implied volatility surface)
-- **Free-tier data:** Uses yfinance instead of professional data vendors (subject to survivorship bias and data quality issues)
+- **Simplified option pricing:** Uses VIX-based Black-Scholes estimates with optional WRDS OptionMetrics data for backtesting accuracy
+- **Free-tier data:** Market data from yfinance; option data from WRDS (academic license) or synthetic pricing
 - **Educational focus:** Designed to demonstrate OR concepts, not production portfolio management
 
 **Always consult a licensed financial advisor for real investment decisions.**
@@ -107,6 +107,15 @@ cd docs && uv run jupyter-book build .
 ## Documentation
 
 Complete documentation is available at **[cmu-21393-f25-group-D.github.io/options-hedge](https://cmu-21393-f25-group-D.github.io/options-hedge)**
+
+## Data Sources
+
+- **Market Data**: Yahoo Finance (S&P 500, VIX) via yfinance
+- **Option Data**: Wharton Research Data Services (WRDS) OptionMetrics IvyDB US
+  - Access through academic subscription
+  - Data encrypted for compliance with WRDS license terms
+  - For academic use only
+  - See [WRDS Setup Guide](docs/WRDS_SETUP.md) for configuration
 
 ## License
 

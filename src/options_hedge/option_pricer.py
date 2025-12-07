@@ -82,11 +82,12 @@ class OptionPricer:
         wrds_data: Optional[pd.DataFrame] = None,
         strike_tolerance: float = DEFAULT_STRIKE_TOLERANCE,
         expiry_tolerance_days: int = DEFAULT_EXPIRY_TOLERANCE_DAYS,
-    ):
+    ) -> None:
         """Initialize option pricer."""
         self.use_wrds = use_wrds
         self.strike_tolerance = strike_tolerance
         self.expiry_tolerance_days = expiry_tolerance_days
+        self.wrds_data: Optional[pd.DataFrame]
 
         if use_wrds:
             if wrds_data is None:

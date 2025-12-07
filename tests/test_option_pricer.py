@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import NoReturn
+
 import pandas as pd
 import pytest
 
@@ -9,7 +11,7 @@ from options_hedge.option_pricer import OptionPricer
 
 
 @pytest.fixture
-def sample_wrds_data():
+def sample_wrds_data() -> pd.DataFrame:
     """Create sample WRDS data for testing."""
     return pd.DataFrame(
         {
@@ -42,7 +44,7 @@ def sample_wrds_data():
 class TestOptionPricerSynthetic:
     """Tests for synthetic (VIX-based) pricing mode."""
 
-    def test_initialization_default(self):
+    def test_initialization_default(self) -> None:
         """Test default initialization uses synthetic pricing."""
         pricer = OptionPricer()
 
@@ -51,7 +53,7 @@ class TestOptionPricerSynthetic:
         assert pricer.strike_tolerance == 0.05
         assert pricer.expiry_tolerance_days == 7
 
-    def test_get_put_premium_synthetic(self):
+    def test_get_put_premium_synthetic(self) -> None:
         """Test synthetic put premium calculation."""
         pricer = OptionPricer()
 
@@ -68,7 +70,7 @@ class TestOptionPricerSynthetic:
         # Premium returned as fraction of spot (e.g., 0.02 = 2%)
         assert 0.001 < premium < 0.5  # Between 0.1% and 50%
 
-    def test_synthetic_pricing_itm_vs_otm(self):
+    def test_synthetic_pricing_itm_vs_otm(self) -> None:
         """Test that ITM puts are more expensive than OTM."""
         pricer = OptionPricer()
         spot = 4000.0
@@ -87,7 +89,7 @@ class TestOptionPricerSynthetic:
 
         assert itm_premium > atm_premium > otm_premium
 
-    def test_synthetic_vix_impact(self):
+    def test_synthetic_vix_impact(self) -> None:
         """Test that higher VIX increases premiums."""
         pricer = OptionPricer()
         strike = 3800.0
@@ -104,7 +106,9 @@ class TestOptionPricerSynthetic:
 class TestOptionPricerWRDS:
     """Tests for WRDS data pricing mode."""
 
-    def test_initialization_with_wrds_data(self, sample_wrds_data):
+    def test_initialization_with_wrds_data(
+        self, sample_wrds_data: pd.DataFrame
+    ) -> None:
         """Test initialization with WRDS data."""
         pricer = OptionPricer(use_wrds=True, wrds_data=sample_wrds_data)
 
@@ -112,11 +116,13 @@ class TestOptionPricerWRDS:
         assert pricer.wrds_data is not None
         assert len(pricer.wrds_data) == 4
 
-    def test_initialization_wrds_auto_load_failure(self, monkeypatch):
+    def test_initialization_wrds_auto_load_failure(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
         """Test graceful fallback when auto-loading WRDS data fails."""
 
         # Mock the import to raise an error
-        def mock_load():
+        def mock_load() -> NoReturn:
             raise FileNotFoundError("No encrypted data found")
 
         # Need to unset the env var so the real load doesn't happen
@@ -134,7 +140,7 @@ class TestOptionPricerWRDS:
         assert pricer.use_wrds is False
         assert pricer.wrds_data is None
 
-    def test_wrds_exact_match(self, sample_wrds_data):
+    def test_wrds_exact_match(self, sample_wrds_data: pd.DataFrame) -> None:
         """Test exact match in WRDS data."""
         pricer = OptionPricer(use_wrds=True, wrds_data=sample_wrds_data)
 
@@ -149,7 +155,7 @@ class TestOptionPricerWRDS:
         # Should match midpoint: (48+52)/2 = 50, as fraction: 50/4000 = 0.0125
         assert premium == 0.0125
 
-    def test_wrds_strike_tolerance(self, sample_wrds_data):
+    def test_wrds_strike_tolerance(self, sample_wrds_data: pd.DataFrame) -> None:
         """Test strike matching within tolerance."""
         pricer = OptionPricer(
             use_wrds=True,
@@ -169,7 +175,7 @@ class TestOptionPricerWRDS:
         # Should match 3500 strike: 50/4000 = 0.0125
         assert premium == 0.0125
 
-    def test_wrds_expiry_tolerance(self, sample_wrds_data):
+    def test_wrds_expiry_tolerance(self, sample_wrds_data: pd.DataFrame) -> None:
         """Test expiry matching within tolerance."""
         pricer = OptionPricer(
             use_wrds=True,
@@ -189,7 +195,7 @@ class TestOptionPricerWRDS:
         # Should match 2020-06-19 expiry: 50/4000 = 0.0125
         assert premium == 0.0125
 
-    def test_wrds_fallback_to_synthetic(self, sample_wrds_data):
+    def test_wrds_fallback_to_synthetic(self, sample_wrds_data: pd.DataFrame) -> None:
         """Test fallback to synthetic when no WRDS match."""
         pricer = OptionPricer(use_wrds=True, wrds_data=sample_wrds_data)
 
@@ -205,7 +211,9 @@ class TestOptionPricerWRDS:
         # Should use synthetic pricing
         assert premium > 0
 
-    def test_wrds_no_match_outside_tolerance(self, sample_wrds_data):
+    def test_wrds_no_match_outside_tolerance(
+        self, sample_wrds_data: pd.DataFrame
+    ) -> None:
         """Test no match when strike outside tolerance."""
         pricer = OptionPricer(
             use_wrds=True,
@@ -225,7 +233,7 @@ class TestOptionPricerWRDS:
         # Should fallback to synthetic
         assert premium > 0
 
-    def test_wrds_no_date_match(self, sample_wrds_data):
+    def test_wrds_no_date_match(self, sample_wrds_data: pd.DataFrame) -> None:
         """Test fallback when date not in WRDS data."""
         pricer = OptionPricer(use_wrds=True, wrds_data=sample_wrds_data)
 
@@ -241,7 +249,7 @@ class TestOptionPricerWRDS:
         # Should use synthetic pricing
         assert premium > 0
 
-    def test_wrds_no_expiry_match(self, sample_wrds_data):
+    def test_wrds_no_expiry_match(self, sample_wrds_data: pd.DataFrame) -> None:
         """Test fallback when expiry outside tolerance."""
         pricer = OptionPricer(
             use_wrds=True,
@@ -265,7 +273,7 @@ class TestOptionPricerWRDS:
 class TestOptionPricerConfig:
     """Tests for pricer configuration and stats."""
 
-    def test_get_stats_synthetic(self):
+    def test_get_stats_synthetic(self) -> None:
         """Test configuration info for synthetic mode."""
         pricer = OptionPricer()
         stats = pricer.get_stats()
@@ -274,7 +282,7 @@ class TestOptionPricerConfig:
         assert stats["strike_tolerance"] == 0.05
         assert stats["expiry_tolerance_days"] == 7
 
-    def test_get_stats_wrds(self, sample_wrds_data):
+    def test_get_stats_wrds(self, sample_wrds_data: pd.DataFrame) -> None:
         """Test configuration info for WRDS mode."""
         pricer = OptionPricer(use_wrds=True, wrds_data=sample_wrds_data)
         stats = pricer.get_stats()
@@ -283,7 +291,7 @@ class TestOptionPricerConfig:
         assert stats["wrds_rows"] == 4
         assert "wrds_date_range" in stats
 
-    def test_custom_tolerances(self):
+    def test_custom_tolerances(self) -> None:
         """Test custom tolerance settings."""
         pricer = OptionPricer(
             strike_tolerance=0.10,
@@ -301,7 +309,7 @@ class TestOptionPricerConfig:
 class TestOptionPricerEdgeCases:
     """Tests for edge cases and error handling."""
 
-    def test_default_vix_parameter(self):
+    def test_default_vix_parameter(self) -> None:
         """Test default VIX value for synthetic pricing."""
         pricer = OptionPricer()
 
@@ -314,7 +322,7 @@ class TestOptionPricerEdgeCases:
         )
         assert premium > 0
 
-    def test_empty_wrds_data(self):
+    def test_empty_wrds_data(self) -> None:
         """Test with empty WRDS DataFrame."""
         empty_df = pd.DataFrame(
             columns=[
@@ -341,7 +349,7 @@ class TestOptionPricerEdgeCases:
 
         assert premium > 0
 
-    def test_zero_strike_tolerance(self, sample_wrds_data):
+    def test_zero_strike_tolerance(self, sample_wrds_data: pd.DataFrame) -> None:
         """Test with zero strike tolerance (exact match only)."""
         pricer = OptionPricer(
             use_wrds=True,

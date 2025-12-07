@@ -10,7 +10,10 @@ import pandas as pd
 import pytest
 from cryptography.fernet import Fernet
 
-from options_hedge.wrds_data import get_wrds_data_info, load_encrypted_wrds_data
+from options_hedge.wrds_data import (
+    get_wrds_data_info,
+    load_encrypted_wrds_data,
+)
 
 
 @pytest.fixture

@@ -118,7 +118,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-uv-docs-
 
+    - name: Download WRDS data from release
+      run: uv run python scripts/download_release_data.py
+
     - name: Execute simulate_portfolio notebook and copy to docs
+      env:
+        WRDS_DATA_KEY: ${{ secrets.WRDS_DATA_KEY }}
       run: |
         # Install jupyter and nbconvert
         uv pip install jupyter nbconvert

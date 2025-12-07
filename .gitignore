@@ -110,3 +110,10 @@ pip-log.txt
 *.cache
 src/options_hedge/_version.py
 *.bak
+
+# WRDS and FRED Data (encrypted versions ARE committed, raw CSVs are ignored)
+data/WRDS/
+data/FRED/
+*.csv
+!data/README.md
+# DO commit: data/*.enc (encrypted, safe for public repo)

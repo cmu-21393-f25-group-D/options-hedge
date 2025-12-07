@@ -25,6 +25,8 @@ dependencies = [
     "matplotlib>=3.7.0",
     "pandas-stubs>=2.2.2.240807",
     "yfinance>=0.2.0",
+    "cryptography>=41.0.0", # For WRDS data encryption/decryption
+    "wrds>=3.4.0",
 ]
 
 [project.optional-dependencies]
@@ -35,6 +37,9 @@ dev = [
     "mypy>=1.5.0",
     "pytest-cov>=4.1.0",
     "pre-commit>=4.3.0"
+]
+wrds = [
+    "wrds>=3.1.0",  # WRDS API client (optional, only for data download)
 ]
 jupyter = [
     "jupyter>=1.0.0",

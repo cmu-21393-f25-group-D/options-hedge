@@ -119,6 +119,9 @@ class TestOptionPricerWRDS:
         def mock_load():
             raise FileNotFoundError("No encrypted data found")
 
+        # Need to unset the env var so the real load doesn't happen
+        monkeypatch.delenv("WRDS_DATA_KEY", raising=False)
+
         monkeypatch.setattr(
             "options_hedge.option_pricer.load_encrypted_wrds_data",
             mock_load,

@@ -112,7 +112,7 @@ def load_encrypted_wrds_data(
     import io
 
     decompressed = gzip.decompress(plaintext)
-    data = pd.read_csv(io.BytesIO(decompressed))
+    data = pd.read_csv(io.BytesIO(decompressed), low_memory=False)
 
     # Convert date columns to datetime
     data["date"] = pd.to_datetime(data["date"])

@@ -19,14 +19,25 @@ DEFAULT_END_DATE = "2025-01-01"
 DEFAULT_FILL_VALUE = 0.0
 """Fill value for first day's return (no previous price to compare)."""
 
+try:
+    from .wrds_data import (
+        load_encrypted_sp500_data,
+        load_encrypted_treasury_data,
+        load_encrypted_vix_data,
+    )
+
+    WRDS_AVAILABLE = True
+except ImportError:  # pragma: no cover
+    WRDS_AVAILABLE = False
+
 
 @dataclass()
 class Market:
     """Download and store daily OHLCV data and returns for a ticker.
 
-    Fetches historical market data from Yahoo Finance and computes daily
-    returns for portfolio simulation. Validates data download to ensure
-    successful data retrieval.
+    Fetches historical market data from Yahoo Finance or WRDS encrypted data
+    and computes daily returns for portfolio simulation. Validates data
+    download to ensure successful data retrieval.
 
     Parameters
     ----------
@@ -36,6 +47,11 @@ class Market:
         Start date in 'YYYY-MM-DD' format (default: '2018-01-01')
     end : str, optional
         End date in 'YYYY-MM-DD' format (default: '2025-01-01')
+    use_wrds : bool, optional
+        If True, use WRDS encrypted data instead of Yahoo Finance
+        (default: False)
+    fetch_vix : bool, optional
+        If True, also download VIX data (default: False)
 
     Attributes
     ----------
@@ -59,6 +75,10 @@ class Market:
         Get closing price for a specific date
     get_returns()
         Get daily returns as a Series
+    get_vix(date)
+        Get VIX value for a specific date (if fetch_vix=True)
+    get_risk_free_rate(date)
+        Get risk-free rate for a specific date (if use_wrds=True)
 
     Notes
     -----
@@ -66,18 +86,102 @@ class Market:
     Returns[t] = (Close[t] - Close[t-1]) / Close[t-1]
 
     First day's return is filled with 0.0 (no previous price).
+
+    When use_wrds=True, loads encrypted S&P 500, VIX, and Treasury data
+    from WRDS OptionMetrics. Requires WRDS_DATA_KEY environment variable.
     """
 
     ticker: str = DEFAULT_TICKER
     start: str = DEFAULT_START_DATE
     end: str = DEFAULT_END_DATE
+    use_wrds: bool = False
     # If True, also download VIX (^VIX) and expose per-date values
     fetch_vix: bool = False
     data: pd.DataFrame = field(init=False)
     vix_data: Optional[pd.DataFrame] = field(init=False, default=None)
+    treasury_data: Optional[pd.DataFrame] = field(init=False, default=None)
     _vix_series: Optional[pd.Series] = field(init=False, default=None)
+    _treasury_series: Optional[pd.Series] = field(init=False, default=None)
 
     def __post_init__(self) -> None:  # pragma: no cover
+        if self.use_wrds and WRDS_AVAILABLE:
+            # Load WRDS encrypted data
+            try:
+                sp500_raw = load_encrypted_sp500_data()
+                vix_raw = load_encrypted_vix_data()
+                treasury_raw = load_encrypted_treasury_data()
+
+                # Filter by date range
+                start_dt = pd.to_datetime(self.start)
+                end_dt = pd.to_datetime(self.end)
+
+                sp500 = sp500_raw[
+                    (sp500_raw["date"] >= start_dt) & (sp500_raw["date"] <= end_dt)
+                ].copy()
+
+                if sp500.empty:
+                    raise ValueError(
+                        f"No S&P 500 data in range {self.start} to {self.end}"
+                    )
+
+                # Set date as index and rename columns to match yfinance format
+                sp500 = sp500.set_index("date")
+                sp500 = sp500.rename(
+                    columns={
+                        "open": "Open",
+                        "high": "High",
+                        "low": "Low",
+                        "close": "Close",
+                        "volume": "Volume",
+                    }
+                )
+
+                # Add Returns column
+                sp500["Returns"] = (
+                    sp500["Close"].pct_change().fillna(DEFAULT_FILL_VALUE)
+                )
+
+                self.data = sp500
+
+                # Load VIX data
+                vix = vix_raw[
+                    (vix_raw["date"] >= start_dt) & (vix_raw["date"] <= end_dt)
+                ].copy()
+                if not vix.empty:
+                    vix = vix.set_index("date")
+                    self.vix_data = vix
+                    # Forward-fill and align to main data index
+                    aligned = self.vix_data.reindex(self.data.index).ffill()
+                    self._vix_series = aligned["close"].astype(float)
+                    self.fetch_vix = True  # Mark as available
+
+                # Load Treasury data
+                treasury = treasury_raw[
+                    (treasury_raw["observation_date"] >= start_dt)
+                    & (treasury_raw["observation_date"] <= end_dt)
+                ].copy()
+                if not treasury.empty:
+                    treasury = treasury.set_index("observation_date")
+                    self.treasury_data = treasury
+                    # Forward-fill and align to main data index
+                    aligned_treasury = self.treasury_data.reindex(
+                        self.data.index
+                    ).ffill()
+                    # Convert from annual percentage to decimal
+                    self._treasury_series = (aligned_treasury["DTB3"] / 100.0).astype(
+                        float
+                    )
+
+            except Exception as e:
+                print(f"⚠️  Failed to load WRDS data: {e}")
+                print("   Falling back to Yahoo Finance...")
+                self.use_wrds = False
+                self._load_yfinance_data()
+        else:
+            self._load_yfinance_data()
+
+    def _load_yfinance_data(self) -> None:  # pragma: no cover
+        """Load data from Yahoo Finance (fallback or default)."""
         # Download primary market data
         downloaded_data = yf.download(  # type: ignore[no-untyped-call]
             self.ticker,
@@ -169,9 +273,44 @@ class Market:
         if self._vix_series is None:
             raise ValueError("VIX data not fetched (fetch_vix=False).")
         if date in self._vix_series.index:
-            return float(self._vix_series.loc[date].iloc[0])
+            val = self._vix_series.loc[date]
+            # Handle both scalar and Series return from loc
+            return float(val.iloc[0] if hasattr(val, "iloc") else val)
         # Use previous available date
         prior_dates = self._vix_series.index[self._vix_series.index <= date]
         if len(prior_dates) == 0:
             raise ValueError(f"No VIX data available on or before {date}.")
-        return float(self._vix_series.loc[prior_dates[-1]].iloc[0])
+        val = self._vix_series.loc[prior_dates[-1]]
+        return float(val.iloc[0] if hasattr(val, "iloc") else val)
+
+    def get_risk_free_rate(self, date: pd.Timestamp) -> float:  # pragma: no cover
+        """Get risk-free rate for a specific date.
+
+        Returns 3-month Treasury rate as decimal (e.g., 0.02 = 2% annual).
+        Falls back to nearest previous available value if exact date not
+        present. Only available when use_wrds=True.
+
+        Parameters
+        ----------
+        date : pd.Timestamp
+            Date to retrieve risk-free rate for.
+
+        Returns
+        -------
+        float
+            Annualized risk-free rate as decimal (e.g., 0.02 = 2%).
+
+        Raises
+        ------
+        ValueError
+            If Treasury data not available (use_wrds=False).
+        """
+        if self._treasury_series is None:
+            raise ValueError("Treasury data not available. Set use_wrds=True to load.")
+        if date in self._treasury_series.index:
+            return float(self._treasury_series.loc[date])
+        # Use previous available date
+        prior_dates = self._treasury_series.index[self._treasury_series.index <= date]
+        if len(prior_dates) == 0:
+            raise ValueError(f"No Treasury data available on or before {date}.")
+        return float(self._treasury_series.loc[prior_dates[-1]])

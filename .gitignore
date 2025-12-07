@@ -111,9 +111,9 @@ pip-log.txt
 src/options_hedge/_version.py
 *.bak
 
-# WRDS and FRED Data (encrypted versions ARE committed, raw CSVs are ignored)
+# WRDS and FRED Data (all data files ignored - available in GitHub Releases)
 data/WRDS/
 data/FRED/
-*.csv
+data/*.enc
+data/*.csv
 !data/README.md
-# DO commit: data/*.enc (encrypted, safe for public repo)

@@ -17,23 +17,23 @@ from pathlib import Path
 from urllib.request import urlretrieve
 
 # Release info
-RELEASE_TAG = "data-v1.0.0"
+RELEASE_TAG = "data-v1.1.0"
 REPO = "cmu-21393-f25-group-D/options-hedge"
 BASE_URL = f"https://github.com/{REPO}/releases/download/{RELEASE_TAG}"
 
 # Files to download with SHA256 checksums
 FILES = {
     "wrds_spx_options.enc": (
-        "26438c2418c55a18e4df009602619cad95d93405f99671bc818f1a25f234cd8b"
+        "5a5b87ff6e19faa541e9fc46ebf52eda65aa711b1f24f02237a8136b196632de"
     ),
     "wrds_sp500.enc": (
-        "2ff5d0607e9269ecdf3741966f2d484591fc71ea2e62eef60ed23b76cb68f1c7"
+        "9437a7c19b1d73c06088be84ab1ad878d1165ed7dc697d9f21e7e6e84449927f"
     ),
     "wrds_vix.enc": (
-        "a09bc60177ccf910f7e1c4b87711c64d71ec507422a744bfa2259069b8631d04"
+        "f8de4bfc5980feabe58920464e6f66e017d4f33b33f2508b1e89c14f5e6e0e21"
     ),
     "fred_treasury.enc": (
-        "c99075894646452ee7dabbd9ce63f32a2c639cdbd56b002e30f92ac2d1136745"
+        "9c364197cb1bb9335ec57386440fa0a8abff8946794f58394e5d0e41bf24440c"
     ),
 }
 

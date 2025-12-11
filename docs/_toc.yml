@@ -8,9 +8,11 @@ chapters:
     title: Put Options Primer
   - file: source/installation
     title: Installation Guide
+  - file: LP_FORMULATIONS
+    title: Mathematical Formulations
+  - file: simulate_portfolio
+    title: Portfolio Simulation Results
   - file: source/contributing
     title: Contributing Guide
   - file: source/hello_world
     title: Hello World Example
-  - file: simulate_portfolio
-    title: Portfolio Simulation (VIX-Ladder LP)

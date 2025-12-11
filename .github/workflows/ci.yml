@@ -130,18 +130,16 @@ jobs:
       env:
         WRDS_DATA_KEY: ${{ secrets.WRDS_DATA_KEY }}
       run: |
-        # Install jupyter and nbconvert
-        uv pip install jupyter nbconvert
-
-        # Explicitly export WRDS_DATA_KEY so it's available in notebook kernel
-        export WRDS_DATA_KEY="${WRDS_DATA_KEY}"
-        echo "WRDS_DATA_KEY is set (length: ${#WRDS_DATA_KEY} chars)"
-
         set -euo pipefail
         NOTEBOOK="notebooks/simulate_portfolio.ipynb"
         if [ -f "$NOTEBOOK" ]; then
           echo "Executing $(basename "$NOTEBOOK")..."
-          uv run jupyter nbconvert --to notebook --execute \
+          echo "WRDS_DATA_KEY length: ${#WRDS_DATA_KEY} chars"
+
+          # Execute notebook in isolated environment with jupyter and nbconvert
+          # uv run --with creates temporary environment and inherits env vars from parent shell
+          uv run --with jupyter --with nbconvert \
+            jupyter nbconvert --to notebook --execute \
             --output-dir=docs \
             --output="$(basename "$NOTEBOOK")" \
             "$NOTEBOOK"

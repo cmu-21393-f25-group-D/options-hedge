@@ -17,10 +17,6 @@ def solve_fixed_floor_lp(
         - 'floor_met': bool, whether floor constraint is satisfied
         - 'status': str, optimization status
     """
-    print("\n" + "=" * 60)
-    print(f"  {name}")
-    print("=" * 60)
-
     m = gp.Model(f"portfolio_insurance_{name}")
     m.Params.OutputFlag = 0
 
@@ -47,25 +43,6 @@ def solve_fixed_floor_lp(
     m.optimize()
 
     if m.Status == GRB.OPTIMAL:
-        print(f"Objective (min total premium) = {m.ObjVal:.4f}")
-        print("\nOption positions x_i:")
-        for i in Is:
-            print(f"  x[{i}] = {x[i].X:.4f}")
-
-        print("\nShortfalls z_s (amount below floor):")
-        for s in S:
-            print(f"  z[{s}] = {z[s].X:.4f}")
-
-        print("\nScenario portfolio values (V_s) and floor F:")
-        for s in S:
-            portfolio_value = V[s] + sum(Payoff[i, s] * x[i].X for i in Is)
-            print(
-                f"  V[{s}] = {V[s]:.2f}, "
-                f"Payoffs = {sum(Payoff[i, s] * x[i].X for i in Is):.2f}, "
-                f"Total = {portfolio_value:.2f}"
-            )
-        print(f"\n  Floor F = {F:.2f}")
-
         # Check if floor met in all scenarios (shortfalls near zero)
         floor_met = all(z[s].X < 1e-4 for s in S)
 
@@ -78,10 +55,6 @@ def solve_fixed_floor_lp(
             "status": "optimal",
         }
     elif m.Status == GRB.INFEASIBLE:
-        print(
-            "Model is infeasible - "
-            "floor constraint cannot be met with available options"
-        )
         return {
             "quantities": dict.fromkeys(Is, 0.0),
             "total_cost": 0.0,
@@ -90,7 +63,6 @@ def solve_fixed_floor_lp(
             "status": "infeasible",
         }
     else:
-        print(f"Model ended with status {m.Status}")
         return {
             "quantities": dict.fromkeys(Is, 0.0),
             "total_cost": 0.0,

@@ -570,11 +570,12 @@ def fixed_floor_lp_strategy(
 
     # Check if solution is valid
     if solution["status"] != "optimal" or solution["total_cost"] == 0.0:
-        # ALWAYS print infeasibility for debugging
-        print(
-            f"  ⚠️  {current_date.date()}: LP status={solution['status']}, "
-            f"strikes={len(Is)}, floor={L:.0%} - SKIPPED"
-        )
+        if verbose:
+            status = solution["status"]
+            print(
+                f"  ⚠️  {current_date.date()}: LP status={status}, "
+                f"strikes={len(Is)}, floor={L:.0%} - SKIPPED"
+            )
         return {
             "total_cost": 0.0,
             "action": "skipped",

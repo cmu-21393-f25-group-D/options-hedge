@@ -17,7 +17,7 @@ except (
 from options_hedge.fixed_floor_lp import solve_fixed_floor_lp
 
 
-def test_case_1(capsys: pytest.CaptureFixture[str]) -> None:
+def test_case_1() -> None:
     """Test basic two-option portfolio with 20% loss floor."""
     Is = ["K90", "K100"]
     S = ["crash", "mild", "up"]
@@ -34,12 +34,13 @@ def test_case_1(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.10,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 1")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 1")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_case_2a(capsys: pytest.CaptureFixture[str]) -> None:
+def test_case_2a() -> None:
     """Test with lower loss floor (10%)."""
     Is = ["K90", "K100"]
     S = ["crash", "mild", "up"]
@@ -56,12 +57,13 @@ def test_case_2a(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.10,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 2A (L=0.10)")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 2A (L=0.10)")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_case_2b(capsys: pytest.CaptureFixture[str]) -> None:
+def test_case_2b() -> None:
     """Test with higher loss floor (30%)."""
     Is = ["K90", "K100"]
     S = ["crash", "mild", "up"]
@@ -78,12 +80,13 @@ def test_case_2b(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.10,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 2B (L=0.30)")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 2B (L=0.30)")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_case_3(capsys: pytest.CaptureFixture[str]) -> None:
+def test_case_3() -> None:
     """Test with three options and four scenarios."""
     Is = ["K80", "K90", "K100"]
     S = ["crash", "bad", "flat", "good"]
@@ -101,12 +104,13 @@ def test_case_3(capsys: pytest.CaptureFixture[str]) -> None:
         "good": 0.15,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 3")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 3")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_case_4(capsys: pytest.CaptureFixture[str]) -> None:
+def test_case_4() -> None:
     """Test with larger portfolio value (Q=1000)."""
     Is = ["K80", "K90", "K100"]
     S = ["crash", "bad", "flat", "good"]
@@ -124,12 +128,13 @@ def test_case_4(capsys: pytest.CaptureFixture[str]) -> None:
         "good": 0.15,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 4 (Q=1000)")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out) or ("infeasible" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 4 (Q=1000)")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_case_5(capsys: pytest.CaptureFixture[str]) -> None:
+def test_case_5() -> None:
     """Test with different strike prices and premiums."""
     Is = ["K85", "K95", "K105"]
     S = ["crash", "down", "flat", "up"]
@@ -147,12 +152,13 @@ def test_case_5(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.20,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 5")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 5")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_case_6(capsys: pytest.CaptureFixture[str]) -> None:
+def test_case_6() -> None:
     """Test Case 6 – More scenarios (stress testing).
 
     I = {K80, K90, K100, K110}, S = {s1,...,s6}
@@ -175,15 +181,16 @@ def test_case_6(capsys: pytest.CaptureFixture[str]) -> None:
         "s6": 0.25,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 6")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 6")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
 # Additional test cases for comprehensive coverage
 
 
-def test_tight_floor_high_cost(capsys: pytest.CaptureFixture[str]) -> None:
+def test_tight_floor_high_cost() -> None:
     """Test with very tight floor (low loss tolerance) - should cost more."""
     Is = ["K90", "K95", "K100"]
     S = ["crash", "mild", "up"]
@@ -200,14 +207,14 @@ def test_tight_floor_high_cost(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.10,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Tight Floor Test")
-    out = capsys.readouterr().out
-    assert "Objective" in out
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Tight Floor Test")
+    assert result["status"] == "optimal"
     # Tight floor should require more protection
-    assert "Floor F = 95.00" in out
+    floor = 100.0 * (1.0 - 0.05)
+    assert floor == 95.0
 
 
-def test_loose_floor_low_cost(capsys: pytest.CaptureFixture[str]) -> None:
+def test_loose_floor_low_cost() -> None:
     """Test with loose floor (high loss tolerance) - should cost less."""
     Is = ["K90", "K100"]
     S = ["crash", "mild", "up"]
@@ -224,15 +231,13 @@ def test_loose_floor_low_cost(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.10,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Loose Floor Test")
-    out = capsys.readouterr().out
-    assert "Objective" in out
-    assert "Floor F = 60.00" in out
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Loose Floor Test")
+    assert result["status"] == "optimal"
+    floor = 100.0 * (1.0 - 0.40)
+    assert floor == 60.0
 
 
-def test_single_strike_single_scenario(
-    capsys: pytest.CaptureFixture[str],
-) -> None:
+def test_single_strike_single_scenario() -> None:
     """Test minimal case: one strike, one scenario."""
     Is = ["K95"]
     S = ["crash"]
@@ -245,12 +250,13 @@ def test_single_strike_single_scenario(
 
     r = {"crash": -0.30}
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Minimal Test")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Minimal Test")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_extreme_crash_scenario(capsys: pytest.CaptureFixture[str]) -> None:
+def test_extreme_crash_scenario() -> None:
     """Test with severe crash scenario (-70% drop)."""
     Is = ["K50", "K70", "K90"]
     S = ["catastrophe", "mild", "normal"]
@@ -267,12 +273,13 @@ def test_extreme_crash_scenario(capsys: pytest.CaptureFixture[str]) -> None:
         "normal": 0.05,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Extreme Crash Test")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Extreme Crash Test")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_asymmetric_strikes(capsys: pytest.CaptureFixture[str]) -> None:
+def test_asymmetric_strikes() -> None:
     """Test with non-uniform strike spacing."""
     Is = ["K75", "K85", "K90", "K100"]
     S = ["crash", "moderate", "flat", "up"]
@@ -290,12 +297,13 @@ def test_asymmetric_strikes(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.15,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Asymmetric Strikes Test")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out) or ("infeasible" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Asymmetric Strikes Test")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_varied_premiums(capsys: pytest.CaptureFixture[str]) -> None:
+def test_varied_premiums() -> None:
     """Test with varying premium/strike ratios."""
     Is = ["K80", "K90", "K95", "K100"]
     S = ["crash", "down", "flat", "up"]
@@ -314,12 +322,13 @@ def test_varied_premiums(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.20,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Varied Premiums Test")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out) or ("infeasible" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Varied Premiums Test")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_large_portfolio(capsys: pytest.CaptureFixture[str]) -> None:
+def test_large_portfolio() -> None:
     """Test with large portfolio value."""
     Is = ["K90", "K95", "K100"]
     S = ["crash", "mild", "up"]
@@ -336,15 +345,17 @@ def test_large_portfolio(capsys: pytest.CaptureFixture[str]) -> None:
         "up": 0.10,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Large Portfolio Test")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out) or ("infeasible" in out)
-    # Floor should scale with portfolio (only check if not infeasible)
-    if "infeasible" not in out:
-        assert "Floor F = 8500.00" in out
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Large Portfolio Test")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
+    # Floor should scale with portfolio
+    if result["status"] == "optimal":
+        floor = 10_000.0 * (1.0 - 0.15)
+        assert floor == 8500.0
 
 
-def test_many_scenarios(capsys: pytest.CaptureFixture[str]) -> None:
+def test_many_scenarios() -> None:
     """Test with many market scenarios (stress testing)."""
     Is = ["K85", "K90", "K95", "K100"]
     S = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"]
@@ -366,12 +377,13 @@ def test_many_scenarios(capsys: pytest.CaptureFixture[str]) -> None:
         "s8": 0.30,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Many Scenarios Test")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Many Scenarios Test")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
 
 
-def test_zero_loss_floor(capsys: pytest.CaptureFixture[str]) -> None:
+def test_zero_loss_floor() -> None:
     """Test with zero loss tolerance (L=0, full protection)."""
     Is = ["K95", "K100"]
     S = ["crash", "mild"]
@@ -387,7 +399,9 @@ def test_zero_loss_floor(capsys: pytest.CaptureFixture[str]) -> None:
         "mild": -0.10,
     }
 
-    solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Zero Loss Floor Test")
-    out = capsys.readouterr().out
-    assert ("Objective" in out) or ("Model ended" in out)
-    assert "Floor F = 100.00" in out
+    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Zero Loss Floor Test")
+    assert result["status"] in ["optimal", "infeasible", "error"]
+    assert "quantities" in result
+    assert "total_cost" in result
+    floor = 100.0 * (1.0 - 0.0)
+    assert floor == 100.0

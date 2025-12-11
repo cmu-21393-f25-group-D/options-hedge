@@ -1,5 +1,6 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
+# Note: simulate_portfolio.ipynb is only added during CI build, not in local TOC
 
 format: jb-book
 root: source/index
@@ -10,8 +11,6 @@ chapters:
     title: Installation Guide
   - file: LP_FORMULATIONS
     title: Mathematical Formulations
-  - file: simulate_portfolio
-    title: Portfolio Simulation Results
   - file: source/contributing
     title: Contributing Guide
   - file: source/hello_world

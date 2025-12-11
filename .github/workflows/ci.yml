@@ -137,6 +137,12 @@ jobs:
             --output="$(basename "$NOTEBOOK")" \
             "$NOTEBOOK"
           echo "Executed notebook copied to docs/"
+
+          # Add notebook to _toc.yml dynamically for CI build
+          echo "Adding notebook to _toc.yml..."
+          echo "  - file: simulate_portfolio" >> docs/_toc.yml
+          echo "    title: Portfolio Simulation Results" >> docs/_toc.yml
+          echo "Notebook added to TOC"
         else
           echo "Notebook $NOTEBOOK not found; skipping execution."
         fi

@@ -2851,7 +2851,7 @@ wheels = [
 
 [[package]]
 name = "options-hedge"
-version = "1.0.1.dev8+g43ca43331.d20251207"
+version = "1.0.1.dev18+gdc6321992.d20251207"
 source = { editable = "." }
 dependencies = [
     { name = "cryptography" },

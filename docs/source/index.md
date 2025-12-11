@@ -57,4 +57,4 @@ The optimization model:
 
 ## Live Results
 
-View the **[Portfolio Simulation Results](../simulate_portfolio.html)** notebook with VIX-Ladder LP backtests across major market crashes (Dot-Com, GFC, COVID-19).
+View the **[Portfolio Simulation Results](simulate_portfolio.html)** notebook with VIX-Ladder LP backtests across major market crashes (Dot-Com, GFC, COVID-19).

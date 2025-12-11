@@ -133,6 +133,10 @@ jobs:
         # Install jupyter and nbconvert
         uv pip install jupyter nbconvert
 
+        # Explicitly export WRDS_DATA_KEY so it's available in notebook kernel
+        export WRDS_DATA_KEY="${WRDS_DATA_KEY}"
+        echo "WRDS_DATA_KEY is set (length: ${#WRDS_DATA_KEY} chars)"
+
         set -euo pipefail
         NOTEBOOK="notebooks/simulate_portfolio.ipynb"
         if [ -f "$NOTEBOOK" ]; then

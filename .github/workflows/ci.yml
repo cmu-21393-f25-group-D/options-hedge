@@ -136,10 +136,15 @@ jobs:
           echo "Executing $(basename "$NOTEBOOK")..."
           echo "WRDS_DATA_KEY length: ${#WRDS_DATA_KEY} chars"
 
-          # Execute notebook in isolated environment with jupyter and nbconvert
-          # uv run --with creates temporary environment and inherits env vars from parent shell
-          uv run --with jupyter --with nbconvert \
-            jupyter nbconvert --to notebook --execute \
+          # Install jupyter, nbconvert, and ipykernel, then register a CI-specific kernel
+          # This ensures the kernel can access environment variables from the CI environment
+          uv pip install jupyter nbconvert ipykernel
+          uv run python -m ipykernel install --user --name=ci-env --display-name="CI Env"
+
+          # Execute notebook using the registered kernel
+          uv run jupyter nbconvert --to notebook --execute \
+            --ExecutePreprocessor.timeout=600 \
+            --ExecutePreprocessor.kernel_name=ci-env \
             --output-dir=docs \
             --output="$(basename "$NOTEBOOK")" \
             "$NOTEBOOK"

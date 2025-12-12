@@ -23,7 +23,7 @@ repos:
   hooks:
     - id: check-notebook-executed
       name: Check notebooks have outputs
-      entry: uv run python scripts/check_notebook_executed.py
+      entry: python scripts/check_notebook_executed.py
       language: system
       files: ^notebooks/.*\.ipynb$
       description: Ensures notebooks are executed before commit

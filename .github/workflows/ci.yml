@@ -137,11 +137,15 @@ jobs:
           echo "WRDS_DATA_KEY length: ${#WRDS_DATA_KEY} chars"
 
           # Install jupyter, nbconvert, and ipykernel, then register a CI-specific kernel
-          # This ensures the kernel can access environment variables from the CI environment
+          # The key is to set the environment variable in the kernel spec itself
           uv pip install jupyter nbconvert ipykernel
           uv run python -m ipykernel install --user --name=ci-env --display-name="CI Env"
 
-          # Execute notebook using the registered kernel
+          # Inject the WRDS_DATA_KEY into the kernel spec's env section
+          # This ensures the kernel subprocess has access to the environment variable
+          uv run python scripts/inject_kernel_env.py ci-env "WRDS_DATA_KEY=$WRDS_DATA_KEY"
+
+          # Execute notebook using the registered kernel with env vars
           uv run jupyter nbconvert --to notebook --execute \
             --ExecutePreprocessor.timeout=600 \
             --ExecutePreprocessor.kernel_name=ci-env \

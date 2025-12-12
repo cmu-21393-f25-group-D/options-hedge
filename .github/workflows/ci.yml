@@ -141,6 +141,10 @@ jobs:
         # Copy notebook to docs for jupyter-book to execute
         cp notebooks/simulate_portfolio.ipynb docs/
 
+        # Update notebook's kernel spec to use ci-env (not python3)
+        # This ensures jupyter-book uses our kernel with WRDS_DATA_KEY
+        python3 -c "import json; nb = json.load(open('docs/simulate_portfolio.ipynb')); nb['metadata']['kernelspec']['name'] = 'ci-env'; nb['metadata']['kernelspec']['display_name'] = 'CI Env'; json.dump(nb, open('docs/simulate_portfolio.ipynb', 'w'), indent=1)"
+
         # Add notebook to _toc.yml
         echo "  - file: simulate_portfolio" >> docs/_toc.yml
         echo "    title: Portfolio Simulation Results" >> docs/_toc.yml

@@ -84,7 +84,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     needs: test  # Only build docs if tests pass
-    if: github.ref == 'refs/heads/main'  # Only on main branch
+    # Build docs on all branches, but only deploy on main
     # Permissions required to deploy with GitHub Pages
     permissions:
       pages: write
@@ -141,6 +141,7 @@ jobs:
   deploy-pages:
     needs: docs
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Only deploy on main branch
     permissions:
       pages: write
       id-token: write

@@ -84,7 +84,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     needs: test  # Only build docs if tests pass
-    if: github.ref == 'refs/heads/main'  # Only on main branch
+    # Build docs on all branches, but only deploy on main
     # Permissions required to deploy with GitHub Pages
     permissions:
       pages: write
@@ -118,27 +118,10 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-uv-docs-
 
-    - name: Download WRDS data from release
-      run: uv run python scripts/download_release_data.py
-
-    - name: Test WRDS encryption key
-      env:
-        WRDS_DATA_KEY: ${{ secrets.WRDS_DATA_KEY }}
-      run: uv run python scripts/test_wrds_key.py
-
-    - name: Set up Jupyter kernel with WRDS environment
-      env:
-        WRDS_DATA_KEY: ${{ secrets.WRDS_DATA_KEY }}
+    - name: Copy pre-executed notebook to docs
       run: |
-        # Install ipykernel and register a CI-specific kernel
-        uv pip install ipykernel
-        uv run python -m ipykernel install --user --name=ci-env --display-name="CI Env"
-
-        # Inject WRDS_DATA_KEY into the kernel spec
-        # This makes the env var available to jupyter-book when it executes the notebook
-        uv run python scripts/inject_kernel_env.py ci-env "WRDS_DATA_KEY=$WRDS_DATA_KEY"
-
-        # Copy notebook to docs for jupyter-book to execute
+        # Copy the locally-executed notebook with outputs
+        # Industry standard: execute locally, commit with outputs, don't re-execute in CI
         cp notebooks/simulate_portfolio.ipynb docs/
 
         # Add notebook to _toc.yml
@@ -158,6 +141,7 @@ jobs:
   deploy-pages:
     needs: docs
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Only deploy on main branch
     permissions:
       pages: write
       id-token: write

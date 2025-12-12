@@ -18,15 +18,23 @@ repos:
       args: [--fix]
     - id: ruff-format
 
-- repo: https://github.com/kynan/nbstripout
-  rev: 0.8.2
+# Notebook execution check - ensure notebooks are pre-executed with outputs
+# Note: Uses python3 directly instead of 'uv run' because uv may not be
+# available in all pre-commit environments (e.g., pre-commit.ci)
+- repo: local
   hooks:
-    - id: nbstripout
-      files: ^notebooks/.*\.ipynb$
+    - id: check-notebook-executed
+      name: Check notebooks have outputs
+      entry: bash -c 'python3 scripts/check_notebook_executed.py notebooks/*.ipynb'
+      language: system
+      pass_filenames: false
+      always_run: true
+      description: Ensures notebooks are executed before commit
 
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.19.0
   hooks:
     - id: mypy
-      args: [--ignore-missing-imports]
-      exclude: ^(tests/|notebooks/)
+      args: [--ignore-missing-imports, src, tests]
+      pass_filenames: false
+      always_run: true

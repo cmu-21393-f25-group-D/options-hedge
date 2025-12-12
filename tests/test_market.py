@@ -146,3 +146,33 @@ def test_market_returns_pct_change(mock_yf_data: pd.DataFrame) -> None:
             market.data["Returns"].iloc[2],  # type: ignore[attr-defined]
             rel=1e-4,
         ) == pytest.approx(-0.0196078, rel=1e-4)
+
+
+def test_market_has_pricer_with_wrds_data() -> None:
+    """Test that Market has pricer attribute when using WRDS data."""
+    # This test will only work with decryption key set
+    import os
+
+    if "WRDS_DATA_KEY" not in os.environ:
+        pytest.skip("WRDS_DATA_KEY not set - skipping pricer test")
+
+    # Create market with WRDS data
+    market = Market(ticker="^GSPC", start="2020-01-01", end="2020-03-31", use_wrds=True)
+
+    # Should have pricer attribute
+    assert hasattr(market, "pricer")
+
+    # If options data loaded successfully, pricer should not be None
+    if market.pricer is not None:
+        from options_hedge.option_pricer import OptionPricer
+
+        assert isinstance(market.pricer, OptionPricer)
+        # Should be able to get available strikes
+        strikes = market.pricer.get_available_strikes(
+            date=pd.Timestamp("2020-02-01"),
+            spot=3000.0,
+            expiry=pd.Timestamp("2020-03-20"),
+            cp_flag="P",
+        )
+        # Strikes should be a list (might be empty if no data for this date/expiry)
+        assert isinstance(strikes, list)

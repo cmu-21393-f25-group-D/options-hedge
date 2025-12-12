@@ -8,13 +8,12 @@ description: "Documentation for the options-hedge package"
 # Only build files specified in table of contents
 only_build_toc_files: true
 
-# Force re-execution of notebooks on each build
+# Use pre-executed notebooks (standard practice for long-running analyses)
 execute:
-  execute_notebooks: force
-  timeout: 600  # 10 minutes for portfolio simulation with WRDS data
-  run_in_temp: false  # Run in actual directory to access environment
+  execute_notebooks: 'off'  # Use existing outputs from local execution
+  timeout: 600
+  run_in_temp: false
   allow_errors: false
-  kernel_name: ci-env  # Use kernel with WRDS_DATA_KEY injected
 
 # LaTeX settings
 latex:

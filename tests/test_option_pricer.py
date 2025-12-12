@@ -377,3 +377,176 @@ class TestOptionPricerEdgeCases:
         )
         # Should use synthetic (won't match WRDS exactly)
         assert near != 0.0125
+
+
+class TestGetAvailableStrikes:
+    """Tests for get_available_strikes method."""
+
+    def test_fallback_synthetic_strikes(self) -> None:
+        """Test that synthetic mode returns default strikes."""
+        pricer = OptionPricer(use_wrds=False)
+
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2020-03-01"),
+            spot=3000.0,
+            expiry=pd.Timestamp("2020-06-19"),
+            cp_flag="P",
+        )
+
+        assert strikes == [0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]
+
+    def test_wrds_strikes_with_data(self, sample_wrds_data: pd.DataFrame) -> None:
+        """Test getting strikes from WRDS data."""
+        pricer = OptionPricer(
+            use_wrds=True,
+            wrds_data=sample_wrds_data,
+            expiry_tolerance_days=5,
+        )
+
+        # Strike prices: [3500, 3600], spot = 4000
+        # Ratios: [0.875, 0.90]
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2020-03-01"),
+            spot=4000.0,
+            expiry=pd.Timestamp("2020-06-19"),
+            cp_flag="P",
+        )
+
+        # Should return strikes as ratios of spot, filtered for OTM/ATM puts
+        assert len(strikes) == 2
+        assert 0.875 in strikes  # 3500/4000
+        assert 0.90 in strikes  # 3600/4000
+        assert all(s <= 1.05 for s in strikes)  # All OTM/ATM puts
+
+    def test_wrds_strikes_no_matching_date(
+        self, sample_wrds_data: pd.DataFrame
+    ) -> None:
+        """Test fallback when no data for requested date."""
+        pricer = OptionPricer(use_wrds=True, wrds_data=sample_wrds_data)
+
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2019-01-01"),  # No data for this date
+            spot=3000.0,
+            expiry=pd.Timestamp("2020-06-19"),
+            cp_flag="P",
+        )
+
+        # Should fallback to synthetic strikes
+        assert strikes == [0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]
+
+    def test_wrds_strikes_no_matching_expiry(
+        self, sample_wrds_data: pd.DataFrame
+    ) -> None:
+        """Test fallback when no data for requested expiry."""
+        pricer = OptionPricer(
+            use_wrds=True,
+            wrds_data=sample_wrds_data,
+            expiry_tolerance_days=1,  # Very tight tolerance
+        )
+
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2020-03-01"),
+            spot=4000.0,
+            expiry=pd.Timestamp("2021-12-31"),  # No data for this expiry
+            cp_flag="P",
+        )
+
+        # Should fallback to synthetic strikes
+        assert strikes == [0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]
+
+    def test_wrds_strikes_filters_puts_only(
+        self, sample_wrds_data: pd.DataFrame
+    ) -> None:
+        """Test that only puts are returned when cp_flag='P'."""
+        pricer = OptionPricer(use_wrds=True, wrds_data=sample_wrds_data)
+
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2020-03-01"),
+            spot=4000.0,
+            expiry=pd.Timestamp("2020-06-19"),
+            cp_flag="P",
+        )
+
+        # All strikes should be <= 1.05 (OTM/ATM puts)
+        assert all(s <= 1.05 for s in strikes)
+
+    def test_wrds_strikes_with_calls(self) -> None:
+        """Test getting strikes for calls."""
+        # Create data with call options
+        call_data = pd.DataFrame(
+            {
+                "date": pd.to_datetime(["2020-03-01", "2020-03-01"]),
+                "exdate": pd.to_datetime(["2020-06-19", "2020-06-19"]),
+                "strike_price": [4100.0, 4200.0],
+                "cp_flag": ["C", "C"],
+                "best_bid": [50.0, 40.0],
+                "best_offer": [52.0, 42.0],
+            }
+        )
+
+        pricer = OptionPricer(
+            use_wrds=True,
+            wrds_data=call_data,
+            expiry_tolerance_days=5,
+        )
+
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2020-03-01"),
+            spot=4000.0,
+            expiry=pd.Timestamp("2020-06-19"),
+            cp_flag="C",
+        )
+
+        # Calls: [4100/4000=1.025, 4200/4000=1.05]
+        assert len(strikes) == 2
+        assert 1.025 in strikes
+        assert 1.05 in strikes
+
+    def test_wrds_strikes_expiry_tolerance(
+        self, sample_wrds_data: pd.DataFrame
+    ) -> None:
+        """Test that expiry tolerance is applied correctly."""
+        # Default tolerance is 7 days
+        pricer = OptionPricer(
+            use_wrds=True,
+            wrds_data=sample_wrds_data,
+            expiry_tolerance_days=7,
+        )
+
+        # Request expiry 2020-06-15, should match 2020-06-19 (4 days diff)
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2020-03-01"),
+            spot=4000.0,
+            expiry=pd.Timestamp("2020-06-15"),
+            cp_flag="P",
+        )
+
+        assert len(strikes) > 0  # Should find matches
+
+    def test_wrds_strikes_sorted(self, sample_wrds_data: pd.DataFrame) -> None:
+        """Test that strikes are returned sorted."""
+        pricer = OptionPricer(use_wrds=True, wrds_data=sample_wrds_data)
+
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2020-03-01"),
+            spot=4000.0,
+            expiry=pd.Timestamp("2020-06-19"),
+            cp_flag="P",
+        )
+
+        # Should be sorted ascending
+        assert strikes == sorted(strikes)
+
+    def test_wrds_strikes_no_data_loaded(self) -> None:
+        """Test behavior when use_wrds=True but no data provided."""
+        pricer = OptionPricer(use_wrds=True, wrds_data=None)
+
+        strikes = pricer.get_available_strikes(
+            date=pd.Timestamp("2020-03-01"),
+            spot=3000.0,
+            expiry=pd.Timestamp("2020-06-19"),
+            cp_flag="P",
+        )
+
+        # Should fallback to synthetic
+        assert strikes == [0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]

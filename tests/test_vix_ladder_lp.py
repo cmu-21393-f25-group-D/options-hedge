@@ -303,3 +303,65 @@ class TestSolveVixLadderLP:
         assert isinstance(quantities, list)
         assert isinstance(total_cost, (int, float))
         assert isinstance(budget, (int, float))
+
+    def test_infeasible_problem(self) -> None:
+        """Test LP handles infeasible scenarios gracefully."""
+        # Create impossible constraints
+        options = [PutOption(strike=4000, premium=1_000_000, expiry_years=0.25)]
+
+        quantities, total_cost, budget = solve_vix_ladder_lp(
+            options=options,
+            V0=1_000_000,
+            S0=4000,
+            beta=1.0,
+            sigma=0.2,
+            T_years=0.25,
+            vix=20.0,
+        )
+
+        # Should return zero solution for infeasible problem
+        assert total_cost >= 0
+
+    def test_zero_budget_scenario(self) -> None:
+        """Test LP with extremely low VIX."""
+        options = [PutOption(strike=3800, premium=50, expiry_years=0.25)]
+
+        # Very low VIX should give minimal budget
+        quantities, total_cost, budget = solve_vix_ladder_lp(
+            options=options,
+            V0=1_000_000,
+            S0=4000,
+            beta=1.0,
+            sigma=0.2,
+            T_years=0.25,
+            vix=1.0,  # Extremely low VIX
+        )
+
+        assert budget >= 0
+        assert total_cost >= 0
+
+    def test_high_beta_increases_budget(self) -> None:
+        """Test that higher beta increases budget allocation."""
+        options = [PutOption(strike=3800, premium=50, expiry_years=0.25)]
+
+        _, _, budget_low = solve_vix_ladder_lp(
+            options=options,
+            V0=1_000_000,
+            S0=4000,
+            beta=1.0,
+            sigma=0.2,
+            T_years=0.25,
+            vix=20.0,
+        )
+
+        _, _, budget_high = solve_vix_ladder_lp(
+            options=options,
+            V0=1_000_000,
+            S0=4000,
+            beta=2.0,  # Higher beta
+            sigma=0.2,
+            T_years=0.25,
+            vix=20.0,
+        )
+
+        assert budget_high > budget_low

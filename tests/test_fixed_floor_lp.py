@@ -34,10 +34,9 @@ def test_case_1() -> None:
         "up": 0.10,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 1")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 1")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 def test_case_2a() -> None:
@@ -57,10 +56,9 @@ def test_case_2a() -> None:
         "up": 0.10,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 2A (L=0.10)")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 2A (L=0.10)")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 def test_case_2b() -> None:
@@ -80,10 +78,9 @@ def test_case_2b() -> None:
         "up": 0.10,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 2B (L=0.30)")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 2B (L=0.30)")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 def test_case_3() -> None:
@@ -104,10 +101,9 @@ def test_case_3() -> None:
         "good": 0.15,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 3")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 3")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 def test_case_4() -> None:
@@ -128,10 +124,10 @@ def test_case_4() -> None:
         "good": 0.15,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 4 (Q=1000)")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 4 (Q=1000)")
+    assert solution["status"] in ["optimal", "infeasible"]
+    if solution["status"] == "optimal":
+        assert solution["total_cost"] > 0
 
 
 def test_case_5() -> None:
@@ -152,10 +148,9 @@ def test_case_5() -> None:
         "up": 0.20,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 5")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 5")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 def test_case_6() -> None:
@@ -181,10 +176,9 @@ def test_case_6() -> None:
         "s6": 0.25,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 6")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Test Case 6")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 # Additional test cases for comprehensive coverage
@@ -207,11 +201,11 @@ def test_tight_floor_high_cost() -> None:
         "up": 0.10,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Tight Floor Test")
-    assert result["status"] == "optimal"
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Tight Floor Test")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
     # Tight floor should require more protection
-    floor = 100.0 * (1.0 - 0.05)
-    assert floor == 95.0
+    assert Q * (1.0 - L) == 95.00
 
 
 def test_loose_floor_low_cost() -> None:
@@ -231,10 +225,11 @@ def test_loose_floor_low_cost() -> None:
         "up": 0.10,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Loose Floor Test")
-    assert result["status"] == "optimal"
-    floor = 100.0 * (1.0 - 0.40)
-    assert floor == 60.0
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Loose Floor Test")
+    assert solution["status"] == "optimal"
+    # Loose floor may not require any protection
+    assert solution["total_cost"] >= 0
+    assert Q * (1.0 - L) == 60.00
 
 
 def test_single_strike_single_scenario() -> None:
@@ -250,10 +245,9 @@ def test_single_strike_single_scenario() -> None:
 
     r = {"crash": -0.30}
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Minimal Test")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Minimal Test")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 def test_extreme_crash_scenario() -> None:
@@ -273,10 +267,9 @@ def test_extreme_crash_scenario() -> None:
         "normal": 0.05,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Extreme Crash Test")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Extreme Crash Test")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 def test_asymmetric_strikes() -> None:
@@ -297,10 +290,12 @@ def test_asymmetric_strikes() -> None:
         "up": 0.15,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Asymmetric Strikes Test")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(
+        Is, S, K, p, Q, r, L, name="Asymmetric Strikes Test"
+    )
+    assert solution["status"] in ["optimal", "infeasible"]
+    if solution["status"] == "optimal":
+        assert solution["total_cost"] > 0
 
 
 def test_varied_premiums() -> None:
@@ -322,10 +317,10 @@ def test_varied_premiums() -> None:
         "up": 0.20,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Varied Premiums Test")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Varied Premiums Test")
+    assert solution["status"] in ["optimal", "infeasible"]
+    if solution["status"] == "optimal":
+        assert solution["total_cost"] > 0
 
 
 def test_large_portfolio() -> None:
@@ -345,14 +340,12 @@ def test_large_portfolio() -> None:
         "up": 0.10,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Large Portfolio Test")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
-    # Floor should scale with portfolio
-    if result["status"] == "optimal":
-        floor = 10_000.0 * (1.0 - 0.15)
-        assert floor == 8500.0
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Large Portfolio Test")
+    assert solution["status"] in ["optimal", "infeasible"]
+    if solution["status"] == "optimal":
+        assert solution["total_cost"] > 0
+        # Floor should scale with portfolio
+        assert Q * (1.0 - L) == 8500.00
 
 
 def test_many_scenarios() -> None:
@@ -377,10 +370,9 @@ def test_many_scenarios() -> None:
         "s8": 0.30,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Many Scenarios Test")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Many Scenarios Test")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
 
 
 def test_zero_loss_floor() -> None:
@@ -399,9 +391,7 @@ def test_zero_loss_floor() -> None:
         "mild": -0.10,
     }
 
-    result = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Zero Loss Floor Test")
-    assert result["status"] in ["optimal", "infeasible", "error"]
-    assert "quantities" in result
-    assert "total_cost" in result
-    floor = 100.0 * (1.0 - 0.0)
-    assert floor == 100.0
+    solution = solve_fixed_floor_lp(Is, S, K, p, Q, r, L, name="Zero Loss Floor Test")
+    assert solution["status"] == "optimal"
+    assert solution["total_cost"] > 0
+    assert Q * (1.0 - L) == 100.00

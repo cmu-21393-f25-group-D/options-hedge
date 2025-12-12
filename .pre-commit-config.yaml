@@ -23,14 +23,16 @@ repos:
   hooks:
     - id: check-notebook-executed
       name: Check notebooks have outputs
-      entry: python3 scripts/check_notebook_executed.py
+      entry: bash -c 'python3 scripts/check_notebook_executed.py notebooks/*.ipynb'
       language: system
-      files: ^notebooks/.*\.ipynb$
+      pass_filenames: false
+      always_run: true
       description: Ensures notebooks are executed before commit
 
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.19.0
   hooks:
     - id: mypy
-      args: [--ignore-missing-imports]
-      exclude: ^(tests/|notebooks/)
+      args: [--ignore-missing-imports, src, tests]
+      pass_filenames: false
+      always_run: true

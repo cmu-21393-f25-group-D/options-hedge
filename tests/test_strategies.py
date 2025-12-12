@@ -15,7 +15,7 @@ from options_hedge.strategies import (
 
 # Skip LP tests if gurobipy isn't available
 try:
-    import gurobipy as _gp  # type: ignore  # noqa: F401
+    import gurobipy  # type: ignore  # noqa: F401
 
     GUROBI_AVAILABLE = True
 except (ImportError, ModuleNotFoundError):

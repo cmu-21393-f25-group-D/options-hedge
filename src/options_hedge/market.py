@@ -206,7 +206,6 @@ class Market:
                     print(f"⚠️  Failed to load SPX options data: {e}")
                     print("   OptionPricer will not be available")
                     self.pricer = None
-                self._load_yfinance_data()
         else:
             self._load_yfinance_data()
 

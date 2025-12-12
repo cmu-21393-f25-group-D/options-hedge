@@ -10,10 +10,11 @@ only_build_toc_files: true
 
 # Force re-execution of notebooks on each build
 execute:
-  execute_notebooks: auto
-  timeout: 300  # 5 minutes for portfolio simulation
-  run_in_temp: true
+  execute_notebooks: force
+  timeout: 600  # 10 minutes for portfolio simulation with WRDS data
+  run_in_temp: false  # Run in actual directory to access environment
   allow_errors: false
+  kernel_name: ci-env  # Use kernel with WRDS_DATA_KEY injected
 
 # LaTeX settings
 latex:

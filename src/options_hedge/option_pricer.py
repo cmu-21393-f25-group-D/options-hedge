@@ -222,6 +222,68 @@ class OptionPricer:
 
         return float(premium_pct)
 
+    def get_available_strikes(
+        self,
+        date: pd.Timestamp,
+        spot: float,
+        expiry: pd.Timestamp,
+        cp_flag: str = "P",
+    ) -> list[float]:
+        """Get available strike prices from WRDS data for a given date/expiry.
+
+        Parameters
+        ----------
+        date : pd.Timestamp
+            Current date
+        spot : float
+            Current spot price (for filtering OTM strikes)
+        expiry : pd.Timestamp
+            Option expiration date
+        cp_flag : str, optional
+            'P' for puts, 'C' for calls (default: 'P')
+
+        Returns
+        -------
+        list[float]
+            List of available strike prices as ratios of spot
+            (e.g., [0.90, 0.95, 1.00])
+        """
+        if not self.use_wrds or self.wrds_data is None:
+            # Fallback: synthetic strikes at 5% intervals
+            return [0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]
+
+        # Filter by date and option type
+        date_filtered = self.wrds_data[
+            (self.wrds_data["date"] == date) & (self.wrds_data["cp_flag"] == cp_flag)
+        ]
+
+        if date_filtered.empty:
+            return [0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]
+
+        # Filter by expiry (within tolerance)
+        expiry_min = expiry - timedelta(days=self.expiry_tolerance_days)
+        expiry_max = expiry + timedelta(days=self.expiry_tolerance_days)
+        expiry_filtered = date_filtered[
+            (date_filtered["exdate"] >= expiry_min)
+            & (date_filtered["exdate"] <= expiry_max)
+        ]
+
+        if expiry_filtered.empty:
+            return [0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]
+
+        # Get unique strikes and convert to ratios
+        strikes = expiry_filtered["strike_price"].unique()
+        strike_ratios = sorted([float(k / spot) for k in strikes])
+
+        # Filter for puts: only return strikes <= spot (OTM/ATM puts)
+        if cp_flag == "P":
+            strike_ratios = [k for k in strike_ratios if k <= 1.05]
+
+        if len(strike_ratios) > 0:
+            return strike_ratios
+        else:
+            return [0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 1.00]
+
     def get_stats(self) -> dict:
         """Get statistics about option pricer configuration.
 

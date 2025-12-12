@@ -22,6 +22,7 @@ DEFAULT_FILL_VALUE = 0.0
 try:
     from .wrds_data import (
         load_encrypted_sp500_data,
+        load_encrypted_spx_options_data,
         load_encrypted_treasury_data,
         load_encrypted_vix_data,
     )
@@ -29,6 +30,13 @@ try:
     WRDS_AVAILABLE = True
 except ImportError:  # pragma: no cover
     WRDS_AVAILABLE = False
+
+try:
+    from .option_pricer import OptionPricer
+
+    OPTION_PRICER_AVAILABLE = True
+except ImportError:  # pragma: no cover
+    OPTION_PRICER_AVAILABLE = False
 
 
 @dataclass()
@@ -100,6 +108,7 @@ class Market:
     data: pd.DataFrame = field(init=False)
     vix_data: Optional[pd.DataFrame] = field(init=False, default=None)
     treasury_data: Optional[pd.DataFrame] = field(init=False, default=None)
+    pricer: Optional[OptionPricer] = field(init=False, default=None)
     _vix_series: Optional[pd.Series] = field(init=False, default=None)
     _treasury_series: Optional[pd.Series] = field(init=False, default=None)
 
@@ -176,6 +185,27 @@ class Market:
                 print(f"⚠️  Failed to load WRDS data: {e}")
                 print("   Falling back to Yahoo Finance...")
                 self.use_wrds = False
+                self._load_yfinance_data()
+
+            # Try to load SPX options data for OptionPricer (separate try block)
+            if self.use_wrds and OPTION_PRICER_AVAILABLE:
+                try:
+                    options_raw = load_encrypted_spx_options_data()
+                    # Filter to date range
+                    start_dt = pd.to_datetime(self.start)
+                    end_dt = pd.to_datetime(self.end)
+                    options_filtered = options_raw[
+                        (options_raw["date"] >= start_dt)
+                        & (options_raw["date"] <= end_dt)
+                    ]
+                    # Instantiate pricer with WRDS data
+                    self.pricer = OptionPricer(
+                        wrds_data=options_filtered, use_wrds=True
+                    )
+                except Exception as e:
+                    print(f"⚠️  Failed to load SPX options data: {e}")
+                    print("   OptionPricer will not be available")
+                    self.pricer = None
                 self._load_yfinance_data()
         else:
             self._load_yfinance_data()

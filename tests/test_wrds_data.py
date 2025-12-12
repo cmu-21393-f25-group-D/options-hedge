@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, InvalidToken
 
 from options_hedge.wrds_data import (
     get_wrds_data_info,
@@ -236,3 +236,58 @@ class TestGetWRDSDataInfo:
         assert info["unique_dates"] == len(dates)
         assert info["avg_strikes_per_date"] == 10.0
         assert info["strike_range"] == (3000, 3009)
+
+    def test_mixed_cp_flags(self) -> None:
+        """Test data with both puts and calls."""
+        data = pd.DataFrame(
+            {
+                "date": pd.to_datetime(
+                    ["2020-01-02", "2020-01-02", "2020-01-02", "2020-01-02"]
+                ),
+                "strike_price": [3500.0, 3600.0, 3500.0, 3600.0],
+                "cp_flag": ["P", "P", "C", "C"],
+            }
+        )
+
+        info = get_wrds_data_info(data)
+        assert info["total_rows"] == 4
+
+
+class TestLoadEncryptedWRDSDataEdgeCases:
+    """Additional edge case tests for encrypted data loading."""
+
+    def test_load_with_env_var_key(
+        self,
+        encrypted_test_file: tuple[Path, str],
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Test loading key from environment variable."""
+        enc_file, key = encrypted_test_file
+        monkeypatch.setenv("WRDS_DATA_KEY", key)
+
+        # Should work without explicit key parameter
+        data = load_encrypted_wrds_data(encrypted_path=str(enc_file))
+        assert isinstance(data, pd.DataFrame)
+        assert len(data) == 4
+
+    def test_corrupt_encrypted_file(self, tmp_path: Path) -> None:
+        """Test handling of corrupted encrypted file."""
+        corrupt_file = tmp_path / "corrupt.enc"
+        with open(corrupt_file, "wb") as f:
+            f.write(b"this is not valid encrypted data")
+
+        key = Fernet.generate_key().decode()
+
+        # Decryption errors
+        with pytest.raises((InvalidToken, ValueError, pd.errors.ParserError)):
+            load_encrypted_wrds_data(encrypted_path=str(corrupt_file), key=key)
+
+    def test_empty_encrypted_file(self, tmp_path: Path) -> None:
+        """Test handling of empty encrypted file."""
+        empty_file = tmp_path / "empty.enc"
+        empty_file.touch()
+
+        key = Fernet.generate_key().decode()
+
+        with pytest.raises((InvalidToken, ValueError)):  # Invalid token
+            load_encrypted_wrds_data(encrypted_path=str(empty_file), key=key)

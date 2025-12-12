@@ -5,6 +5,8 @@ This script modifies a Jupyter kernel's kernel.json file to include
 environment variables, ensuring they are available to the kernel subprocess.
 """
 
+from __future__ import annotations
+
 import json
 import os
 import sys
@@ -31,14 +33,25 @@ def inject_env_into_kernel(kernel_name: str, env_vars: dict) -> None:
             break
 
     if kernel_file is None:
-        print(f"Error: Kernel spec '{kernel_name}' not found in:", file=sys.stderr)
+        print(
+            f"Error: Kernel spec '{kernel_name}' not found in:",
+            file=sys.stderr,
+        )
         for d in possible_dirs:
             print(f"  - {d}", file=sys.stderr)
         sys.exit(1)
 
     # Load existing kernel spec
-    with open(kernel_file, "r") as f:
-        spec = json.load(f)
+    with open(kernel_file, encoding="utf-8") as f:
+        try:
+            spec = json.load(f)
+        except json.JSONDecodeError as e:
+            print(
+                f"Error: Kernel spec file '{kernel_file}' is not valid JSON:",
+                file=sys.stderr,
+            )
+            print(f"  {e}", file=sys.stderr)
+            sys.exit(1)
 
     # Add or update env section
     if "env" not in spec:
@@ -46,8 +59,9 @@ def inject_env_into_kernel(kernel_name: str, env_vars: dict) -> None:
     spec["env"].update(env_vars)
 
     # Write updated spec
-    with open(kernel_file, "w") as f:
+    with open(kernel_file, "w", encoding="utf-8") as f:
         json.dump(spec, f, indent=2)
+        f.write("\n")
 
     print(f"✓ Updated kernel spec at {kernel_file}")
     print(f"  Added env vars: {list(env_vars.keys())}")
@@ -68,11 +82,24 @@ if __name__ == "__main__":
     for arg in sys.argv[2:]:
         if "=" in arg:
             key, value = arg.split("=", 1)
+            if not value:
+                print(
+                    f"Error: Empty value for environment variable '{key}'",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
             env_vars[key] = value
         else:
             # Try to get from environment
             if arg in os.environ:
-                env_vars[arg] = os.environ[arg]
+                value = os.environ[arg]
+                if not value:
+                    print(
+                        f"Error: Environment variable '{arg}' is empty",
+                        file=sys.stderr,
+                    )
+                    sys.exit(1)
+                env_vars[arg] = value
             else:
                 print(f"Warning: {arg} not in environment", file=sys.stderr)
 

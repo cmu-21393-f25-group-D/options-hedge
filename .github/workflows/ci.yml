@@ -118,32 +118,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-uv-docs-
 
-    - name: Download WRDS data from release
-      run: uv run python scripts/download_release_data.py
-
-    - name: Test WRDS encryption key
-      env:
-        WRDS_DATA_KEY: ${{ secrets.WRDS_DATA_KEY }}
-      run: uv run python scripts/test_wrds_key.py
-
-    - name: Set up Jupyter kernel with WRDS environment
-      env:
-        WRDS_DATA_KEY: ${{ secrets.WRDS_DATA_KEY }}
+    - name: Copy pre-executed notebook to docs
       run: |
-        # Install ipykernel and register a CI-specific kernel
-        uv pip install ipykernel
-        uv run python -m ipykernel install --user --name=ci-env --display-name="CI Env"
-
-        # Inject WRDS_DATA_KEY into the kernel spec
-        # This makes the env var available to jupyter-book when it executes the notebook
-        uv run python scripts/inject_kernel_env.py ci-env "WRDS_DATA_KEY=$WRDS_DATA_KEY"
-
-        # Copy notebook to docs for jupyter-book to execute
+        # Copy the locally-executed notebook with outputs
+        # Industry standard: execute locally, commit with outputs, don't re-execute in CI
         cp notebooks/simulate_portfolio.ipynb docs/
-
-        # Update notebook's kernel spec to use ci-env (not python3)
-        # This ensures jupyter-book uses our kernel with WRDS_DATA_KEY
-        python3 -c "import json; nb = json.load(open('docs/simulate_portfolio.ipynb')); nb['metadata']['kernelspec']['name'] = 'ci-env'; nb['metadata']['kernelspec']['display_name'] = 'CI Env'; json.dump(nb, open('docs/simulate_portfolio.ipynb', 'w'), indent=1)"
 
         # Add notebook to _toc.yml
         echo "  - file: simulate_portfolio" >> docs/_toc.yml

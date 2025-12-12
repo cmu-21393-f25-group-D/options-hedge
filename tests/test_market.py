@@ -170,9 +170,9 @@ def test_market_has_pricer_with_wrds_data() -> None:
         # Should be able to get available strikes
         strikes = market.pricer.get_available_strikes(
             date=pd.Timestamp("2020-02-01"),
+            spot=3000.0,
             expiry=pd.Timestamp("2020-03-20"),
-            spot_price=3000.0,
-            option_type="put",
+            cp_flag="P",
         )
         # Strikes should be a list (might be empty if no data for this date/expiry)
         assert isinstance(strikes, list)

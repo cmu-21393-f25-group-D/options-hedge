@@ -15,9 +15,10 @@ from options_hedge.strategies import (
 
 # Skip LP tests if gurobipy isn't available
 try:
-    import gurobipy  # type: ignore  # noqa: F401
+    import gurobipy  # type: ignore
 
     GUROBI_AVAILABLE = True
+    _ = gurobipy.Model  # Use the import to satisfy linter
 except (ImportError, ModuleNotFoundError):
     GUROBI_AVAILABLE = False
 

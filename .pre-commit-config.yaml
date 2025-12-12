@@ -23,7 +23,7 @@ repos:
   hooks:
     - id: check-notebook-executed
       name: Check notebooks have outputs
-      entry: bash -c 'python3 scripts/check_notebook_executed.py notebooks/*.ipynb'
+      entry: bash -c 'uv run python scripts/check_notebook_executed.py notebooks/*.ipynb'
       language: system
       pass_filenames: false
       always_run: true

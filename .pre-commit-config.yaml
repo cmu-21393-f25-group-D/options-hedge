@@ -12,7 +12,7 @@ repos:
     - id: detect-private-key
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.14.8
+  rev: v0.14.10
   hooks:
     - id: ruff-check
       args: [--fix]
@@ -32,7 +32,7 @@ repos:
       description: Ensures notebooks are executed before commit
 
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.19.0
+  rev: v1.19.1
   hooks:
     - id: mypy
       args: [--ignore-missing-imports, src, tests]

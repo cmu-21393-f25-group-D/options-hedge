@@ -114,7 +114,7 @@ class OptionPricer:
         spot: float,
         date: pd.Timestamp,
         expiry: pd.Timestamp,
-        vix: float = 20.0
+        vix: float = 20.0,
     ) -> float:
         """Get put premium (WRDS if available, else synthetic)."""
         if self.use_wrds:
@@ -127,13 +127,12 @@ class OptionPricer:
         """Match closest available option in WRDS data."""
         # Filter by date and expiry
         candidates = self.wrds_data[
-            (self.wrds_data['date'] == date) &
-            (self.wrds_data['exdate'] == expiry)
+            (self.wrds_data["date"] == date) & (self.wrds_data["exdate"] == expiry)
         ]
 
         # Find closest strike
-        candidates['strike_diff'] = abs(candidates['strike_price'] - strike)
-        best_match = candidates.nsmallest(1, 'strike_diff')
+        candidates["strike_diff"] = abs(candidates["strike_price"] - strike)
+        best_match = candidates.nsmallest(1, "strike_diff")
 
         if best_match.empty:
             # Fallback to synthetic
@@ -141,8 +140,8 @@ class OptionPricer:
             return estimate_put_premium(strike, spot, days, vix)
 
         # Use mid-price (average of bid/ask)
-        bid = best_match['best_bid'].iloc[0]
-        offer = best_match['best_offer'].iloc[0]
+        bid = best_match["best_bid"].iloc[0]
+        offer = best_match["best_offer"].iloc[0]
         mid_price = (bid + offer) / 2.0
 
         # Convert to premium as % of spot (for consistency)
@@ -185,21 +184,21 @@ db.close()
 print(f"Downloaded {len(data):,} rows")
 
 # Save compressed CSV
-csv_path = 'data/wrds_spx_options.csv.gz'
-data.to_csv(csv_path, index=False, compression='gzip')
+csv_path = "data/wrds_spx_options.csv.gz"
+data.to_csv(csv_path, index=False, compression="gzip")
 print(f"Saved to {csv_path}")
 
 # Encrypt the data
 key = Fernet.generate_key()
 cipher = Fernet(key)
 
-with open(csv_path, 'rb') as f:
+with open(csv_path, "rb") as f:
     plaintext = f.read()
 
 ciphertext = cipher.encrypt(plaintext)
 
-enc_path = 'data/wrds_spx_options.enc'
-with open(enc_path, 'wb') as f:
+enc_path = "data/wrds_spx_options.enc"
+with open(enc_path, "wb") as f:
     f.write(ciphertext)
 
 print(f"Encrypted to {enc_path}")
@@ -246,7 +245,7 @@ data/wrds_spx_options.csv.gz
 premium_pct = estimate_put_premium(strike, spot, days, vix)
 
 # strategies.py - after (backward compatible)
-if hasattr(market, 'option_pricer'):
+if hasattr(market, "option_pricer"):
     premium_pct = market.option_pricer.get_put_premium(
         strike, spot, current_date, expiry_date, vix
     )

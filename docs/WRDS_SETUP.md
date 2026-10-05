@@ -28,9 +28,9 @@ If the encrypted data file already exists in the repository, you only need:
    premium = pricer.get_put_premium(
        strike=3500,
        spot=4000,
-       date=pd.Timestamp('2020-03-01'),
-       expiry=pd.Timestamp('2020-06-01'),
-       vix=30.0
+       date=pd.Timestamp("2020-03-01"),
+       expiry=pd.Timestamp("2020-06-01"),
+       vix=30.0,
    )
    ```
 
@@ -197,11 +197,11 @@ pricer = OptionPricer(use_wrds=True)
 
 # Get premium
 premium = pricer.get_put_premium(
-    strike=3500,      # $3500 strike
-    spot=4000,        # $4000 current price (12.5% OTM)
-    date=pd.Timestamp('2020-03-01'),
-    expiry=pd.Timestamp('2020-06-01'),  # 90 days
-    vix=30.0          # VIX at 30 (high volatility)
+    strike=3500,  # $3500 strike
+    spot=4000,  # $4000 current price (12.5% OTM)
+    date=pd.Timestamp("2020-03-01"),
+    expiry=pd.Timestamp("2020-06-01"),  # 90 days
+    vix=30.0,  # VIX at 30 (high volatility)
 )
 
 print(f"Premium: {premium:.2%} of notional")
@@ -232,15 +232,15 @@ for date in trading_dates:
 # Strict matching (must be exact)
 pricer = OptionPricer(
     use_wrds=True,
-    strike_tolerance=0.01,      # 1% strike tolerance
-    expiry_tolerance_days=3     # 3 days expiry tolerance
+    strike_tolerance=0.01,  # 1% strike tolerance
+    expiry_tolerance_days=3,  # 3 days expiry tolerance
 )
 
 # Loose matching (for illiquid strikes)
 pricer = OptionPricer(
     use_wrds=True,
-    strike_tolerance=0.10,      # 10% strike tolerance
-    expiry_tolerance_days=14    # 2 weeks expiry tolerance
+    strike_tolerance=0.10,  # 10% strike tolerance
+    expiry_tolerance_days=14,  # 2 weeks expiry tolerance
 )
 ```
 

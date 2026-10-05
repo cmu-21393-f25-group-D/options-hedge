@@ -144,9 +144,9 @@ pricer = OptionPricer(use_wrds=True)
 premium = pricer.get_put_premium(
     strike=3500,
     spot=4000,
-    date=pd.Timestamp('2020-03-01'),
-    expiry=pd.Timestamp('2020-06-01'),
-    vix=30.0
+    date=pd.Timestamp("2020-03-01"),
+    expiry=pd.Timestamp("2020-06-01"),
+    vix=30.0,
 )
 
 print(f"Premium: {premium:.2%}")
@@ -303,7 +303,8 @@ def test_load_encrypted_data():
     """Test data decryption and loading."""
     data = load_encrypted_wrds_data()
     assert len(data) > 100000
-    assert 'strike_price' in data.columns
+    assert "strike_price" in data.columns
+
 
 # tests/test_option_pricer.py
 def test_wrds_pricing():
@@ -311,6 +312,7 @@ def test_wrds_pricing():
     pricer = OptionPricer(use_wrds=True)
     premium = pricer.get_put_premium(...)
     assert 0.001 < premium < 0.10  # Reasonable range
+
 
 def test_synthetic_fallback():
     """Test fallback when no WRDS match."""

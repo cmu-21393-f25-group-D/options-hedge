@@ -84,7 +84,7 @@ import gurobipy as gp
 
 # Create model
 m = gp.Model("vix_ladder_lp")
-m.setParam('OutputFlag', 0)
+m.setParam("OutputFlag", 0)
 
 # Decision variables
 x = m.addVars(len(options), lb=0.0, name="x")
@@ -92,7 +92,7 @@ x = m.addVars(len(options), lb=0.0, name="x")
 # Objective: minimize total cost
 m.setObjective(
     gp.quicksum(opt.premium * (1 + tau) * x[j] for j, opt in enumerate(options)),
-    gp.GRB.MINIMIZE
+    gp.GRB.MINIMIZE,
 )
 
 # Budget constraint
@@ -103,8 +103,11 @@ m.addConstr(
 
 # Ladder constraints (one per rung)
 for rung_idx, (otm_min, otm_max, frac) in enumerate(ladder_allocations):
-    rung_opts = [j for j, opt in enumerate(options)
-                 if otm_min <= compute_otm(opt.strike, S0) < otm_max]
+    rung_opts = [
+        j
+        for j, opt in enumerate(options)
+        if otm_min <= compute_otm(opt.strike, S0) < otm_max
+    ]
     if rung_opts:
         m.addConstr(
             gp.quicksum(options[j].premium * (1 + tau) * x[j] for j in rung_opts)
